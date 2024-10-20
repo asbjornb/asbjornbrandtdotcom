@@ -5,11 +5,11 @@ namespace SiteGenerator.Tests;
 
 public class GeneratorTests : IAsyncLifetime
 {
-    private string _testRootPath;
-    private string _contentPath;
-    private string _outputPath;
-    private string _templatePath;
-    private string _configPath;
+    private string? _testRootPath;
+    private string? _contentPath;
+    private string? _outputPath;
+    private string? _templatePath;
+    private string? _configPath;
 
     public async Task InitializeAsync()
     {
@@ -40,7 +40,7 @@ public class GeneratorTests : IAsyncLifetime
 
     public Task DisposeAsync()
     {
-        if (Directory.Exists(_testRootPath))
+        if (!string.IsNullOrEmpty(_testRootPath) && Directory.Exists(_testRootPath))
         {
             Directory.Delete(_testRootPath, true);
         }
@@ -51,13 +51,14 @@ public class GeneratorTests : IAsyncLifetime
     public async Task GenerateSiteAsync_ShouldCreateHtmlFiles()
     {
         // Arrange
-        var generator = new Generator(_contentPath, _outputPath, _templatePath, _configPath);
+        EnsureInitialized();
+        var generator = new Generator(_contentPath!, _outputPath!, _templatePath!, _configPath!);
 
         // Act
         await generator.GenerateSiteAsync();
 
         // Assert
-        var outputFile = Path.Combine(_outputPath, "pages", "test.html");
+        var outputFile = Path.Combine(_outputPath!, "pages", "test.html");
         Assert.True(File.Exists(outputFile));
 
         var content = await File.ReadAllTextAsync(outputFile);
@@ -71,30 +72,47 @@ public class GeneratorTests : IAsyncLifetime
     public async Task GenerateSiteAsync_ShouldCreateBacklinks()
     {
         // Arrange
+        EnsureInitialized();
         await File.WriteAllTextAsync(
-            Path.Combine(_contentPath, "notes", "note1.md"),
+            Path.Combine(_contentPath!, "notes", "note1.md"),
             "---\ntitle: Note 1\n---\nThis is [[note2]]."
         );
         await File.WriteAllTextAsync(
-            Path.Combine(_contentPath, "notes", "note2.md"),
+            Path.Combine(_contentPath!, "notes", "note2.md"),
             "---\ntitle: Note 2\n---\nThis is note 2."
         );
         await File.WriteAllTextAsync(
-            Path.Combine(_templatePath, "note.html"),
+            Path.Combine(_templatePath!, "note.html"),
             "<html><head><title>{{Metadata.title}}</title></head><body><h1>{{Metadata.title}}</h1>{{{Content}}}</body></html>"
         );
 
-        var generator = new Generator(_contentPath, _outputPath, _templatePath, _configPath);
+        var generator = new Generator(_contentPath!, _outputPath!, _templatePath!, _configPath!);
 
         // Act
         await generator.GenerateSiteAsync();
 
         // Assert
-        var note2OutputFile = Path.Combine(_outputPath, "notes", "note2.html");
+        var note2OutputFile = Path.Combine(_outputPath!, "notes", "note2.html");
         Assert.True(File.Exists(note2OutputFile));
 
         var content = await File.ReadAllTextAsync(note2OutputFile);
         Assert.Contains("<h2>Backlinks</h2>", content);
         Assert.Contains("<a href=\"notes/note1.html\">note1</a>", content);
+    }
+
+    private void EnsureInitialized()
+    {
+        if (
+            _testRootPath == null
+            || _contentPath == null
+            || _outputPath == null
+            || _templatePath == null
+            || _configPath == null
+        )
+        {
+            throw new InvalidOperationException(
+                "Test environment not properly initialized. Ensure InitializeAsync has been called."
+            );
+        }
     }
 }
