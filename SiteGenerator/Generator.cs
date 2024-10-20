@@ -8,13 +8,17 @@ namespace SiteGenerator
     {
         private readonly string _contentDirectory;
         private readonly string _outputDirectory;
+        private readonly string _templateDirectory;
         private readonly MarkdownParser _markdownParser;
+        private readonly TemplateRenderer _templateRenderer;
 
-        public Generator(string contentDirectory, string outputDirectory)
+        public Generator(string contentDirectory, string outputDirectory, string templateDirectory)
         {
             _contentDirectory = contentDirectory;
             _outputDirectory = outputDirectory;
+            _templateDirectory = templateDirectory;
             _markdownParser = new MarkdownParser();
+            _templateRenderer = new TemplateRenderer();
         }
 
         public async Task GenerateSiteAsync()
@@ -35,8 +39,11 @@ namespace SiteGenerator
             var relativePath = Path.GetRelativePath(_contentDirectory, filePath);
             var outputPath = Path.Combine(_outputDirectory, Path.ChangeExtension(relativePath, ".html"));
 
+            var templatePath = Path.Combine(_templateDirectory, "default.html");
+            var renderedContent = _templateRenderer.RenderTemplate(templatePath, new { Content = html });
+
             Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
-            await File.WriteAllTextAsync(outputPath, html);
+            await File.WriteAllTextAsync(outputPath, renderedContent);
 
             Console.WriteLine($"Processed: {relativePath}");
         }

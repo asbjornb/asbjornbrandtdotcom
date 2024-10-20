@@ -8,8 +8,9 @@ class Program
 
         string contentDirectory = "../content";
         string outputDirectory = "../output";
+        string templateDirectory = "../templates";
 
-        var generator = new Generator(contentDirectory, outputDirectory);
+        var generator = new Generator(contentDirectory, outputDirectory, templateDirectory);
         await generator.GenerateSiteAsync();
 
         Console.WriteLine("Site Generation Complete!");
