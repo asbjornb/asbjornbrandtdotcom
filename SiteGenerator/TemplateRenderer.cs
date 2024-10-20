@@ -1,22 +1,20 @@
-using System.IO;
 using HandlebarsDotNet;
 
-namespace SiteGenerator
+namespace SiteGenerator;
+
+public class TemplateRenderer
 {
-    public class TemplateRenderer
+    private readonly IHandlebars _handlebars;
+
+    public TemplateRenderer()
     {
-        private readonly IHandlebars _handlebars;
+        _handlebars = Handlebars.Create();
+    }
 
-        public TemplateRenderer()
-        {
-            _handlebars = Handlebars.Create();
-        }
-
-        public string RenderTemplate(string templatePath, object data)
-        {
-            string templateContent = File.ReadAllText(templatePath);
-            var template = _handlebars.Compile(templateContent);
-            return template(data);
-        }
+    public string RenderTemplate(string templatePath, object data)
+    {
+        string templateContent = File.ReadAllText(templatePath);
+        var template = _handlebars.Compile(templateContent);
+        return template(data);
     }
 }

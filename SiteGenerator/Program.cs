@@ -1,8 +1,8 @@
 ﻿namespace SiteGenerator;
 
-class Program
+public class Program
 {
-    static async Task Main(string[] args)
+    public static async Task Main(string[] args)
     {
         Console.WriteLine("Starting Site Generation...");
 

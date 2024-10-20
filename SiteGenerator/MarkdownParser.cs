@@ -1,49 +1,46 @@
-using System.Collections.Generic;
-using System.IO;
 using System.Text.RegularExpressions;
 using Markdig;
 
-namespace SiteGenerator
+namespace SiteGenerator;
+
+public class MarkdownParser
 {
-    public class MarkdownParser
+    private readonly MarkdownPipeline _pipeline;
+
+    public MarkdownParser()
     {
-        private readonly MarkdownPipeline _pipeline;
+        _pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+    }
 
-        public MarkdownParser()
+    public string ParseToHtml(string markdown, Dictionary<string, string> noteMapping)
+    {
+        // Replace [[note-title]] with [note-title](note-title.html)
+        foreach (var note in noteMapping)
         {
-            _pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            markdown = Regex.Replace(
+                markdown,
+                $@"\[\[{Regex.Escape(note.Key)}\]\]",
+                $"[{note.Key}]({note.Value})"
+            );
         }
 
-        public string ParseToHtml(string markdown, Dictionary<string, string> noteMapping)
-        {
-            // Replace [[note-title]] with [note-title](note-title.html)
-            foreach (var note in noteMapping)
-            {
-                markdown = Regex.Replace(
-                    markdown,
-                    $@"\[\[{Regex.Escape(note.Key)}\]\]",
-                    $"[{note.Key}]({note.Value})"
-                );
-            }
+        return Markdown.ToHtml(markdown, _pipeline);
+    }
 
-            return Markdown.ToHtml(markdown, _pipeline);
+    public async Task<string> ParseFileToHtmlAsync(
+        string filePath,
+        Dictionary<string, string> noteMapping
+    )
+    {
+        try
+        {
+            string markdown = await File.ReadAllTextAsync(filePath);
+            return ParseToHtml(markdown, noteMapping);
         }
-
-        public async Task<string> ParseFileToHtmlAsync(
-            string filePath,
-            Dictionary<string, string> noteMapping
-        )
+        catch (Exception ex)
         {
-            try
-            {
-                string markdown = await File.ReadAllTextAsync(filePath);
-                return ParseToHtml(markdown, noteMapping);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error parsing file {filePath}: {ex.Message}");
-                return string.Empty;
-            }
+            Console.WriteLine($"Error parsing file {filePath}: {ex.Message}");
+            return string.Empty;
         }
     }
 }
