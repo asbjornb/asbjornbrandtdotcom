@@ -9,8 +9,14 @@ class Program
         string contentDirectory = "../content";
         string outputDirectory = "../output";
         string templateDirectory = "../templates";
+        string configPath = "../config/config.json";
 
-        var generator = new Generator(contentDirectory, outputDirectory, templateDirectory);
+        var generator = new Generator(
+            contentDirectory,
+            outputDirectory,
+            templateDirectory,
+            configPath
+        );
         await generator.GenerateSiteAsync();
 
         Console.WriteLine("Site Generation Complete!");
