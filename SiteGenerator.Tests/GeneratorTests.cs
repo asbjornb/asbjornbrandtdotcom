@@ -66,4 +66,35 @@ public class GeneratorTests : IAsyncLifetime
         Assert.Contains("<h1 id=\"test\">Test</h1>", content);
         Assert.Contains("<p>This is a test.</p>", content);
     }
+
+    [Fact]
+    public async Task GenerateSiteAsync_ShouldCreateBacklinks()
+    {
+        // Arrange
+        await File.WriteAllTextAsync(
+            Path.Combine(_contentPath, "notes", "note1.md"),
+            "---\ntitle: Note 1\n---\nThis is [[note2]]."
+        );
+        await File.WriteAllTextAsync(
+            Path.Combine(_contentPath, "notes", "note2.md"),
+            "---\ntitle: Note 2\n---\nThis is note 2."
+        );
+        await File.WriteAllTextAsync(
+            Path.Combine(_templatePath, "note.html"),
+            "<html><head><title>{{Metadata.title}}</title></head><body><h1>{{Metadata.title}}</h1>{{{Content}}}</body></html>"
+        );
+
+        var generator = new Generator(_contentPath, _outputPath, _templatePath, _configPath);
+
+        // Act
+        await generator.GenerateSiteAsync();
+
+        // Assert
+        var note2OutputFile = Path.Combine(_outputPath, "notes", "note2.html");
+        Assert.True(File.Exists(note2OutputFile));
+
+        var content = await File.ReadAllTextAsync(note2OutputFile);
+        Assert.Contains("<h2>Backlinks</h2>", content);
+        Assert.Contains("<a href=\"notes/note1.html\">note1</a>", content);
+    }
 }
