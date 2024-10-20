@@ -1,0 +1,5 @@
+<Project>
+  <Target Name="CSharpier" BeforeTargets="Build">
+    <Exec Command="dotnet csharpier ." WorkingDirectory="$(MSBuildThisFileDirectory)" />
+  </Target>
+</Project>
