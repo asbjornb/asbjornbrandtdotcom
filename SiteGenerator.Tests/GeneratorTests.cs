@@ -2,7 +2,7 @@ using Xunit;
 
 namespace SiteGenerator.Tests;
 
-public class SiteGeneratorTests : IAsyncLifetime
+public class GeneratorTests : IAsyncLifetime
 {
     private string _testRootPath;
     private string _contentPath;
@@ -20,11 +20,11 @@ public class SiteGeneratorTests : IAsyncLifetime
         Directory.CreateDirectory(_templatePath);
         await File.WriteAllTextAsync(
             Path.Combine(_contentPath, "test.md"),
-            "# Test\nThis is a test."
+            "---\ntitle: Test Page\n---\n# Test\nThis is a test."
         );
         await File.WriteAllTextAsync(
             Path.Combine(_templatePath, "default.html"),
-            "<html><body>{{{Content}}}</body></html>"
+            "<html><head><title>{{Metadata.title}}</title></head><body><h1>{{Metadata.title}}</h1>{{{Content}}}</body></html>"
         );
     }
 
@@ -51,7 +51,9 @@ public class SiteGeneratorTests : IAsyncLifetime
         Assert.True(File.Exists(outputFile));
 
         var content = await File.ReadAllTextAsync(outputFile);
-        Assert.Contains("<html><body><h1 id=\"test\">Test</h1>", content);
-        Assert.Contains("<p>This is a test.</p></body></html>", content);
+        Assert.Contains("<title>Test Page</title>", content);
+        Assert.Contains("<h1>Test Page</h1>", content);
+        Assert.Contains("<h1 id=\"test\">Test</h1>", content);
+        Assert.Contains("<p>This is a test.</p>", content);
     }
 }
