@@ -1,11 +1,17 @@
-﻿// See https://aka.ms/new-console-template for more information
-using SiteGenerator;
+﻿namespace SiteGenerator;
 
 class Program
 {
     static async Task Main(string[] args)
     {
-        Console.WriteLine("SiteGenerator is ready to use.");
-        // Add your main program logic here
+        Console.WriteLine("Starting Site Generation...");
+
+        string contentDirectory = "../content";
+        string outputDirectory = "../output";
+
+        var generator = new Generator(contentDirectory, outputDirectory);
+        await generator.GenerateSiteAsync();
+
+        Console.WriteLine("Site Generation Complete!");
     }
 }
