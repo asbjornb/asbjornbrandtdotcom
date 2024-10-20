@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Xunit;
 
 namespace SiteGenerator.Tests;
@@ -10,9 +11,10 @@ public class MarkdownParserTests
         // Arrange
         var parser = new MarkdownParser();
         var filePath = "example.md";
+        var noteMapping = new Dictionary<string, string>();
 
         // Act
-        string result = await parser.ParseFileToHtmlAsync(filePath);
+        string result = await parser.ParseFileToHtmlAsync(filePath, noteMapping);
 
         // Assert
         string expectedHtml =
@@ -31,5 +33,22 @@ public class MarkdownParserTests
 ";
 
         Assert.Equal(expectedHtml.Replace("\r\n", "\n"), result.Replace("\r\n", "\n"));
+    }
+
+    [Fact]
+    public void ParseToHtml_ShouldReplaceObsidianLinks()
+    {
+        // Arrange
+        var parser = new MarkdownParser();
+        var markdown = "This is a [[test]] of Obsidian-style links.";
+        var noteMapping = new Dictionary<string, string> { { "test", "notes/test.html" } };
+
+        // Act
+        string result = parser.ParseToHtml(markdown, noteMapping);
+
+        // Assert
+        string expectedHtml =
+            "<p>This is a <a href=\"notes/test.html\">test</a> of Obsidian-style links.</p>\n";
+        Assert.Equal(expectedHtml, result);
     }
 }

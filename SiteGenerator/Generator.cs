@@ -20,6 +20,8 @@ namespace SiteGenerator
         private readonly MarkdownParser _markdownParser;
         private readonly TemplateRenderer _templateRenderer;
         private Config _config;
+        private Dictionary<string, List<string>> _backlinks;
+        private Dictionary<string, string> _noteMapping;
 
         public Generator(
             string contentDirectory,
@@ -34,6 +36,8 @@ namespace SiteGenerator
             _configPath = configPath;
             _markdownParser = new MarkdownParser();
             _templateRenderer = new TemplateRenderer();
+            _backlinks = new Dictionary<string, List<string>>();
+            _noteMapping = new Dictionary<string, string>();
             LoadConfig();
         }
 
@@ -76,7 +80,97 @@ namespace SiteGenerator
             var notesDirectory = Path.Combine(_contentDirectory, "notes");
             if (Directory.Exists(notesDirectory))
             {
-                await ProcessContentFilesAsync(notesDirectory, "note.html");
+                // First pass: build note mapping
+                foreach (var file in Directory.GetFiles(notesDirectory, "*.md"))
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file);
+                    _noteMapping[fileName] = $"notes/{fileName}.html";
+                }
+
+                // Second pass: process notes and build backlinks
+                foreach (var file in Directory.GetFiles(notesDirectory, "*.md"))
+                {
+                    await ProcessNoteAsync(file);
+                }
+
+                // Third pass: update notes with backlinks
+                foreach (var file in Directory.GetFiles(notesDirectory, "*.md"))
+                {
+                    await UpdateNoteWithBacklinksAsync(file);
+                }
+            }
+        }
+
+        private async Task ProcessNoteAsync(string filePath)
+        {
+            var content = await File.ReadAllTextAsync(filePath);
+            var (frontMatter, markdownContent) = FrontMatterParser.ExtractFrontMatter(content);
+            var html = _markdownParser.ParseToHtml(markdownContent, _noteMapping);
+
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            foreach (var note in _noteMapping.Keys)
+            {
+                if (markdownContent.Contains($"[[{note}]]"))
+                {
+                    if (!_backlinks.ContainsKey(note))
+                    {
+                        _backlinks[note] = new List<string>();
+                    }
+                    _backlinks[note].Add(fileName);
+                }
+            }
+
+            var relativePath = Path.GetRelativePath(_contentDirectory, filePath);
+            var outputPath = Path.Combine(
+                _outputDirectory,
+                Path.ChangeExtension(relativePath, ".html")
+            );
+
+            var templatePath = Path.Combine(_templateDirectory, "note.html");
+            if (!File.Exists(templatePath))
+            {
+                templatePath = Path.Combine(_templateDirectory, "default.html");
+            }
+
+            var renderedContent = _templateRenderer.RenderTemplate(
+                templatePath,
+                new
+                {
+                    Content = html,
+                    Metadata = frontMatter,
+                    Config = _config
+                }
+            );
+
+            Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+            await File.WriteAllTextAsync(outputPath, renderedContent);
+
+            Console.WriteLine($"Processed note: {relativePath}");
+        }
+
+        private async Task UpdateNoteWithBacklinksAsync(string filePath)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            var outputPath = Path.Combine(_outputDirectory, "notes", $"{fileName}.html");
+
+            if (File.Exists(outputPath))
+            {
+                var content = await File.ReadAllTextAsync(outputPath);
+                var backlinksHtml = "";
+
+                if (_backlinks.ContainsKey(fileName))
+                {
+                    backlinksHtml = "<h2>Backlinks</h2><ul>";
+                    foreach (var backlink in _backlinks[fileName])
+                    {
+                        backlinksHtml +=
+                            $"<li><a href=\"{_noteMapping[backlink]}\">{backlink}</a></li>";
+                    }
+                    backlinksHtml += "</ul>";
+                }
+
+                content = content.Replace("</body>", $"{backlinksHtml}</body>");
+                await File.WriteAllTextAsync(outputPath, content);
             }
         }
 
@@ -92,7 +186,7 @@ namespace SiteGenerator
         {
             var content = await File.ReadAllTextAsync(filePath);
             var (frontMatter, markdownContent) = FrontMatterParser.ExtractFrontMatter(content);
-            var html = _markdownParser.ParseToHtml(markdownContent);
+            var html = _markdownParser.ParseToHtml(markdownContent, _noteMapping);
 
             var relativePath = Path.GetRelativePath(_contentDirectory, filePath);
             var outputPath = Path.Combine(

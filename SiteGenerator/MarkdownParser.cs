@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 using Markdig;
 
 namespace SiteGenerator
@@ -11,17 +14,30 @@ namespace SiteGenerator
             _pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
         }
 
-        public string ParseToHtml(string markdown)
+        public string ParseToHtml(string markdown, Dictionary<string, string> noteMapping)
         {
+            // Replace [[note-title]] with [note-title](note-title.html)
+            foreach (var note in noteMapping)
+            {
+                markdown = Regex.Replace(
+                    markdown,
+                    $@"\[\[{Regex.Escape(note.Key)}\]\]",
+                    $"[{note.Key}]({note.Value})"
+                );
+            }
+
             return Markdown.ToHtml(markdown, _pipeline);
         }
 
-        public async Task<string> ParseFileToHtmlAsync(string filePath)
+        public async Task<string> ParseFileToHtmlAsync(
+            string filePath,
+            Dictionary<string, string> noteMapping
+        )
         {
             try
             {
                 string markdown = await File.ReadAllTextAsync(filePath);
-                return ParseToHtml(markdown);
+                return ParseToHtml(markdown, noteMapping);
             }
             catch (Exception ex)
             {
