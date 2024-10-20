@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Xunit;
 
 namespace SiteGenerator.Tests;
@@ -49,6 +48,44 @@ public class MarkdownParserTests
         // Assert
         string expectedHtml =
             "<p>This is a <a href=\"notes/test.html\">test</a> of Obsidian-style links.</p>\n";
+        Assert.Equal(expectedHtml, result);
+    }
+
+    [Fact]
+    public void ParseToHtml_ShouldHandleOrdinaryMarkdownLinks()
+    {
+        // Arrange
+        var parser = new MarkdownParser();
+        var markdown =
+            "This is a [regular link](https://example.com) and an [internal link](internal-page.md).";
+        var noteMapping = new Dictionary<string, string>();
+
+        // Act
+        string result = parser.ParseToHtml(markdown, noteMapping);
+
+        // Assert
+        string expectedHtml =
+            "<p>This is a <a href=\"https://example.com\">regular link</a> and an <a href=\"internal-page.md\">internal link</a>.</p>\n";
+        Assert.Equal(expectedHtml, result);
+    }
+
+    [Fact]
+    public void ParseToHtml_ShouldHandleMixedLinkTypes()
+    {
+        // Arrange
+        var parser = new MarkdownParser();
+        var markdown = "Here's an [[obsidian-link]] and a [regular link](https://example.com).";
+        var noteMapping = new Dictionary<string, string>
+        {
+            { "obsidian-link", "notes/obsidian-link.html" }
+        };
+
+        // Act
+        string result = parser.ParseToHtml(markdown, noteMapping);
+
+        // Assert
+        string expectedHtml =
+            "<p>Here's an <a href=\"notes/obsidian-link.html\">obsidian-link</a> and a <a href=\"https://example.com\">regular link</a>.</p>\n";
         Assert.Equal(expectedHtml, result);
     }
 }
