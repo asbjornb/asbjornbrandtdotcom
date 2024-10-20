@@ -1,5 +1,5 @@
-using HandlebarsDotNet;
 using System.IO;
+using HandlebarsDotNet;
 
 namespace SiteGenerator
 {

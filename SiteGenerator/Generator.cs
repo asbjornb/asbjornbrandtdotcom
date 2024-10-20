@@ -25,7 +25,13 @@ namespace SiteGenerator
         {
             Directory.CreateDirectory(_outputDirectory);
 
-            foreach (var file in Directory.GetFiles(_contentDirectory, "*.md", SearchOption.AllDirectories))
+            foreach (
+                var file in Directory.GetFiles(
+                    _contentDirectory,
+                    "*.md",
+                    SearchOption.AllDirectories
+                )
+            )
             {
                 await ProcessFileAsync(file);
             }
@@ -34,13 +40,20 @@ namespace SiteGenerator
         private async Task ProcessFileAsync(string filePath)
         {
             var content = await File.ReadAllTextAsync(filePath);
-            var html = _markdownParser.ParseToHtml(content);
+            var (frontMatter, markdownContent) = FrontMatterParser.ExtractFrontMatter(content);
+            var html = _markdownParser.ParseToHtml(markdownContent);
 
             var relativePath = Path.GetRelativePath(_contentDirectory, filePath);
-            var outputPath = Path.Combine(_outputDirectory, Path.ChangeExtension(relativePath, ".html"));
+            var outputPath = Path.Combine(
+                _outputDirectory,
+                Path.ChangeExtension(relativePath, ".html")
+            );
 
             var templatePath = Path.Combine(_templateDirectory, "default.html");
-            var renderedContent = _templateRenderer.RenderTemplate(templatePath, new { Content = html });
+            var renderedContent = _templateRenderer.RenderTemplate(
+                templatePath,
+                new { Content = html, Metadata = frontMatter }
+            );
 
             Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
             await File.WriteAllTextAsync(outputPath, renderedContent);

@@ -1,5 +1,5 @@
 <Project>
-  <Target Name="CSharpier" BeforeTargets="Build">
-    <Exec Command="dotnet csharpier ." WorkingDirectory="$(MSBuildThisFileDirectory)" />
-  </Target>
+  <ItemGroup>
+    <PackageReference Include="CSharpier.MsBuild" Version="0.27.3" PrivateAssets="all" />
+  </ItemGroup>
 </Project>
