@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SiteGenerator.Tests
+namespace Generator.Tests
 {
     public class SiteGeneratorTests : IAsyncLifetime
     {
