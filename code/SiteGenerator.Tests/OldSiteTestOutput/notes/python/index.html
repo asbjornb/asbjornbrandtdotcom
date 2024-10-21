@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+    
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+<title>Python • Asbjørn Brandt's Notes</title>
+
+<meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<meta property="og:title" content="Python • Asbjørn Brandt's Notes">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tbd.netlify.app/notes/python/">
+<meta property="og:image" content="/assets/chart.svg">
+<meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<link rel="canonical" href="https://tbd.netlify.app/notes/python/">
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <a href="/" class="page-header__logo" title="Go home">
+            <img src="/assets/chart.svg" alt="" width="48">
+        </a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/notes">Notes</a>
+            <a href="/inspiration">Inspiration</a>
+            <a href="/now">Now</a>
+        </nav>
+    </header>
+    <main>
+        <article>
+    <h1>Python</h1>
+<p>Check out this cheatsheet: <a href="https://gto76.github.io/python-cheatsheet/#pandas">python cheatsheet</a></p>
+<h2>Virtual environments</h2>
+<p>To activate an existing virtual environment (venv) use the activate.bat. If project is at c:\someproject and has venv folder at c:\someproject\someVenv then usually call:
+<code>someVenv\scripts\activate.bat</code></p>
+<p><code>pip list</code> lists the actual packages in the venv</p>
+<pre><code class="language-bat">// navigate to project folder  
+cd c:\someproject
+  
+// create a new directory 'project-36'  
+mkdir project-36  
+  
+// change currenct directory to 'project-36'  
+cd .\project-36  
+  
+// create a virtual environment named 'venv', feel free to name it anything you like. -p Location is optional but makes sure to use a specific python version.
+virtualenv venv -p C:\Python\Python36\python.exe  
+
+// activate the virtual environment
+.\venv\Scripts\activate
+
+// check the python version
+python --version
+
+// list all packages installed by default
+pip list
+
+// deactivate the virtual environment
+deactivate
+</code></pre>
+<p>See also pipx for managing global packages that are not project-bound.</p>
+<h2>Taking arguments</h2>
+<p>Argparse has all the functionality one could want. See:
+<a href="https://docs.python.org/3/howto/argparse.html">docs.python.org</a></p>
+<h2>Stopping execution</h2>
+<p>On windows (and sometimes linux) cancelling python in the terminal can be tricky since io operations can ignore ctrl+c and similar commands. ctrl+break seems to work though and on thinkpad laptops is done with ctrl+fn+b due to the lacking break button.</p>
+<h2>Project templates</h2>
+<p>Cookiecutter allows setting up new projects from templates.</p>
+<ul>
+<li><a href="https://github.com/drivendata/cookiecutter-data-science">Cookiecutter data science template</a></li>
+</ul>
+
+</article>
+<hr>
+<p class="backlinks-title larger">Backlinks</p>
+
+<ul class="backlinks-container">
+    
+        <li class="backlink">
+            <a href="/notes/cheat-sheets/" class="backlink__link">Cheat-Sheets</a>
+            <div class="backlink__preview" role="none">
+                <h1>Cheat sheets</h1>
+<ul>
+<li><a href="/notes/git/">git</a></li>
+<li><a href="/notes/python/">python</a></li>
+</ul>
+
+            </div>
+        </li>
+    
+        <li class="backlink">
+            <a href="/notes/work-tools/" class="backlink__link">Work-Tools</a>
+            <div class="backlink__preview" role="none">
+                <h1>Work Tools</h1>
+<h2>Inbox tools of note</h2>
+<ul>
+<li>CDS: mds alternative?</li>
+<li>Azure data catalog</li>
+<li>nBI: testing</li>
+<li>scales for dynamics na</li>
+<li>Schema crawler looks awesome: <a href="https://www.schemacrawler.com/scripting.html">https://www.schemacrawler.com/scripting.html</a></li>
+<li><a href="http://plopjs.com">plopjs.com</a>: Plop creates ge</li>
+</ul>
+
+            </div>
+        </li>
+    
+        <li class="backlink">
+            <a href="/notes/tech/" class="backlink__link">Tech</a>
+            <div class="backlink__preview" role="none">
+                <h1>Tech</h1>
+<ul>
+<li><a href="/notes/sql-server/">sql-server</a></li>
+<li><a href="/notes/web/">web</a></li>
+<li><a href="/notes/csharp/">csharp</a></li>
+<li><a href="/notes/docker/">docker</a></li>
+<li><a href="/notes/python/">python</a></li>
+</ul>
+
+            </div>
+        </li>
+    
+</ul>
+
+    </main>
+    
+    <footer class="page-footer">
+        <small>Copyright Asbjørn Brandt</small>
+    </footer>
+</body>
+</html>

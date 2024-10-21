@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+    
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+<title>Static-Sites • Asbjørn Brandt's Notes</title>
+
+<meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<meta property="og:title" content="Static-Sites • Asbjørn Brandt's Notes">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tbd.netlify.app/notes/static-sites/">
+<meta property="og:image" content="/assets/chart.svg">
+<meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<link rel="canonical" href="https://tbd.netlify.app/notes/static-sites/">
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <a href="/" class="page-header__logo" title="Go home">
+            <img src="/assets/chart.svg" alt="" width="48">
+        </a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/notes">Notes</a>
+            <a href="/inspiration">Inspiration</a>
+            <a href="/now">Now</a>
+        </nav>
+    </header>
+    <main>
+        <article>
+    <h1>Static sites</h1>
+<p>Static site generator is definitely the way to go for a modern blog - though interactivity such as comments then require workarounds.</p>
+<p>Static site generators work by just delivering html, js, css files directly. This means no easy contact to a server so more difficult to support stuff like contact forms etc. However it also means very fast page loads, no database/security concerns, no updates on the site, very cheap if not free hosting.</p>
+<ul>
+<li>For cool features that require a server just build that in a separate app and host it elsewhere?</li>
+<li>Blazor can be hosted in azure - can it somehow then be embedded at the same domain? Should be doable with pointing subdomains there?</li>
+</ul>
+<h2>Options</h2>
+<p>To see and compare many options check <a href="%5Dhttps://jamstack.org/generators/">jamstack.org/generators</a></p>
+<ul>
+<li><a href="/notes/11ty/">11ty</a> - currently preferred. Very simple and can separate all site code from all content so that content is at the root.</li>
+<li>Jekyll</li>
+<li>Hugo</li>
+</ul>
+<p>Also note that it might actually not be too bad to build a static site generator directly in e.g. python by importing jinja2 and markdown2.</p>
+
+</article>
+<hr>
+<p class="backlinks-title larger">Backlinks</p>
+
+<ul class="backlinks-container">
+    
+        <li class="backlink">
+            <a href="/notes/personal-blog/" class="backlink__link">Personal-Blog</a>
+            <div class="backlink__preview" role="none">
+                <h1>Personal blog</h1>
+<h2>Blog vs. medium/linkedin articles</h2>
+<ul>
+<li>Pros/cons for both</li>
+<li>Blog can't be deleted by third party</li>
+<li>Allows dofollow links for further projects after building authority</li>
+<li>Blog has a nice single place for personal know</li>
+</ul>
+
+            </div>
+        </li>
+    
+</ul>
+
+    </main>
+    
+    <footer class="page-footer">
+        <small>Copyright Asbjørn Brandt</small>
+    </footer>
+</body>
+</html>
