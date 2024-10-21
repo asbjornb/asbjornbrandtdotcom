@@ -28,4 +28,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="OldSiteTestInput\posts\" />
+    <Folder Include="OldSiteTestOutput\" />
+  </ItemGroup>
+
 </Project>
