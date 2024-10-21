@@ -1,247 +1,239 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace SiteGenerator
+namespace SiteGenerator;
+
+public class Generator
 {
-    public class Config
+    private readonly string _contentDirectory;
+    private readonly string _outputDirectory;
+    private readonly string _templateDirectory;
+    private readonly string _configPath;
+    private readonly MarkdownParser _markdownParser;
+    private readonly TemplateRenderer _templateRenderer;
+    private Config _config;
+    private readonly Dictionary<string, List<string>> _backlinks;
+    private readonly Dictionary<string, string> _noteMapping;
+
+    public Generator(
+        string contentDirectory,
+        string outputDirectory,
+        string templateDirectory,
+        string configPath
+    )
     {
-        public string SiteTitle { get; set; }
-        public string BaseUrl { get; set; }
+        _contentDirectory = contentDirectory;
+        _outputDirectory = outputDirectory;
+        _templateDirectory = templateDirectory;
+        _configPath = configPath;
+        _markdownParser = new MarkdownParser();
+        _templateRenderer = new TemplateRenderer();
+        _backlinks = [];
+        _noteMapping = [];
+        LoadConfig();
     }
 
-    public class Generator
+    private void LoadConfig()
     {
-        private readonly string _contentDirectory;
-        private readonly string _outputDirectory;
-        private readonly string _templateDirectory;
-        private readonly string _configPath;
-        private readonly MarkdownParser _markdownParser;
-        private readonly TemplateRenderer _templateRenderer;
-        private Config _config;
-        private Dictionary<string, List<string>> _backlinks;
-        private Dictionary<string, string> _noteMapping;
+        string configContent = File.ReadAllText(_configPath);
+        _config = JsonConvert.DeserializeObject<Config>(configContent);
+    }
 
-        public Generator(
-            string contentDirectory,
-            string outputDirectory,
-            string templateDirectory,
-            string configPath
-        )
+    public async Task GenerateSiteAsync()
+    {
+        Directory.CreateDirectory(_outputDirectory);
+
+        await ProcessPagesAsync();
+        await ProcessPostsAsync();
+        await ProcessNotesAsync();
+        CopyAssets();
+    }
+
+    private async Task ProcessPagesAsync()
+    {
+        var pagesDirectory = Path.Combine(_contentDirectory, "pages");
+        if (Directory.Exists(pagesDirectory))
         {
-            _contentDirectory = contentDirectory;
-            _outputDirectory = outputDirectory;
-            _templateDirectory = templateDirectory;
-            _configPath = configPath;
-            _markdownParser = new MarkdownParser();
-            _templateRenderer = new TemplateRenderer();
-            _backlinks = new Dictionary<string, List<string>>();
-            _noteMapping = new Dictionary<string, string>();
-            LoadConfig();
+            await ProcessContentFilesAsync(pagesDirectory, "page.html");
         }
+    }
 
-        private void LoadConfig()
+    private async Task ProcessPostsAsync()
+    {
+        var postsDirectory = Path.Combine(_contentDirectory, "posts");
+        if (Directory.Exists(postsDirectory))
         {
-            string configContent = File.ReadAllText(_configPath);
-            _config = JsonConvert.DeserializeObject<Config>(configContent);
+            await ProcessContentFilesAsync(postsDirectory, "post.html");
         }
+    }
 
-        public async Task GenerateSiteAsync()
+    private async Task ProcessNotesAsync()
+    {
+        var notesDirectory = Path.Combine(_contentDirectory, "notes");
+        if (Directory.Exists(notesDirectory))
         {
-            Directory.CreateDirectory(_outputDirectory);
-
-            await ProcessPagesAsync();
-            await ProcessPostsAsync();
-            await ProcessNotesAsync();
-            CopyAssets();
-        }
-
-        private async Task ProcessPagesAsync()
-        {
-            var pagesDirectory = Path.Combine(_contentDirectory, "pages");
-            if (Directory.Exists(pagesDirectory))
+            // First pass: build note mapping
+            foreach (var file in Directory.GetFiles(notesDirectory, "*.md"))
             {
-                await ProcessContentFilesAsync(pagesDirectory, "page.html");
+                var fileName = Path.GetFileNameWithoutExtension(file);
+                _noteMapping[fileName] = $"notes/{fileName}.html";
+            }
+
+            // Second pass: process notes and build backlinks
+            foreach (var file in Directory.GetFiles(notesDirectory, "*.md"))
+            {
+                await ProcessNoteAsync(file);
+            }
+
+            // Third pass: update notes with backlinks
+            foreach (var file in Directory.GetFiles(notesDirectory, "*.md"))
+            {
+                await UpdateNoteWithBacklinksAsync(file);
             }
         }
+    }
 
-        private async Task ProcessPostsAsync()
-        {
-            var postsDirectory = Path.Combine(_contentDirectory, "posts");
-            if (Directory.Exists(postsDirectory))
-            {
-                await ProcessContentFilesAsync(postsDirectory, "post.html");
-            }
-        }
+    private async Task ProcessNoteAsync(string filePath)
+    {
+        var content = await File.ReadAllTextAsync(filePath);
+        var (frontMatter, markdownContent) = FrontMatterParser.ExtractFrontMatter(content);
+        var html = _markdownParser.ParseToHtml(markdownContent, _noteMapping);
 
-        private async Task ProcessNotesAsync()
+        var fileName = Path.GetFileNameWithoutExtension(filePath);
+        foreach (var note in _noteMapping.Keys)
         {
-            var notesDirectory = Path.Combine(_contentDirectory, "notes");
-            if (Directory.Exists(notesDirectory))
+            if (markdownContent.Contains($"[[{note}]]"))
             {
-                // First pass: build note mapping
-                foreach (var file in Directory.GetFiles(notesDirectory, "*.md"))
+                if (!_backlinks.TryGetValue(note, out var value))
                 {
-                    var fileName = Path.GetFileNameWithoutExtension(file);
-                    _noteMapping[fileName] = $"notes/{fileName}.html";
+                    value = ([]);
+                    _backlinks[note] = value;
                 }
 
-                // Second pass: process notes and build backlinks
-                foreach (var file in Directory.GetFiles(notesDirectory, "*.md"))
-                {
-                    await ProcessNoteAsync(file);
-                }
-
-                // Third pass: update notes with backlinks
-                foreach (var file in Directory.GetFiles(notesDirectory, "*.md"))
-                {
-                    await UpdateNoteWithBacklinksAsync(file);
-                }
+                value.Add(fileName);
             }
         }
 
-        private async Task ProcessNoteAsync(string filePath)
-        {
-            var content = await File.ReadAllTextAsync(filePath);
-            var (frontMatter, markdownContent) = FrontMatterParser.ExtractFrontMatter(content);
-            var html = _markdownParser.ParseToHtml(markdownContent, _noteMapping);
+        var relativePath = Path.GetRelativePath(_contentDirectory, filePath);
+        var outputPath = Path.Combine(
+            _outputDirectory,
+            Path.ChangeExtension(relativePath, ".html")
+        );
 
-            var fileName = Path.GetFileNameWithoutExtension(filePath);
-            foreach (var note in _noteMapping.Keys)
+        var templatePath = Path.Combine(_templateDirectory, "note.html");
+        if (!File.Exists(templatePath))
+        {
+            templatePath = Path.Combine(_templateDirectory, "default.html");
+        }
+
+        var renderedContent = _templateRenderer.RenderTemplate(
+            templatePath,
+            new
             {
-                if (markdownContent.Contains($"[[{note}]]"))
+                Content = html,
+                Metadata = frontMatter,
+                Config = _config
+            }
+        );
+
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+        await File.WriteAllTextAsync(outputPath, renderedContent);
+
+        Console.WriteLine($"Processed note: {relativePath}");
+    }
+
+    private async Task UpdateNoteWithBacklinksAsync(string filePath)
+    {
+        var fileName = Path.GetFileNameWithoutExtension(filePath);
+        var outputPath = Path.Combine(_outputDirectory, "notes", $"{fileName}.html");
+
+        if (File.Exists(outputPath))
+        {
+            var content = await File.ReadAllTextAsync(outputPath);
+            var backlinksHtml = "";
+
+            if (_backlinks.TryGetValue(fileName, out var value))
+            {
+                backlinksHtml = "<h2>Backlinks</h2><ul>";
+                foreach (var backlink in value)
                 {
-                    if (!_backlinks.ContainsKey(note))
-                    {
-                        _backlinks[note] = new List<string>();
-                    }
-                    _backlinks[note].Add(fileName);
+                    backlinksHtml +=
+                        $"<li><a href=\"{_noteMapping[backlink]}\">{backlink}</a></li>";
                 }
+                backlinksHtml += "</ul>";
             }
 
-            var relativePath = Path.GetRelativePath(_contentDirectory, filePath);
-            var outputPath = Path.Combine(
-                _outputDirectory,
-                Path.ChangeExtension(relativePath, ".html")
-            );
+            content = content.Replace("</body>", $"{backlinksHtml}</body>");
+            await File.WriteAllTextAsync(outputPath, content);
+        }
+    }
 
-            var templatePath = Path.Combine(_templateDirectory, "note.html");
-            if (!File.Exists(templatePath))
-            {
-                templatePath = Path.Combine(_templateDirectory, "default.html");
-            }
+    private async Task ProcessContentFilesAsync(string directory, string templateName)
+    {
+        foreach (var file in Directory.GetFiles(directory, "*.md", SearchOption.AllDirectories))
+        {
+            await ProcessFileAsync(file, templateName);
+        }
+    }
 
-            var renderedContent = _templateRenderer.RenderTemplate(
-                templatePath,
-                new
-                {
-                    Content = html,
-                    Metadata = frontMatter,
-                    Config = _config
-                }
-            );
+    private async Task ProcessFileAsync(string filePath, string templateName)
+    {
+        var content = await File.ReadAllTextAsync(filePath);
+        var (frontMatter, markdownContent) = FrontMatterParser.ExtractFrontMatter(content);
+        var html = _markdownParser.ParseToHtml(markdownContent, _noteMapping);
 
-            Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
-            await File.WriteAllTextAsync(outputPath, renderedContent);
+        var relativePath = Path.GetRelativePath(_contentDirectory, filePath);
+        var outputPath = Path.Combine(
+            _outputDirectory,
+            Path.ChangeExtension(relativePath, ".html")
+        );
 
-            Console.WriteLine($"Processed note: {relativePath}");
+        var templatePath = Path.Combine(_templateDirectory, templateName);
+        if (!File.Exists(templatePath))
+        {
+            templatePath = Path.Combine(_templateDirectory, "default.html");
         }
 
-        private async Task UpdateNoteWithBacklinksAsync(string filePath)
-        {
-            var fileName = Path.GetFileNameWithoutExtension(filePath);
-            var outputPath = Path.Combine(_outputDirectory, "notes", $"{fileName}.html");
-
-            if (File.Exists(outputPath))
+        var renderedContent = _templateRenderer.RenderTemplate(
+            templatePath,
+            new
             {
-                var content = await File.ReadAllTextAsync(outputPath);
-                var backlinksHtml = "";
-
-                if (_backlinks.ContainsKey(fileName))
-                {
-                    backlinksHtml = "<h2>Backlinks</h2><ul>";
-                    foreach (var backlink in _backlinks[fileName])
-                    {
-                        backlinksHtml +=
-                            $"<li><a href=\"{_noteMapping[backlink]}\">{backlink}</a></li>";
-                    }
-                    backlinksHtml += "</ul>";
-                }
-
-                content = content.Replace("</body>", $"{backlinksHtml}</body>");
-                await File.WriteAllTextAsync(outputPath, content);
+                Content = html,
+                Metadata = frontMatter,
+                Config = _config
             }
+        );
+
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+        await File.WriteAllTextAsync(outputPath, renderedContent);
+
+        Console.WriteLine($"Processed: {relativePath}");
+    }
+
+    private void CopyAssets()
+    {
+        var assetsDirectory = Path.Combine(_contentDirectory, "assets");
+        var outputAssetsDirectory = Path.Combine(_outputDirectory, "assets");
+
+        if (Directory.Exists(assetsDirectory))
+        {
+            CopyDirectory(assetsDirectory, outputAssetsDirectory);
+        }
+    }
+
+    private static void CopyDirectory(string sourceDir, string destinationDir)
+    {
+        Directory.CreateDirectory(destinationDir);
+
+        foreach (var file in Directory.GetFiles(sourceDir))
+        {
+            var destFile = Path.Combine(destinationDir, Path.GetFileName(file));
+            File.Copy(file, destFile, true);
         }
 
-        private async Task ProcessContentFilesAsync(string directory, string templateName)
+        foreach (var directory in Directory.GetDirectories(sourceDir))
         {
-            foreach (var file in Directory.GetFiles(directory, "*.md", SearchOption.AllDirectories))
-            {
-                await ProcessFileAsync(file, templateName);
-            }
-        }
-
-        private async Task ProcessFileAsync(string filePath, string templateName)
-        {
-            var content = await File.ReadAllTextAsync(filePath);
-            var (frontMatter, markdownContent) = FrontMatterParser.ExtractFrontMatter(content);
-            var html = _markdownParser.ParseToHtml(markdownContent, _noteMapping);
-
-            var relativePath = Path.GetRelativePath(_contentDirectory, filePath);
-            var outputPath = Path.Combine(
-                _outputDirectory,
-                Path.ChangeExtension(relativePath, ".html")
-            );
-
-            var templatePath = Path.Combine(_templateDirectory, templateName);
-            if (!File.Exists(templatePath))
-            {
-                templatePath = Path.Combine(_templateDirectory, "default.html");
-            }
-
-            var renderedContent = _templateRenderer.RenderTemplate(
-                templatePath,
-                new
-                {
-                    Content = html,
-                    Metadata = frontMatter,
-                    Config = _config
-                }
-            );
-
-            Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
-            await File.WriteAllTextAsync(outputPath, renderedContent);
-
-            Console.WriteLine($"Processed: {relativePath}");
-        }
-
-        private void CopyAssets()
-        {
-            var assetsDirectory = Path.Combine(_contentDirectory, "assets");
-            var outputAssetsDirectory = Path.Combine(_outputDirectory, "assets");
-
-            if (Directory.Exists(assetsDirectory))
-            {
-                CopyDirectory(assetsDirectory, outputAssetsDirectory);
-            }
-        }
-
-        private void CopyDirectory(string sourceDir, string destinationDir)
-        {
-            Directory.CreateDirectory(destinationDir);
-
-            foreach (var file in Directory.GetFiles(sourceDir))
-            {
-                var destFile = Path.Combine(destinationDir, Path.GetFileName(file));
-                File.Copy(file, destFile, true);
-            }
-
-            foreach (var directory in Directory.GetDirectories(sourceDir))
-            {
-                var destDirectory = Path.Combine(destinationDir, Path.GetFileName(directory));
-                CopyDirectory(directory, destDirectory);
-            }
+            var destDirectory = Path.Combine(destinationDir, Path.GetFileName(directory));
+            CopyDirectory(directory, destDirectory);
         }
     }
 }
