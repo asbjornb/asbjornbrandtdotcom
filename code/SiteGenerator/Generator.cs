@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 using Markdig;
-using Newtonsoft.Json;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -13,7 +12,7 @@ public class Generator
     private readonly string _templatePath;
     private readonly string _configPath;
     private readonly TemplateRenderer _templateRenderer;
-    private readonly Dictionary<string, List<string>> _backlinks = new();
+    private readonly Dictionary<string, List<string>> _backlinks = [];
 
     public Generator(string contentPath, string outputPath, string templatePath, string configPath)
     {
@@ -44,11 +43,13 @@ public class Generator
             {
                 var linkedNote = match.Groups[1].Value;
                 var currentNote = Path.GetFileNameWithoutExtension(file);
-                if (!_backlinks.ContainsKey(linkedNote))
+                if (!_backlinks.TryGetValue(linkedNote, out var value))
                 {
-                    _backlinks[linkedNote] = new List<string>();
+                    value = [];
+                    _backlinks[linkedNote] = value;
                 }
-                _backlinks[linkedNote].Add(currentNote);
+
+                value.Add(currentNote);
             }
         }
     }
@@ -126,9 +127,9 @@ public class Generator
             var end = fileContent.IndexOf("---", 3);
             if (end != -1)
             {
-                var yaml = fileContent.Substring(3, end - 3);
+                var yaml = fileContent[3..end];
                 frontMatter = deserializer.Deserialize<Dictionary<string, object>>(yaml);
-                content = fileContent.Substring(end + 3).Trim();
+                content = fileContent[(end + 3)..].Trim();
             }
         }
 
