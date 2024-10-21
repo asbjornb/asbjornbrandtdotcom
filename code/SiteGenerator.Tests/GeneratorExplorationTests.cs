@@ -23,7 +23,7 @@ public class GeneratorExplorationTests : IAsyncLifetime
         Directory.CreateDirectory(_outputPath);
         Directory.CreateDirectory(_templatePath);
         Directory.CreateDirectory(Path.Combine(_contentPath, "pages"));
-        Directory.CreateDirectory(Path.Combine(_contentPath, "notes"));
+        Directory.CreateDirectory(Path.Combine(_contentPath, "thoughts"));
         Directory.CreateDirectory(Path.Combine(_contentPath, "posts"));
 
         return Task.CompletedTask;
@@ -64,8 +64,12 @@ public class GeneratorExplorationTests : IAsyncLifetime
     public async Task GenerateSiteAsync_ShouldCreateBacklinks()
     {
         // Arrange
-        await CreateTestFile(Path.Combine(_contentPath, "notes"), "note1.md", "This is [[note2]].");
-        await CreateTestFile(Path.Combine(_contentPath, "notes"), "note2.md", "This is note 2.");
+        await CreateTestFile(
+            Path.Combine(_contentPath, "thoughts"),
+            "note1.md",
+            "This is [[note2]]."
+        );
+        await CreateTestFile(Path.Combine(_contentPath, "thoughts"), "note2.md", "This is note 2.");
         await CreateTestFile(
             _templatePath,
             "note.html",
@@ -79,7 +83,7 @@ public class GeneratorExplorationTests : IAsyncLifetime
         await generator.GenerateSiteAsync();
 
         // Assert
-        var note2OutputFile = Path.Combine(_outputPath, "notes", "note2.html");
+        var note2OutputFile = Path.Combine(_outputPath, "thoughts", "note2.html");
         Assert.True(File.Exists(note2OutputFile));
 
         var content = await File.ReadAllTextAsync(note2OutputFile);

@@ -29,8 +29,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="OldSiteTestInput\posts\" />
-    <Folder Include="OldSiteTestOutput\" />
+    <Content Include="OldSiteTestInput\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OldSiteTestOutput\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\templates\**\*">
+      <Link>templates\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

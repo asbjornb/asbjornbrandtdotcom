@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,7 +12,7 @@ public class BacklinkCollector
 
     public async Task CollectBacklinksAsync(string contentPath)
     {
-        var noteFiles = Directory.GetFiles(Path.Combine(contentPath, "notes"), "*.md");
+        var noteFiles = Directory.GetFiles(Path.Combine(contentPath, "thoughts"), "*.md");
         foreach (var file in noteFiles)
         {
             var content = await File.ReadAllTextAsync(file);

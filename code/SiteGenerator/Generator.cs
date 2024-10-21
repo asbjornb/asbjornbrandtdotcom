@@ -23,7 +23,7 @@ public class Generator
 
         _processors = new Dictionary<string, IPageProcessor>
         {
-            ["notes"] = new NoteProcessor(_backlinkCollector, _templateRenderer),
+            ["thoughts"] = new NoteProcessor(_backlinkCollector, _templateRenderer),
             ["pages"] = new PageProcessor(_templateRenderer),
             ["posts"] = new PostProcessor(_templateRenderer)
         };
