@@ -1,0 +1,4 @@
+# Cheat sheets
+
+* [[git]]
+* [[python]]
