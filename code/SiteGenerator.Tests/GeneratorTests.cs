@@ -97,7 +97,7 @@ public class GeneratorTests : IAsyncLifetime
 
         var content = await File.ReadAllTextAsync(note2OutputFile);
         Assert.Contains("<h2>Backlinks</h2>", content);
-        Assert.Contains("<a href=\"notes/note1.html\">note1</a>", content);
+        Assert.Contains("<a href=\"note1.html\">note1</a>", content);
     }
 
     private void EnsureInitialized()

@@ -1,20 +1,22 @@
-using HandlebarsDotNet;
+﻿using HandlebarsDotNet;
 
 namespace SiteGenerator;
 
 public class TemplateRenderer
 {
-    private readonly IHandlebars _handlebars;
+    private readonly string _templatePath;
 
-    public TemplateRenderer()
+    public TemplateRenderer(string templatePath)
     {
-        _handlebars = Handlebars.Create();
+        _templatePath = templatePath;
     }
 
-    public string RenderTemplate(string templatePath, object data)
+    public async Task<string> RenderAsync(string templateName, object data)
     {
-        string templateContent = File.ReadAllText(templatePath);
-        var template = _handlebars.Compile(templateContent);
+        var templatePath = Path.Combine(_templatePath, $"{templateName}.html");
+        var templateContent = await File.ReadAllTextAsync(templatePath);
+
+        var template = Handlebars.Compile(templateContent);
         return template(data);
     }
 }
