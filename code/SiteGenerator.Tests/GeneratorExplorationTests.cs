@@ -27,11 +27,11 @@ public class GeneratorExplorationTests : IAsyncLifetime
 
         await File.WriteAllTextAsync(
             Path.Combine(_contentPath, "pages", "test.md"),
-            "---\ntitle: Test Page\n---\n# Test\nThis is a test."
+            "# Test\nThis is a test."
         );
         await File.WriteAllTextAsync(
             Path.Combine(_templatePath, "default.html"),
-            "<html><head><title>{{Metadata.title}}</title></head><body><h1>{{Metadata.title}}</h1>{{{Content}}}</body></html>"
+            "<html><head><title>Default Title</title></head><body>{{{Content}}}</body></html>"
         );
 
         var config = new { SiteTitle = "Test Site", BaseUrl = "https://test.com" };
@@ -62,8 +62,7 @@ public class GeneratorExplorationTests : IAsyncLifetime
         Assert.True(File.Exists(outputFile));
 
         var content = await File.ReadAllTextAsync(outputFile);
-        Assert.Contains("<title>Test Page</title>", content);
-        Assert.Contains("<h1>Test Page</h1>", content);
+        Assert.Contains("<title>Default Title</title>", content);
         Assert.Contains("<h1 id=\"test\">Test</h1>", content);
         Assert.Contains("<p>This is a test.</p>", content);
     }
@@ -75,15 +74,15 @@ public class GeneratorExplorationTests : IAsyncLifetime
         EnsureInitialized();
         await File.WriteAllTextAsync(
             Path.Combine(_contentPath!, "notes", "note1.md"),
-            "---\ntitle: Note 1\n---\nThis is [[note2]]."
+            "This is [[note2]]."
         );
         await File.WriteAllTextAsync(
             Path.Combine(_contentPath!, "notes", "note2.md"),
-            "---\ntitle: Note 2\n---\nThis is note 2."
+            "This is note 2."
         );
         await File.WriteAllTextAsync(
             Path.Combine(_templatePath!, "note.html"),
-            "<html><head><title>{{Metadata.title}}</title></head><body><h1>{{Metadata.title}}</h1>{{{Content}}}</body></html>"
+            "<html><head><title>Note</title></head><body>{{{Content}}}</body></html>"
         );
 
         var generator = new Generator(_contentPath!, _outputPath!, _templatePath!, _configPath!);

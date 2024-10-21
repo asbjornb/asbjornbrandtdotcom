@@ -1,9 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Markdig;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-
-namespace SiteGenerator;
+﻿namespace SiteGenerator;
 
 public class Generator
 {
@@ -12,7 +7,8 @@ public class Generator
     private readonly string _templatePath;
     private readonly string _configPath;
     private readonly TemplateRenderer _templateRenderer;
-    private readonly Dictionary<string, List<string>> _backlinks = [];
+    private readonly BacklinkCollector _backlinkCollector;
+    private readonly Dictionary<string, IPageProcessor> _processors;
 
     public Generator(string contentPath, string outputPath, string templatePath, string configPath)
     {
@@ -21,118 +17,30 @@ public class Generator
         _templatePath = templatePath;
         _configPath = configPath;
         _templateRenderer = new TemplateRenderer(_templatePath);
+        _backlinkCollector = new BacklinkCollector();
+
+        _processors = new Dictionary<string, IPageProcessor>
+        {
+            ["notes"] = new NoteProcessor(_backlinkCollector, _templateRenderer),
+            ["pages"] = new PageProcessor(_templateRenderer),
+            ["posts"] = new PostProcessor(_templateRenderer)
+        };
     }
 
     public async Task GenerateSiteAsync()
     {
-        // First pass: collect backlinks
-        await CollectBacklinksAsync();
+        await _backlinkCollector.CollectBacklinksAsync(_contentPath);
 
-        // Second pass: generate pages
-        await GeneratePagesAsync();
-    }
-
-    private async Task CollectBacklinksAsync()
-    {
-        var noteFiles = Directory.GetFiles(Path.Combine(_contentPath, "notes"), "*.md");
-        foreach (var file in noteFiles)
+        foreach (var (subdir, processor) in _processors)
         {
-            var content = await File.ReadAllTextAsync(file);
-            var matches = Regex.Matches(content, @"\[\[(.*?)\]\]");
-            foreach (Match match in matches)
-            {
-                var linkedNote = match.Groups[1].Value;
-                var currentNote = Path.GetFileNameWithoutExtension(file);
-                if (!_backlinks.TryGetValue(linkedNote, out var value))
-                {
-                    value = [];
-                    _backlinks[linkedNote] = value;
-                }
+            var inputPath = Path.Combine(_contentPath, subdir);
+            var outputPath = Path.Combine(_outputPath, subdir);
+            var files = Directory.GetFiles(inputPath, "*.md");
 
-                value.Add(currentNote);
+            foreach (var file in files)
+            {
+                await processor.ProcessAsync(file, outputPath);
             }
         }
-    }
-
-    private async Task GeneratePagesAsync()
-    {
-        // Generate notes
-        var noteFiles = Directory.GetFiles(Path.Combine(_contentPath, "notes"), "*.md");
-        foreach (var file in noteFiles)
-        {
-            await GeneratePageAsync(file, "note", "notes");
-        }
-
-        // Generate pages
-        var pageFiles = Directory.GetFiles(Path.Combine(_contentPath, "pages"), "*.md");
-        foreach (var file in pageFiles)
-        {
-            await GeneratePageAsync(file, "default", "pages");
-        }
-
-        // Generate posts (if needed)
-        var postFiles = Directory.GetFiles(Path.Combine(_contentPath, "posts"), "*.md");
-        foreach (var file in postFiles)
-        {
-            await GeneratePageAsync(file, "post", "posts");
-        }
-    }
-
-    private async Task GeneratePageAsync(string inputFile, string templateName, string outputSubdir)
-    {
-        var content = await File.ReadAllTextAsync(inputFile);
-        var (frontMatter, markdownContent) = ExtractFrontMatter(content);
-
-        var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-        var htmlContent = Markdown.ToHtml(markdownContent, pipeline);
-
-        var fileName = Path.GetFileNameWithoutExtension(inputFile);
-        if (_backlinks.TryGetValue(fileName, out var links))
-        {
-            htmlContent += "<h2>Backlinks</h2><ul>";
-            foreach (var link in links)
-            {
-                htmlContent += $"<li><a href=\"{link}.html\">{link}</a></li>";
-            }
-            htmlContent += "</ul>";
-        }
-
-        var renderedContent = await _templateRenderer.RenderAsync(
-            templateName,
-            new { Metadata = frontMatter, Content = htmlContent }
-        );
-
-        var outputFile = Path.Combine(
-            _outputPath,
-            outputSubdir,
-            Path.GetFileNameWithoutExtension(inputFile) + ".html"
-        );
-        Directory.CreateDirectory(Path.GetDirectoryName(outputFile));
-        await File.WriteAllTextAsync(outputFile, renderedContent);
-    }
-
-    private (Dictionary<string, object> frontMatter, string content) ExtractFrontMatter(
-        string fileContent
-    )
-    {
-        var deserializer = new DeserializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .Build();
-
-        var frontMatter = new Dictionary<string, object>();
-        var content = fileContent;
-
-        if (fileContent.StartsWith("---"))
-        {
-            var end = fileContent.IndexOf("---", 3);
-            if (end != -1)
-            {
-                var yaml = fileContent[3..end];
-                frontMatter = deserializer.Deserialize<Dictionary<string, object>>(yaml);
-                content = fileContent[(end + 3)..].Trim();
-            }
-        }
-
-        return (frontMatter, content);
     }
 }
