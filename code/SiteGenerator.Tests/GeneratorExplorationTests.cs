@@ -3,7 +3,7 @@ using Xunit;
 
 namespace SiteGenerator.Tests;
 
-public class GeneratorTests : IAsyncLifetime
+public class GeneratorExplorationTests : IAsyncLifetime
 {
     private string? _testRootPath;
     private string? _contentPath;
