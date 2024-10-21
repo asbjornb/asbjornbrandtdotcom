@@ -1,4 +1,6 @@
-﻿namespace SiteGenerator;
+﻿using SiteGenerator.Processors;
+
+namespace SiteGenerator;
 
 public class Generator
 {

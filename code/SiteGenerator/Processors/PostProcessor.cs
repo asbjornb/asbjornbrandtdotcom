@@ -2,7 +2,7 @@
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace SiteGenerator;
+namespace SiteGenerator.Processors;
 
 public class PostProcessor : IPageProcessor
 {

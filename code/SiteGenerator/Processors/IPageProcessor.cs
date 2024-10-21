@@ -1,4 +1,4 @@
-namespace SiteGenerator;
+﻿namespace SiteGenerator.Processors;
 
 public interface IPageProcessor
 {

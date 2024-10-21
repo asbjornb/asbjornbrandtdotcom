@@ -1,6 +1,6 @@
 ﻿using Markdig;
 
-namespace SiteGenerator;
+namespace SiteGenerator.Processors;
 
 public class PageProcessor : IPageProcessor
 {
