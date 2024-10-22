@@ -7,19 +7,22 @@ public class Generator
 {
     private readonly string _contentPath;
     private readonly string _outputPath;
-    private readonly string _templatePath;
     private readonly string _configPath;
     private readonly TemplateRenderer _templateRenderer;
     private readonly BacklinkCollector _backlinkCollector;
     private readonly Dictionary<string, IPageProcessor> _processors;
 
-    public Generator(string contentPath, string outputPath, string templatePath, string configPath)
+    public Generator(
+        string contentPath,
+        string outputPath,
+        TemplateRenderer templateRenderer,
+        string configPath
+    )
     {
         _contentPath = contentPath;
         _outputPath = outputPath;
-        _templatePath = templatePath;
         _configPath = configPath;
-        _templateRenderer = new TemplateRenderer(new FileTemplateProvider(_templatePath));
+        _templateRenderer = templateRenderer;
         _backlinkCollector = new BacklinkCollector();
 
         _processors = new Dictionary<string, IPageProcessor>

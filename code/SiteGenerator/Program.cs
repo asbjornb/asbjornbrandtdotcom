@@ -1,4 +1,6 @@
-﻿namespace SiteGenerator;
+﻿using SiteGenerator.Templates;
+
+namespace SiteGenerator;
 
 public class Program
 {
@@ -14,7 +16,7 @@ public class Program
         var generator = new Generator(
             contentDirectory,
             outputDirectory,
-            templateDirectory,
+            new(new FileTemplateProvider(templateDirectory)),
             configPath
         );
         await generator.GenerateSiteAsync();

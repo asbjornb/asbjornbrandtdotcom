@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using SiteGenerator.Tests.TemplateTests;
 using Xunit;
 
 namespace SiteGenerator.Tests;
@@ -8,7 +9,6 @@ public class GeneratorExplorationTests : IAsyncLifetime
     private string _testRootPath = null!;
     private string _contentPath = null!;
     private string _outputPath = null!;
-    private string _templatePath = null!;
     private string _configPath = null!;
 
     public Task InitializeAsync()
@@ -16,12 +16,10 @@ public class GeneratorExplorationTests : IAsyncLifetime
         _testRootPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         _contentPath = Path.Combine(_testRootPath, "TestContent");
         _outputPath = Path.Combine(_testRootPath, "TestOutput");
-        _templatePath = Path.Combine(_testRootPath, "TestTemplates");
         _configPath = Path.Combine(_testRootPath, "config.json");
 
         Directory.CreateDirectory(_contentPath);
         Directory.CreateDirectory(_outputPath);
-        Directory.CreateDirectory(_templatePath);
         Directory.CreateDirectory(Path.Combine(_contentPath, "pages"));
         Directory.CreateDirectory(Path.Combine(_contentPath, "thoughts"));
         Directory.CreateDirectory(Path.Combine(_contentPath, "posts"));
@@ -38,14 +36,21 @@ public class GeneratorExplorationTests : IAsyncLifetime
             "test.md",
             "# Test\nThis is a test."
         );
-        await CreateTestFile(
-            _templatePath,
-            "default.html",
-            "<html><head><title>Default Title</title></head><body>{{{Content}}}</body></html>"
+        var defaultTemplate =
+            "<html><head><title>Default Title</title></head><body>{{{Content}}}</body></html>";
+        var templateProvider = new InMemoryTemplateProvider(
+            new() { { "default", defaultTemplate } },
+            []
         );
+
         await CreateConfig();
 
-        var generator = new Generator(_contentPath, _outputPath, _templatePath, _configPath);
+        var generator = new Generator(
+            _contentPath,
+            _outputPath,
+            new(templateProvider),
+            _configPath
+        );
 
         // Act
         await generator.GenerateSiteAsync();
@@ -70,14 +75,17 @@ public class GeneratorExplorationTests : IAsyncLifetime
             "This is [[note2]]."
         );
         await CreateTestFile(Path.Combine(_contentPath, "thoughts"), "note2.md", "This is note 2.");
-        await CreateTestFile(
-            _templatePath,
-            "note.html",
-            "<html><head><title>Note</title></head><body>{{{Content}}}</body></html>"
-        );
+        var noteTemplate =
+            "<html><head><title>Note</title></head><body>{{{Content}}}</body></html>";
+        var templateProvider = new InMemoryTemplateProvider(new() { { "note", noteTemplate } }, []);
         await CreateConfig();
 
-        var generator = new Generator(_contentPath, _outputPath, _templatePath, _configPath);
+        var generator = new Generator(
+            _contentPath,
+            _outputPath,
+            new(templateProvider),
+            _configPath
+        );
 
         // Act
         await generator.GenerateSiteAsync();
