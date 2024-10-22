@@ -4,17 +4,16 @@ namespace SiteGenerator.Templates;
 
 public class TemplateRenderer
 {
-    private readonly string _templatePath;
+    private readonly ITemplateProvider templateProvider;
 
-    public TemplateRenderer(string templatePath)
+    public TemplateRenderer(ITemplateProvider templateProvider)
     {
-        _templatePath = templatePath;
+        this.templateProvider = templateProvider;
     }
 
     public async Task<string> RenderAsync(string templateName, object data)
     {
-        var templatePath = Path.Combine(_templatePath, $"{templateName}.html");
-        var templateContent = await File.ReadAllTextAsync(templatePath);
+        var templateContent = templateProvider.GetTemplateContent(templateName);
 
         var template = Handlebars.Compile(templateContent);
         return template(data);

@@ -19,7 +19,7 @@ public class Generator
         _outputPath = outputPath;
         _templatePath = templatePath;
         _configPath = configPath;
-        _templateRenderer = new TemplateRenderer(_templatePath);
+        _templateRenderer = new TemplateRenderer(new FileTemplateProvider(_templatePath));
         _backlinkCollector = new BacklinkCollector();
 
         _processors = new Dictionary<string, IPageProcessor>
