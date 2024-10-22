@@ -1,6 +1,6 @@
 ﻿using HandlebarsDotNet;
 
-namespace SiteGenerator;
+namespace SiteGenerator.Templates;
 
 public class TemplateRenderer
 {

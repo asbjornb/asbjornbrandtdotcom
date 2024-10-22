@@ -1,4 +1,5 @@
 ﻿using Markdig;
+using SiteGenerator.Templates;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 

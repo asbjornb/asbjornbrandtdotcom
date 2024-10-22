@@ -1,4 +1,5 @@
 ﻿using SiteGenerator.Processors;
+using SiteGenerator.Templates;
 
 namespace SiteGenerator;
 
