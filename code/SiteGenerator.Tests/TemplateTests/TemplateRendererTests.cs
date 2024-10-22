@@ -44,4 +44,46 @@ public class TemplateRendererTests
         // Check that backlinks are not present
         renderedTemplate.Should().NotContain("<ul class=\"backlinks-container\">");
     }
+
+    [Fact]
+    public void RenderTemplateWithBacklinks_ShouldRenderNoteTemplateWithBacklinks()
+    {
+        // Arrange
+        var provider = new FileTemplateProvider(_testTemplatePath);
+        var renderer = new TemplateRenderer(provider);
+
+        var noteContent = @"<h1>Note with Backlinks</h1>";
+        var backlinks = new List<BacklinkModel>
+        {
+            new(Url: "/note1.html", Title: "Note 1", PreviewHtml: "<p>Preview of Note 1</p>"),
+            new(Url: "/note2.html", Title: "Note 2", PreviewHtml: "<p>Preview of Note 2</p>")
+        };
+
+        var noteData = new NoteModel(noteContent, backlinks);
+        var layoutData = new LayoutModel(
+            MetaTitle: "Note with Backlinks",
+            MetaDescription: "SomeDescription",
+            MetaType: "Website",
+            PageUrl: "SomeUrl",
+            Body: null
+        );
+
+        // Act
+        var renderedTemplate = renderer.RenderNote(noteData, layoutData);
+
+        // Assert
+        renderedTemplate.Should().NotBeNullOrEmpty();
+        renderedTemplate.Should().Contain("<h1>Note with Backlinks</h1>");
+
+        // Check that backlinks are present
+        renderedTemplate.Should().Contain("<ul class=\"backlinks-container\">");
+        renderedTemplate
+            .Should()
+            .Contain("<a href=\"/note1.html\" class=\"backlink__link\">Note 1</a>");
+        renderedTemplate.Should().Contain("<p>Preview of Note 1</p>");
+        renderedTemplate
+            .Should()
+            .Contain("<a href=\"/note2.html\" class=\"backlink__link\">Note 2</a>");
+        renderedTemplate.Should().Contain("<p>Preview of Note 2</p>");
+    }
 }
