@@ -38,6 +38,15 @@ public class TemplateRenderer
         return _layoutTemplate(layout);
     }
 
+    public string RenderPage(LayoutModel layoutData)
+    {
+        if (layoutData.Body == null)
+        {
+            throw new ArgumentException("Body must be provided in layout data for Page.");
+        }
+        return _layoutTemplate(layoutData);
+    }
+
     public async Task<string> RenderAsync(string templateName, object data)
     {
         var templateContent = _templateProvider.GetTemplateContent(templateName);

@@ -86,4 +86,36 @@ public class TemplateRendererTests
             .Contain("<a href=\"/note2.html\" class=\"backlink__link\">Note 2</a>");
         renderedTemplate.Should().Contain("<p>Preview of Note 2</p>");
     }
+
+    [Fact]
+    public void RenderPageTemplate_ShouldRender()
+    {
+        // Arrange
+        var provider = new FileTemplateProvider(_testTemplatePath);
+        var renderer = new TemplateRenderer(provider);
+
+        var simplePageContent = "<h1>Simple Page</h1><p>Some words</p>";
+        var layoutData = new LayoutModel(
+            "SomeTitle",
+            "SomeDescription",
+            "Website",
+            "SomeUrl",
+            simplePageContent
+        );
+
+        // Act
+        var renderedTemplate = renderer.RenderPage(layoutData);
+
+        // Assert
+        renderedTemplate.Should().NotBeNullOrEmpty();
+
+        // Check for the presence of key HTML elements
+        renderedTemplate.Should().Contain("<html");
+        renderedTemplate.Should().Contain("<head>");
+        renderedTemplate.Should().Contain("<title>SomeTitle</title>");
+        renderedTemplate.Should().Contain("<body>");
+        renderedTemplate.Should().Contain("<h1>Simple Page</h1>");
+        renderedTemplate.Should().Contain("<p>Some words</p>");
+        renderedTemplate.Should().Contain("Copyright Asbjørn Brandt");
+    }
 }
