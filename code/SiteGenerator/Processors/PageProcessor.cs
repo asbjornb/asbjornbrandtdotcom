@@ -1,5 +1,6 @@
 ﻿using Markdig;
 using SiteGenerator.Templates;
+using SiteGenerator.Templates.MetadataModels;
 
 namespace SiteGenerator.Processors;
 
@@ -19,9 +20,8 @@ public class PageProcessor : IPageProcessor
         var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
         var htmlContent = Markdown.ToHtml(content, pipeline);
 
-        var renderedContent = await _templateRenderer.RenderAsync(
-            "default",
-            new { Content = htmlContent }
+        var renderedContent = _templateRenderer.RenderPage(
+            new LayoutModel("SomeTitle", "SomeDescription", "Website", "SomeUrl", htmlContent) //TODO: Add real data
         );
 
         var fileName = Path.GetFileNameWithoutExtension(inputFile);

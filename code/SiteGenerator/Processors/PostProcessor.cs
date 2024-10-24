@@ -1,5 +1,6 @@
 ﻿using Markdig;
 using SiteGenerator.Templates;
+using SiteGenerator.Templates.MetadataModels;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -22,9 +23,16 @@ public class PostProcessor : IPageProcessor
         var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
         var htmlContent = Markdown.ToHtml(markdownContent, pipeline);
 
-        var renderedContent = await _templateRenderer.RenderAsync(
-            "post",
-            new { Metadata = frontMatter, Content = htmlContent }
+        var renderedContent = _templateRenderer.RenderPage( //TODO: Add real data
+            new LayoutModel(
+                frontMatter.ContainsKey("title") ? frontMatter["title"].ToString() : "SomeTitle",
+                frontMatter.ContainsKey("description")
+                    ? frontMatter["description"].ToString()
+                    : "SomeDescription",
+                "Website",
+                "SomeUrl",
+                htmlContent
+            )
         );
 
         var fileName = Path.GetFileNameWithoutExtension(inputFile);

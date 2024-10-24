@@ -46,12 +46,4 @@ public class TemplateRenderer
         }
         return _layoutTemplate(layoutData);
     }
-
-    public async Task<string> RenderAsync(string templateName, object data)
-    {
-        var templateContent = _templateProvider.GetTemplateContent(templateName);
-
-        var template = Handlebars.Compile(templateContent);
-        return template(data);
-    }
 }

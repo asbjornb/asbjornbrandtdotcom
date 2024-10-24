@@ -1,5 +1,6 @@
 ﻿using Markdig;
 using SiteGenerator.Templates;
+using SiteGenerator.Templates.MetadataModels;
 
 namespace SiteGenerator.Processors;
 
@@ -33,9 +34,12 @@ public class NoteProcessor : IPageProcessor
             htmlContent += "</ul>";
         }
 
-        var renderedContent = await _templateRenderer.RenderAsync(
-            "note",
-            new { Content = htmlContent }
+        var renderedContent = _templateRenderer.RenderNote(
+            new NoteModel(
+                htmlContent,
+                backlinks.Select(b => new BacklinkModel(b + ".html", b, "")).ToList()
+            ), //TODO: Add preview, fix link
+            new LayoutModel("SomeTitle", "SomeDescription", "Website", "SomeUrl", null) //TODO: Add real data
         );
 
         var outputFile = Path.Combine(outputPath, $"{fileName}.html");
