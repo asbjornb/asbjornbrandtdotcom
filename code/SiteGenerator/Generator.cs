@@ -35,7 +35,7 @@ public class Generator
 
     public async Task GenerateSiteAsync()
     {
-        await _backlinkCollector.CollectBacklinksAsync(_contentPath);
+        await _backlinkCollector.CollectBacklinksAsync(new FolderReader(), _contentPath);
 
         foreach (var (subdir, processor) in _processors)
         {

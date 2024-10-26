@@ -6,17 +6,16 @@ public class BacklinkCollector
 {
     private readonly Dictionary<string, List<string>> _backlinks = [];
 
-    public async Task CollectBacklinksAsync(string contentPath)
+    public async Task CollectBacklinksAsync(IFolderReader folderReader, string contentPath)
     {
-        var noteFiles = Directory.GetFiles(Path.Combine(contentPath, "thoughts"), "*.md");
-        foreach (var file in noteFiles)
+        var noteFiles = folderReader.GetFileContents(contentPath, "*.md");
+        await foreach (var file in noteFiles)
         {
-            var content = await File.ReadAllTextAsync(file);
-            var matches = Regex.Matches(content, @"\[\[(.*?)\]\]");
+            var matches = Regex.Matches(file.Content, @"\[\[(.*?)\]\]");
             foreach (Match match in matches)
             {
                 var linkedNote = match.Groups[1].Value;
-                var currentNote = Path.GetFileNameWithoutExtension(file);
+                var currentNote = Path.GetFileNameWithoutExtension(file.Name);
                 if (!_backlinks.TryGetValue(linkedNote, out var value))
                 {
                     value = [];
