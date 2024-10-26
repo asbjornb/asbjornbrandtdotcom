@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace SiteGenerator;
+namespace SiteGenerator.BacklinksProcessing;
 
 public class BacklinkCollector
 {
