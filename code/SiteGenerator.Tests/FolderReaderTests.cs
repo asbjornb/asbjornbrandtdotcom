@@ -41,6 +41,28 @@ public sealed class FolderReaderTests : IDisposable
             .ContainSingle(f => f.Name == "file2.txt" && f.Content == "Content of file 2");
     }
 
+    [Fact]
+    public async Task GetFileContents_WithSearchPattern_ShouldReturnOnlyMatchingFiles()
+    {
+        // Arrange
+        string txtFilePath = Path.Combine(TestFolderPath, "file1.txt");
+        string mdFilePath = Path.Combine(TestFolderPath, "file2.md");
+
+        await File.WriteAllTextAsync(txtFilePath, "Content of file 1");
+        await File.WriteAllTextAsync(mdFilePath, "Content of file 2");
+
+        var folderReader = new FolderReader();
+
+        // Act
+        var files = await folderReader.GetFileContents(TestFolderPath, "*.txt").ToListAsync();
+
+        // Assert
+        files.Should().HaveCount(1);
+        files
+            .Should()
+            .ContainSingle(f => f.Name == "file1.txt" && f.Content == "Content of file 1");
+    }
+
     public void Dispose()
     {
         // Clean up: Delete test files and folder after test
