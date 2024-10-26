@@ -2,5 +2,5 @@
 
 public interface IFolderReader
 {
-    IAsyncEnumerable<File> GetFileContents();
+    IAsyncEnumerable<ContentFile> GetFileContents(string folderPath);
 }
