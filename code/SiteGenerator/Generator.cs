@@ -38,8 +38,8 @@ public class Generator
                 folderReader,
                 markdownConverter
             ),
-            ["pages"] = new PageProcessor(_templateRenderer, folderReader),
-            ["posts"] = new PostProcessor(_templateRenderer, folderReader)
+            ["pages"] = new PageProcessor(_templateRenderer, folderReader)
+            //,["posts"] = new PostProcessor(_templateRenderer, folderReader)
         };
 
         foreach (var (subdir, processor) in processors)
