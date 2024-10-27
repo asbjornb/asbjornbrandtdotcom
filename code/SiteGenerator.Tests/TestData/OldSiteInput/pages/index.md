@@ -1,6 +1,3 @@
----
-layout: default
----
 # Hi, I'm Asbjørn
 
 ![profile](assets/profile.png) {.sideimg}
