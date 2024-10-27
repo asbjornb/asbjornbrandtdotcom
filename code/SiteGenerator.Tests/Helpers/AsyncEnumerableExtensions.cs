@@ -12,12 +12,12 @@ public static class AsyncEnumerableExtensions
         return list;
     }
 
-    public static IAsyncEnumerable<T> ToIAsyncEnumerable<T>(this List<T> list)
+    public static IAsyncEnumerable<T> ToAsyncEnumerable<T>(this IEnumerable<T> list)
     {
         return GetAsyncEnumerable(list);
     }
 
-    private static async IAsyncEnumerable<T> GetAsyncEnumerable<T>(List<T> list)
+    private static async IAsyncEnumerable<T> GetAsyncEnumerable<T>(IEnumerable<T> list)
     {
         foreach (var item in list)
         {

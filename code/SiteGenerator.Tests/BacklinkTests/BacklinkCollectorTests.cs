@@ -19,7 +19,7 @@ public class BacklinkCollectorTests
         };
         folderReader
             .GetFileContents(Arg.Any<string>(), "*.md")
-            .Returns(testFiles.ToIAsyncEnumerable());
+            .Returns(testFiles.ToAsyncEnumerable());
 
         var contentPath = "testPath";
 
