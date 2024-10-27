@@ -7,12 +7,12 @@ namespace SiteGenerator.Processors;
 
 public class NoteProcessor : IPageProcessor
 {
-    private readonly BacklinkCollector _backlinkCollector;
+    private readonly Backlinks _backlinks;
     private readonly TemplateRenderer _templateRenderer;
 
-    public NoteProcessor(BacklinkCollector backlinkCollector, TemplateRenderer templateRenderer)
+    public NoteProcessor(Backlinks backlinks, TemplateRenderer templateRenderer)
     {
-        _backlinkCollector = backlinkCollector;
+        _backlinks = backlinks;
         _templateRenderer = templateRenderer;
     }
 
@@ -24,11 +24,11 @@ public class NoteProcessor : IPageProcessor
         var htmlContent = Markdown.ToHtml(content, pipeline);
 
         var fileName = Path.GetFileNameWithoutExtension(inputFile);
-        var backlinks = _backlinkCollector.GetBacklinksForNote(fileName);
-        if (backlinks.Any())
+        var _noteBacklinks = _backlinks.GetBacklinksForNote(fileName);
+        if (_noteBacklinks.Any())
         {
             htmlContent += "<h2>Backlinks</h2><ul>";
-            foreach (var link in backlinks)
+            foreach (var link in _noteBacklinks)
             {
                 htmlContent += $"<li><a href=\"{link}.html\">{link}</a></li>";
             }
@@ -38,7 +38,7 @@ public class NoteProcessor : IPageProcessor
         var renderedContent = _templateRenderer.RenderNote(
             new NoteModel(
                 htmlContent,
-                backlinks.Select(b => new BacklinkModel(b + ".html", b, "")).ToList()
+                _noteBacklinks.Select(b => new BacklinkModel(b + ".html", b, "")).ToList()
             ), //TODO: Add preview, fix link
             new LayoutModel("SomeTitle", "SomeDescription", "Website", "SomeUrl", null) //TODO: Add real data
         );
