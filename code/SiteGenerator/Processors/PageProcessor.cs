@@ -27,9 +27,10 @@ public class PageProcessor : IPageProcessor
             );
 
             var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
-            var outputFile = Path.Combine(outputPath, $"{fileName}.html");
-            Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
-            await File.WriteAllTextAsync(outputFile, renderedContent);
+            await _folderReader.WriteFileAsync(
+                Path.Combine(outputPath, "index.html"),
+                renderedContent
+            );
         }
     }
 }

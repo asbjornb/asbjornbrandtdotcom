@@ -42,11 +42,8 @@ public class Generator
             Path.Combine(_outputPath, "notes")
         );
 
-        // Process pages
+        // Process pages (from pages folder to root)
         var pageProcessor = new PageProcessor(_templateRenderer, fileProvider);
-        await pageProcessor.ProcessAsync(
-            Path.Combine(_contentPath, "pages"),
-            Path.Combine(_outputPath, "pages")
-        );
+        await pageProcessor.ProcessAsync(Path.Combine(_contentPath, "pages"), _outputPath);
     }
 }
