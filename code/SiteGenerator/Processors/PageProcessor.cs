@@ -7,15 +7,17 @@ namespace SiteGenerator.Processors;
 public class PageProcessor : IPageProcessor
 {
     private readonly TemplateRenderer _templateRenderer;
+    private readonly IFolderReader _folderReader;
 
-    public PageProcessor(TemplateRenderer templateRenderer)
+    public PageProcessor(TemplateRenderer templateRenderer, IFolderReader folderReader)
     {
         _templateRenderer = templateRenderer;
+        _folderReader = folderReader;
     }
 
-    public async Task ProcessAsync(IFolderReader folderReader, string inputPath, string outputPath)
+    public async Task ProcessAsync(string inputPath, string outputPath)
     {
-        await foreach (var contentFile in folderReader.GetFileContents(inputPath, "*.md"))
+        await foreach (var contentFile in _folderReader.GetFileContents(inputPath, "*.md"))
         {
             var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
             var htmlContent = Markdown.ToHtml(contentFile.Content, pipeline);

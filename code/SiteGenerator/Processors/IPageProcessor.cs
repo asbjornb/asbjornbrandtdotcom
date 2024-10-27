@@ -2,5 +2,5 @@
 
 public interface IPageProcessor
 {
-    Task ProcessAsync(IFolderReader folderReader, string inputPath, string outputPath);
+    Task ProcessAsync(string inputPath, string outputPath);
 }

@@ -26,16 +26,17 @@ public class Generator
 
     public async Task GenerateSiteAsync()
     {
+        var folderReader = new FolderReader();
         var backlinks = await BacklinkCollector.CollectBacklinksAsync(
-            new FolderReader(),
+            folderReader,
             _contentPath
         );
 
         var processors = new Dictionary<string, IPageProcessor>
         {
-            ["thoughts"] = new NoteProcessor(backlinks, _templateRenderer),
-            ["pages"] = new PageProcessor(_templateRenderer),
-            ["posts"] = new PostProcessor(_templateRenderer)
+            ["thoughts"] = new NoteProcessor(backlinks, _templateRenderer, folderReader),
+            ["pages"] = new PageProcessor(_templateRenderer, folderReader),
+            ["posts"] = new PostProcessor(_templateRenderer, folderReader)
         };
 
         foreach (var (subdir, processor) in processors)
@@ -43,7 +44,7 @@ public class Generator
             var inputPath = Path.Combine(_contentPath, subdir);
             var outputPath = Path.Combine(_outputPath, subdir);
 
-            await processor.ProcessAsync(new FolderReader(), inputPath, outputPath);
+            await processor.ProcessAsync(inputPath, outputPath);
         }
     }
 }

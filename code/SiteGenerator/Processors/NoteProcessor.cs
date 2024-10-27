@@ -9,16 +9,21 @@ public class NoteProcessor : IPageProcessor
 {
     private readonly Backlinks _backlinks;
     private readonly TemplateRenderer _templateRenderer;
+    private readonly IFolderReader _folderReader;
 
-    public NoteProcessor(Backlinks backlinks, TemplateRenderer templateRenderer)
+    public NoteProcessor(
+        Backlinks backlinks, 
+        TemplateRenderer templateRenderer,
+        IFolderReader folderReader)
     {
         _backlinks = backlinks;
         _templateRenderer = templateRenderer;
+        _folderReader = folderReader;
     }
 
-    public async Task ProcessAsync(IFolderReader folderReader, string inputPath, string outputPath)
+    public async Task ProcessAsync(string inputPath, string outputPath)
     {
-        await foreach (var contentFile in folderReader.GetFileContents(inputPath, "*.md"))
+        await foreach (var contentFile in _folderReader.GetFileContents(inputPath, "*.md"))
         {
             var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
             var htmlContent = ConvertMarkdownToHtml(contentFile.Content);

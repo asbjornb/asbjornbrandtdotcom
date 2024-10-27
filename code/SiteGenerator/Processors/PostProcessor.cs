@@ -9,15 +9,17 @@ namespace SiteGenerator.Processors;
 public class PostProcessor : IPageProcessor
 {
     private readonly TemplateRenderer _templateRenderer;
+    private readonly IFolderReader _folderReader;
 
-    public PostProcessor(TemplateRenderer templateRenderer)
+    public PostProcessor(TemplateRenderer templateRenderer, IFolderReader folderReader)
     {
         _templateRenderer = templateRenderer;
+        _folderReader = folderReader;
     }
 
-    public async Task ProcessAsync(IFolderReader folderReader, string inputPath, string outputPath)
+    public async Task ProcessAsync(string inputPath, string outputPath)
     {
-        await foreach (var contentFile in folderReader.GetFileContents(inputPath, "*.md"))
+        await foreach (var contentFile in _folderReader.GetFileContents(inputPath, "*.md"))
         {
             var (frontMatter, markdownContent) = ExtractFrontMatter(contentFile.Content);
 
