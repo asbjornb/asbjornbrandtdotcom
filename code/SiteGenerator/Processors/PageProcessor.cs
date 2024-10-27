@@ -27,10 +27,23 @@ public class PageProcessor : IPageProcessor
             );
 
             var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
-            await _folderReader.WriteFileAsync(
-                Path.Combine(outputPath, "index.html"),
-                renderedContent
-            );
+            if (fileName.Equals("index", StringComparison.OrdinalIgnoreCase))
+            {
+                // Put index.html directly in the output folder
+                await _folderReader.WriteFileAsync(
+                    Path.Combine(outputPath, "index.html"),
+                    renderedContent
+                );
+            }
+            else
+            {
+                // Create a folder for the page and put index.html inside it
+                var pageFolder = Path.Combine(outputPath, fileName);
+                await _folderReader.WriteFileAsync(
+                    Path.Combine(pageFolder, "index.html"),
+                    renderedContent
+                );
+            }
         }
     }
 }
