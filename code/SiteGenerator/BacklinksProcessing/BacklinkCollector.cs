@@ -5,7 +5,7 @@ namespace SiteGenerator.BacklinksProcessing;
 public class BacklinkCollector
 {
     public static async Task<Backlinks> CollectBacklinksAsync(
-        IFolderReader folderReader,
+        IFileProvider folderReader,
         string contentPath
     )
     {

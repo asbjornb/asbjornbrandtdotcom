@@ -9,12 +9,13 @@ public class NoteProcessor : IPageProcessor
 {
     private readonly Backlinks _backlinks;
     private readonly TemplateRenderer _templateRenderer;
-    private readonly IFolderReader _folderReader;
+    private readonly IFileProvider _folderReader;
 
     public NoteProcessor(
-        Backlinks backlinks, 
+        Backlinks backlinks,
         TemplateRenderer templateRenderer,
-        IFolderReader folderReader)
+        IFileProvider folderReader
+    )
     {
         _backlinks = backlinks;
         _templateRenderer = templateRenderer;
@@ -29,7 +30,7 @@ public class NoteProcessor : IPageProcessor
             var htmlContent = ConvertMarkdownToHtml(contentFile.Content);
             var processedHtml = AddBacklinksToHtml(htmlContent, fileName);
             var renderedContent = RenderNoteWithTemplate(processedHtml, fileName);
-            
+
             await SaveNoteToFile(renderedContent, fileName, outputPath);
         }
     }
@@ -46,21 +47,31 @@ public class NoteProcessor : IPageProcessor
         if (!noteBacklinks.Any())
             return html;
 
-        return html + 
-               "<h2>Backlinks</h2><ul>" + 
-               string.Join("", noteBacklinks.Select(link => $"<li><a href=\"{link}.html\">{link}</a></li>")) + 
-               "</ul>";
+        return html
+            + "<h2>Backlinks</h2><ul>"
+            + string.Join(
+                "",
+                noteBacklinks.Select(link => $"<li><a href=\"{link}.html\">{link}</a></li>")
+            )
+            + "</ul>";
     }
 
     private string RenderNoteWithTemplate(string htmlContent, string fileName)
     {
-        var backlinks = _backlinks.GetBacklinksForNote(fileName)
+        var backlinks = _backlinks
+            .GetBacklinksForNote(fileName)
             .Select(b => new BacklinkModel(b + ".html", b, ""))
             .ToList();
 
         var noteModel = new NoteModel(htmlContent, backlinks);
-        var layoutModel = new LayoutModel("SomeTitle", "SomeDescription", "Website", "SomeUrl", null);
-        
+        var layoutModel = new LayoutModel(
+            "SomeTitle",
+            "SomeDescription",
+            "Website",
+            "SomeUrl",
+            null
+        );
+
         return _templateRenderer.RenderNote(noteModel, layoutModel);
     }
 

@@ -1,6 +1,6 @@
 ﻿namespace SiteGenerator;
 
-public class FolderReader : IFolderReader
+public class FileProvider : IFileProvider
 {
     public async IAsyncEnumerable<ContentFile> GetFileContents(string folderPath)
     {

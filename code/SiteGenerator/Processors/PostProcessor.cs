@@ -9,9 +9,9 @@ namespace SiteGenerator.Processors;
 public class PostProcessor : IPageProcessor
 {
     private readonly TemplateRenderer _templateRenderer;
-    private readonly IFolderReader _folderReader;
+    private readonly IFileProvider _folderReader;
 
-    public PostProcessor(TemplateRenderer templateRenderer, IFolderReader folderReader)
+    public PostProcessor(TemplateRenderer templateRenderer, IFileProvider folderReader)
     {
         _templateRenderer = templateRenderer;
         _folderReader = folderReader;

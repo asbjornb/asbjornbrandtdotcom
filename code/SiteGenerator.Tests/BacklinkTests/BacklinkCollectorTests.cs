@@ -11,7 +11,7 @@ public class BacklinkCollectorTests
     public async Task CollectBacklinksAsync_ShouldCollectCorrectBacklinks()
     {
         // Arrange
-        var folderReader = Substitute.For<IFolderReader>();
+        var folderReader = Substitute.For<IFileProvider>();
         var testFiles = new List<ContentFile>
         {
             new ContentFile("Note1.md", "[[Note2]]"),

@@ -26,11 +26,8 @@ public class Generator
 
     public async Task GenerateSiteAsync()
     {
-        var folderReader = new FolderReader();
-        var backlinks = await BacklinkCollector.CollectBacklinksAsync(
-            folderReader,
-            _contentPath
-        );
+        var folderReader = new FileProvider();
+        var backlinks = await BacklinkCollector.CollectBacklinksAsync(folderReader, _contentPath);
 
         var processors = new Dictionary<string, IPageProcessor>
         {

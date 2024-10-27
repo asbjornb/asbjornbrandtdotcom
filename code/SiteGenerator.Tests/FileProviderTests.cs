@@ -4,11 +4,11 @@ using Xunit;
 
 namespace SiteGenerator.Tests;
 
-public sealed class FolderReaderTests : IDisposable
+public sealed class FileProviderTests : IDisposable
 {
     private const string TestFolderPath = "TestFolder";
 
-    public FolderReaderTests()
+    public FileProviderTests()
     {
         if (!Directory.Exists(TestFolderPath))
         {
@@ -26,7 +26,7 @@ public sealed class FolderReaderTests : IDisposable
         await File.WriteAllTextAsync(file1Path, "Content of file 1");
         await File.WriteAllTextAsync(file2Path, "Content of file 2");
 
-        var folderReader = new FolderReader();
+        var folderReader = new FileProvider();
 
         // Act: Read files from the folder
         var files = await folderReader.GetFileContents(TestFolderPath).ToListAsync();
@@ -51,7 +51,7 @@ public sealed class FolderReaderTests : IDisposable
         await File.WriteAllTextAsync(txtFilePath, "Content of file 1");
         await File.WriteAllTextAsync(mdFilePath, "Content of file 2");
 
-        var folderReader = new FolderReader();
+        var folderReader = new FileProvider();
 
         // Act
         var files = await folderReader.GetFileContents(TestFolderPath, "*.txt").ToListAsync();
