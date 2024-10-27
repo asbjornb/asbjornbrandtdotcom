@@ -9,6 +9,7 @@ namespace SiteGenerator.Tests.Integration;
 public sealed class GeneratorIntegrationTests : IDisposable
 {
     private readonly ITestOutputHelper _output;
+    private readonly Generator _generator;
     private const string InputPath = "TestData/OldSiteInput";
     private const string ExpectedOutputPath = "TestData/OldSiteOutput";
     private const string ActualOutputPath = "TestOutput";
@@ -17,6 +18,9 @@ public sealed class GeneratorIntegrationTests : IDisposable
     {
         _output = output;
         Directory.CreateDirectory(ActualOutputPath);
+
+        var templateRenderer = new TemplateRenderer(new FileTemplateProvider("testdata/templates"));
+        _generator = new Generator(InputPath, ActualOutputPath, templateRenderer, "config.json");
     }
 
     public void Dispose()
@@ -31,13 +35,11 @@ public sealed class GeneratorIntegrationTests : IDisposable
     public async Task GenerateSite_CompletesWithinReasonableTime()
     {
         // Arrange
-        var templateRenderer = new TemplateRenderer(new FileTemplateProvider("testdata/templates"));
-        var generator = new Generator(InputPath, ActualOutputPath, templateRenderer, "config.json");
         var stopwatch = new Stopwatch();
 
         // Act
         stopwatch.Start();
-        await generator.GenerateSiteAsync();
+        await _generator.GenerateSiteAsync();
         stopwatch.Stop();
 
         // Assert
@@ -48,12 +50,8 @@ public sealed class GeneratorIntegrationTests : IDisposable
     [Fact]
     public async Task GenerateSite_CreatesAllExpectedFiles()
     {
-        // Arrange
-        var templateRenderer = new TemplateRenderer(new FileTemplateProvider("testdata/templates"));
-        var generator = new Generator(InputPath, ActualOutputPath, templateRenderer, "config.json");
-
         // Act
-        await generator.GenerateSiteAsync();
+        await _generator.GenerateSiteAsync();
 
         // Assert
         var expectedFiles = Directory
