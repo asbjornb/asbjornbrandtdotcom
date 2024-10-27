@@ -2,12 +2,22 @@
 
 public class Backlinks
 {
-    // _backlinks holds each note's name as a key and a list of notes that reference it as the value.
-    private readonly Dictionary<string, List<string>> _backlinks;
+    private readonly Dictionary<string, HashSet<string>> _backlinks;
 
-    public Backlinks(Dictionary<string, List<string>> backlinks)
+    public Backlinks()
     {
-        _backlinks = backlinks;
+        _backlinks = [];
+    }
+
+    public void AddBacklink(string linkedNote, string currentNote)
+    {
+        if (!_backlinks.TryGetValue(linkedNote, out var value))
+        {
+            value = [];
+            _backlinks[linkedNote] = value;
+        }
+
+        value.Add(currentNote);
     }
 
     public IEnumerable<string> GetBacklinksForNote(string noteName)
@@ -15,5 +25,5 @@ public class Backlinks
         return _backlinks.TryGetValue(noteName, out var links) ? links : Enumerable.Empty<string>();
     }
 
-    public IReadOnlyDictionary<string, List<string>> AllBacklinks => _backlinks;
+    public IReadOnlyDictionary<string, IReadOnlyCollection<string>> AllBacklinks => _backlinks.ToDictionary(kvp => kvp.Key, kvp => (IReadOnlyCollection<string>)kvp.Value);
 }

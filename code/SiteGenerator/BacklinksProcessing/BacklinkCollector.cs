@@ -9,26 +9,20 @@ public class BacklinkCollector
         string contentPath
     )
     {
-        var backlinks = new Dictionary<string, List<string>>();
+        var backlinks = new Backlinks();
         var noteFiles = folderReader.GetFileContents(contentPath, "*.md");
 
         await foreach (var file in noteFiles)
         {
             var matches = Regex.Matches(file.Content, @"\[\[(.*?)\]\]");
+            var currentNote = Path.GetFileNameWithoutExtension(file.Name);
             foreach (Match match in matches)
             {
                 var linkedNote = match.Groups[1].Value;
-                var currentNote = Path.GetFileNameWithoutExtension(file.Name);
-                if (!backlinks.TryGetValue(linkedNote, out var value))
-                {
-                    value = new List<string>();
-                    backlinks[linkedNote] = value;
-                }
-
-                value.Add(currentNote);
+                backlinks.AddBacklink(linkedNote, currentNote);
             }
         }
 
-        return new Backlinks(backlinks);
+        return backlinks;
     }
 }
