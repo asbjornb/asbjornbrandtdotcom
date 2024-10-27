@@ -33,7 +33,9 @@ public class NoteProcessor : IPageProcessor
             var processedHtml = AddBacklinksToHtml(htmlContent, fileName);
             var renderedContent = RenderNoteWithTemplate(processedHtml, fileName);
 
-            await SaveNoteToFile(renderedContent, fileName, outputPath);
+            // Create a folder for each note and put an index.html inside it
+            var noteFolder = Path.Combine(outputPath, fileName);
+            await SaveNoteToFile(renderedContent, "index", noteFolder);
         }
     }
 
@@ -47,7 +49,7 @@ public class NoteProcessor : IPageProcessor
             + "<h2>Backlinks</h2><ul>"
             + string.Join(
                 "",
-                noteBacklinks.Select(link => $"<li><a href=\"{link}.html\">{link}</a></li>")
+                noteBacklinks.Select(link => $"<li><a href=\"/{link}/\">/{link}/</a></li>")
             )
             + "</ul>";
     }
@@ -56,7 +58,7 @@ public class NoteProcessor : IPageProcessor
     {
         var backlinks = _backlinks
             .GetBacklinksForNote(fileName)
-            .Select(b => new BacklinkModel(b + ".html", b, ""))
+            .Select(b => new BacklinkModel($"/{b}/", b, ""))
             .ToList();
 
         var noteModel = new NoteModel(htmlContent, backlinks);

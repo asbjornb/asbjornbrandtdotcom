@@ -49,7 +49,7 @@ public class NoteProcessorTests
         await _fileProvider
             .Received(1)
             .WriteFileAsync(
-                Arg.Is<string>(s => s == Path.Combine(outputPath, "test.html")),
+                Arg.Is<string>(s => s == Path.Combine(outputPath, "test", "index.html")),
                 Arg.Is<string>(s => s.Contains("<h1 id=\"test\">Test</h1>"))
             );
     }
@@ -76,8 +76,8 @@ public class NoteProcessorTests
         await _fileProvider
             .Received(1)
             .WriteFileAsync(
-                Arg.Any<string>(),
-                Arg.Is<string>(s => s.Contains("other-note") && s.Contains("another-note"))
+                Arg.Is<string>(s => s == Path.Combine(outputPath, "test", "index.html")),
+                Arg.Is<string>(s => s.Contains("/other-note/") && s.Contains("/another-note/"))
             );
     }
 
@@ -99,6 +99,17 @@ public class NoteProcessorTests
         await _processor.ProcessAsync(inputPath, outputPath);
 
         // Assert
-        await _fileProvider.Received(2).WriteFileAsync(Arg.Any<string>(), Arg.Any<string>());
+        await _fileProvider
+            .Received(1)
+            .WriteFileAsync(
+                Arg.Is<string>(s => s == Path.Combine(outputPath, "note1", "index.html")),
+                Arg.Any<string>()
+            );
+        await _fileProvider
+            .Received(1)
+            .WriteFileAsync(
+                Arg.Is<string>(s => s == Path.Combine(outputPath, "note2", "index.html")),
+                Arg.Any<string>()
+            );
     }
 }
