@@ -13,20 +13,21 @@ public class PageProcessor : IPageProcessor
         _templateRenderer = templateRenderer;
     }
 
-    public async Task ProcessAsync(string inputFile, string outputPath)
+    public async Task ProcessAsync(IFolderReader folderReader, string inputPath, string outputPath)
     {
-        var content = await File.ReadAllTextAsync(inputFile);
+        await foreach (var contentFile in folderReader.GetFileContents(inputPath, "*.md"))
+        {
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            var htmlContent = Markdown.ToHtml(contentFile.Content, pipeline);
 
-        var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-        var htmlContent = Markdown.ToHtml(content, pipeline);
+            var renderedContent = _templateRenderer.RenderPage(
+                new LayoutModel("SomeTitle", "SomeDescription", "Website", "SomeUrl", htmlContent)
+            );
 
-        var renderedContent = _templateRenderer.RenderPage(
-            new LayoutModel("SomeTitle", "SomeDescription", "Website", "SomeUrl", htmlContent) //TODO: Add real data
-        );
-
-        var fileName = Path.GetFileNameWithoutExtension(inputFile);
-        var outputFile = Path.Combine(outputPath, $"{fileName}.html");
-        Directory.CreateDirectory(Path.GetDirectoryName(outputFile));
-        await File.WriteAllTextAsync(outputFile, renderedContent);
+            var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
+            var outputFile = Path.Combine(outputPath, $"{fileName}.html");
+            Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
+            await File.WriteAllTextAsync(outputFile, renderedContent);
+        }
     }
 }

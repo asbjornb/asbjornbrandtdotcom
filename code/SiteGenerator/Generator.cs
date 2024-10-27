@@ -42,12 +42,8 @@ public class Generator
         {
             var inputPath = Path.Combine(_contentPath, subdir);
             var outputPath = Path.Combine(_outputPath, subdir);
-            var files = Directory.GetFiles(inputPath, "*.md");
 
-            foreach (var file in files)
-            {
-                await processor.ProcessAsync(file, outputPath);
-            }
+            await processor.ProcessAsync(new FolderReader(), inputPath, outputPath);
         }
     }
 }

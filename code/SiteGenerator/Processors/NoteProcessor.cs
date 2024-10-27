@@ -16,35 +16,36 @@ public class NoteProcessor : IPageProcessor
         _templateRenderer = templateRenderer;
     }
 
-    public async Task ProcessAsync(string inputFile, string outputPath)
+    public async Task ProcessAsync(IFolderReader folderReader, string inputPath, string outputPath)
     {
-        var content = await File.ReadAllTextAsync(inputFile);
-
-        var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-        var htmlContent = Markdown.ToHtml(content, pipeline);
-
-        var fileName = Path.GetFileNameWithoutExtension(inputFile);
-        var _noteBacklinks = _backlinks.GetBacklinksForNote(fileName);
-        if (_noteBacklinks.Any())
+        await foreach (var contentFile in folderReader.GetFileContents(inputPath, "*.md"))
         {
-            htmlContent += "<h2>Backlinks</h2><ul>";
-            foreach (var link in _noteBacklinks)
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            var htmlContent = Markdown.ToHtml(contentFile.Content, pipeline);
+
+            var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
+            var noteBacklinks = _backlinks.GetBacklinksForNote(fileName);
+            if (noteBacklinks.Any())
             {
-                htmlContent += $"<li><a href=\"{link}.html\">{link}</a></li>";
+                htmlContent += "<h2>Backlinks</h2><ul>";
+                foreach (var link in noteBacklinks)
+                {
+                    htmlContent += $"<li><a href=\"{link}.html\">{link}</a></li>";
+                }
+                htmlContent += "</ul>";
             }
-            htmlContent += "</ul>";
+
+            var renderedContent = _templateRenderer.RenderNote(
+                new NoteModel(
+                    htmlContent,
+                    noteBacklinks.Select(b => new BacklinkModel(b + ".html", b, "")).ToList()
+                ),
+                new LayoutModel("SomeTitle", "SomeDescription", "Website", "SomeUrl", null)
+            );
+
+            var outputFile = Path.Combine(outputPath, $"{fileName}.html");
+            Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
+            await File.WriteAllTextAsync(outputFile, renderedContent);
         }
-
-        var renderedContent = _templateRenderer.RenderNote(
-            new NoteModel(
-                htmlContent,
-                _noteBacklinks.Select(b => new BacklinkModel(b + ".html", b, "")).ToList()
-            ), //TODO: Add preview, fix link
-            new LayoutModel("SomeTitle", "SomeDescription", "Website", "SomeUrl", null) //TODO: Add real data
-        );
-
-        var outputFile = Path.Combine(outputPath, $"{fileName}.html");
-        Directory.CreateDirectory(Path.GetDirectoryName(outputFile));
-        await File.WriteAllTextAsync(outputFile, renderedContent);
     }
 }

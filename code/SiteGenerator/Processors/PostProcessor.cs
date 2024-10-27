@@ -15,30 +15,34 @@ public class PostProcessor : IPageProcessor
         _templateRenderer = templateRenderer;
     }
 
-    public async Task ProcessAsync(string inputFile, string outputPath)
+    public async Task ProcessAsync(IFolderReader folderReader, string inputPath, string outputPath)
     {
-        var content = await File.ReadAllTextAsync(inputFile);
-        var (frontMatter, markdownContent) = ExtractFrontMatter(content);
+        await foreach (var contentFile in folderReader.GetFileContents(inputPath, "*.md"))
+        {
+            var (frontMatter, markdownContent) = ExtractFrontMatter(contentFile.Content);
 
-        var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-        var htmlContent = Markdown.ToHtml(markdownContent, pipeline);
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            var htmlContent = Markdown.ToHtml(markdownContent, pipeline);
 
-        var renderedContent = _templateRenderer.RenderPage( //TODO: Add real data
-            new LayoutModel(
-                frontMatter.ContainsKey("title") ? frontMatter["title"].ToString() : "SomeTitle",
-                frontMatter.ContainsKey("description")
-                    ? frontMatter["description"].ToString()
-                    : "SomeDescription",
-                "Website",
-                "SomeUrl",
-                htmlContent
-            )
-        );
+            var renderedContent = _templateRenderer.RenderPage(
+                new LayoutModel(
+                    frontMatter.ContainsKey("title")
+                        ? frontMatter["title"].ToString()
+                        : "SomeTitle",
+                    frontMatter.ContainsKey("description")
+                        ? frontMatter["description"].ToString()
+                        : "SomeDescription",
+                    "Website",
+                    "SomeUrl",
+                    htmlContent
+                )
+            );
 
-        var fileName = Path.GetFileNameWithoutExtension(inputFile);
-        var outputFile = Path.Combine(outputPath, $"{fileName}.html");
-        Directory.CreateDirectory(Path.GetDirectoryName(outputFile));
-        await File.WriteAllTextAsync(outputFile, renderedContent);
+            var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
+            var outputFile = Path.Combine(outputPath, $"{fileName}.html");
+            Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
+            await File.WriteAllTextAsync(outputFile, renderedContent);
+        }
     }
 
     private static (Dictionary<string, object> frontMatter, string content) ExtractFrontMatter(
