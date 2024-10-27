@@ -1,5 +1,9 @@
 <Project>
   <ItemGroup>
-    <PackageReference Include="CSharpier.MsBuild" Version="0.27.3" PrivateAssets="all" />
+    <PackageReference Include="CSharpier.MsBuild" Version="0.27.3" PrivateAssets="all" Condition="'$(CI)' != 'true'" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <CSharpierContinueOnError>true</CSharpierContinueOnError>
+  </PropertyGroup>
 </Project>
