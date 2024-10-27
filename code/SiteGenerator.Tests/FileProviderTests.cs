@@ -7,6 +7,7 @@ namespace SiteGenerator.Tests;
 public sealed class FileProviderTests : IDisposable
 {
     private const string TestFolderPath = "TestFolder";
+    private readonly FileProvider _fileProvider;
 
     public FileProviderTests()
     {
@@ -14,6 +15,7 @@ public sealed class FileProviderTests : IDisposable
         {
             Directory.CreateDirectory(TestFolderPath);
         }
+        _fileProvider = new FileProvider();
     }
 
     [Fact]
@@ -26,10 +28,10 @@ public sealed class FileProviderTests : IDisposable
         await File.WriteAllTextAsync(file1Path, "Content of file 1");
         await File.WriteAllTextAsync(file2Path, "Content of file 2");
 
-        var folderReader = new FileProvider();
+        var fileProvider = new FileProvider();
 
         // Act: Read files from the folder
-        var files = await folderReader.GetFileContents(TestFolderPath).ToListAsync();
+        var files = await fileProvider.GetFileContents(TestFolderPath).ToListAsync();
 
         // Assert: Check that the correct files and contents are returned
         files.Should().HaveCount(2);
@@ -51,10 +53,10 @@ public sealed class FileProviderTests : IDisposable
         await File.WriteAllTextAsync(txtFilePath, "Content of file 1");
         await File.WriteAllTextAsync(mdFilePath, "Content of file 2");
 
-        var folderReader = new FileProvider();
+        var fileProvider = new FileProvider();
 
         // Act
-        var files = await folderReader.GetFileContents(TestFolderPath, "*.txt").ToListAsync();
+        var files = await fileProvider.GetFileContents(TestFolderPath, "*.txt").ToListAsync();
 
         // Assert
         files.Should().HaveCount(1);
@@ -63,9 +65,41 @@ public sealed class FileProviderTests : IDisposable
             .ContainSingle(f => f.Name == "file1.txt" && f.Content == "Content of file 1");
     }
 
+    [Fact]
+    public async Task WriteFileAsync_CreatesDirectoryAndFile()
+    {
+        // Arrange
+        var deepPath = Path.Combine(TestFolderPath, "deep", "nested", "path");
+        var filePath = Path.Combine(deepPath, "test.txt");
+        var content = "Test content";
+
+        // Act
+        await _fileProvider.WriteFileAsync(filePath, content);
+
+        // Assert
+        Assert.True(Directory.Exists(deepPath));
+        Assert.True(File.Exists(filePath));
+        Assert.Equal(content, await File.ReadAllTextAsync(filePath));
+    }
+
+    [Fact]
+    public async Task WriteFileAsync_OverwritesExistingFile()
+    {
+        // Arrange
+        var filePath = Path.Combine(TestFolderPath, "test.txt");
+        var initialContent = "Initial content";
+        var newContent = "New content";
+
+        // Act
+        await _fileProvider.WriteFileAsync(filePath, initialContent);
+        await _fileProvider.WriteFileAsync(filePath, newContent);
+
+        // Assert
+        Assert.Equal(newContent, await File.ReadAllTextAsync(filePath));
+    }
+
     public void Dispose()
     {
-        // Clean up: Delete test files and folder after test
         if (Directory.Exists(TestFolderPath))
         {
             Directory.Delete(TestFolderPath, true);

@@ -78,7 +78,6 @@ public class NoteProcessor : IPageProcessor
     private async Task SaveNoteToFile(string content, string fileName, string outputPath)
     {
         var outputFile = Path.Combine(outputPath, $"{fileName}.html");
-        Directory.CreateDirectory(Path.GetDirectoryName(outputFile)!);
-        await File.WriteAllTextAsync(outputFile, content);
+        await _folderReader.WriteFileAsync(outputFile, content);
     }
 }

@@ -22,4 +22,14 @@ public class FileProvider : IFileProvider
             yield return new ContentFile(Path.GetFileName(filePath), content);
         }
     }
+
+    public async Task WriteFileAsync(string filePath, string content)
+    {
+        var directory = Path.GetDirectoryName(filePath);
+        if (directory != null)
+        {
+            Directory.CreateDirectory(directory);
+        }
+        await File.WriteAllTextAsync(filePath, content);
+    }
 }
