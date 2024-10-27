@@ -17,7 +17,9 @@ public class BacklinkCollectorTests
             new ContentFile("Note1.md", "[[Note2]]"),
             new ContentFile("Note2.md", "[[Note1]]")
         };
-        folderReader.GetFileContents(Arg.Any<string>(), "*.md").Returns(testFiles.ToIAsyncEnumerable());
+        folderReader
+            .GetFileContents(Arg.Any<string>(), "*.md")
+            .Returns(testFiles.ToIAsyncEnumerable());
 
         var contentPath = "testPath";
 
