@@ -1,11 +1,11 @@
-name: Build and Deploy
+name: Build and Test
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,14 +16,20 @@ jobs:
       with:
         dotnet-version: '6.0.x'
 
-    - name: Build Site
+    - name: Build Solution
       run: |
-        cd StaticSiteGenerator
-        dotnet run -- build
+        cd code
+        dotnet build SiteGenerator.sln --configuration Release
 
-    - name: Deploy to Cloudflare Pages
-      env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    - name: Run Tests
       run: |
-        cd StaticSiteGenerator
-        dotnet run -- deploy
+        cd code
+        dotnet test SiteGenerator.sln --no-build --configuration Release
+
+    # Commented out deployment step until secrets are available
+    # - name: Deploy to Cloudflare Pages
+    #   env:
+    #     CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    #   run: |
+    #     cd StaticSiteGenerator
+    #     dotnet run -- deploy
