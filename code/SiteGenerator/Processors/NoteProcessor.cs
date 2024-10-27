@@ -33,9 +33,17 @@ public class NoteProcessor : IPageProcessor
             var processedHtml = AddBacklinksToHtml(htmlContent, fileName);
             var renderedContent = RenderNoteWithTemplate(processedHtml, fileName);
 
-            // Create a folder for each note and put an index.html inside it
-            var noteFolder = Path.Combine(outputPath, fileName);
-            await SaveNoteToFile(renderedContent, "index", noteFolder);
+            if (fileName.Equals("index", StringComparison.OrdinalIgnoreCase))
+            {
+                // Put index.html directly in the output folder
+                await SaveNoteToFile(renderedContent, fileName, outputPath);
+            }
+            else
+            {
+                // Create a folder for each non-index note and put an index.html inside it
+                var noteFolder = Path.Combine(outputPath, fileName);
+                await SaveNoteToFile(renderedContent, "index", noteFolder);
+            }
         }
     }
 
