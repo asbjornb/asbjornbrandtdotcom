@@ -25,5 +25,6 @@ public class Backlinks
         return _backlinks.TryGetValue(noteName, out var links) ? links : Enumerable.Empty<string>();
     }
 
-    public IReadOnlyDictionary<string, IReadOnlyCollection<string>> AllBacklinks => _backlinks.ToDictionary(kvp => kvp.Key, kvp => (IReadOnlyCollection<string>)kvp.Value);
+    public IReadOnlyDictionary<string, IReadOnlyCollection<string>> AllBacklinks =>
+        _backlinks.ToDictionary(kvp => kvp.Key, kvp => (IReadOnlyCollection<string>)kvp.Value);
 }
