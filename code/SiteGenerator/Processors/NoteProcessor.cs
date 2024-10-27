@@ -1,5 +1,4 @@
-﻿using Markdig;
-using SiteGenerator.BacklinksProcessing;
+﻿using SiteGenerator.BacklinksProcessing;
 using SiteGenerator.Templates;
 using SiteGenerator.Templates.MetadataModels;
 
@@ -10,16 +9,19 @@ public class NoteProcessor : IPageProcessor
     private readonly Backlinks _backlinks;
     private readonly TemplateRenderer _templateRenderer;
     private readonly IFileProvider _folderReader;
+    private readonly IMarkdownConverter _markdownConverter;
 
     public NoteProcessor(
         Backlinks backlinks,
         TemplateRenderer templateRenderer,
-        IFileProvider folderReader
+        IFileProvider folderReader,
+        IMarkdownConverter markdownConverter
     )
     {
         _backlinks = backlinks;
         _templateRenderer = templateRenderer;
         _folderReader = folderReader;
+        _markdownConverter = markdownConverter;
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -27,18 +29,12 @@ public class NoteProcessor : IPageProcessor
         await foreach (var contentFile in _folderReader.GetFileContents(inputPath, "*.md"))
         {
             var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
-            var htmlContent = ConvertMarkdownToHtml(contentFile.Content);
+            var htmlContent = _markdownConverter.ConvertToHtml(contentFile.Content);
             var processedHtml = AddBacklinksToHtml(htmlContent, fileName);
             var renderedContent = RenderNoteWithTemplate(processedHtml, fileName);
 
             await SaveNoteToFile(renderedContent, fileName, outputPath);
         }
-    }
-
-    private string ConvertMarkdownToHtml(string markdown)
-    {
-        var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-        return Markdown.ToHtml(markdown, pipeline);
     }
 
     private string AddBacklinksToHtml(string html, string fileName)

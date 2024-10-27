@@ -27,11 +27,17 @@ public class Generator
     public async Task GenerateSiteAsync()
     {
         var folderReader = new FileProvider();
+        var markdownConverter = new MarkdownConverter();
         var backlinks = await BacklinkCollector.CollectBacklinksAsync(folderReader, _contentPath);
 
         var processors = new Dictionary<string, IPageProcessor>
         {
-            ["thoughts"] = new NoteProcessor(backlinks, _templateRenderer, folderReader),
+            ["thoughts"] = new NoteProcessor(
+                backlinks,
+                _templateRenderer,
+                folderReader,
+                markdownConverter
+            ),
             ["pages"] = new PageProcessor(_templateRenderer, folderReader),
             ["posts"] = new PostProcessor(_templateRenderer, folderReader)
         };
