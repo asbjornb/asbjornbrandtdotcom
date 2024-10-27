@@ -26,28 +26,27 @@ public class Generator
 
     public async Task GenerateSiteAsync()
     {
-        var folderReader = new FileProvider();
+        var fileProvider = new FileProvider();
         var markdownConverter = new MarkdownConverter();
-        var backlinks = await BacklinkCollector.CollectBacklinksAsync(folderReader, _contentPath);
+        var backlinks = await BacklinkCollector.CollectBacklinksAsync(fileProvider, _contentPath);
 
-        var processors = new Dictionary<string, IPageProcessor>
-        {
-            ["thoughts"] = new NoteProcessor(
-                backlinks,
-                _templateRenderer,
-                folderReader,
-                markdownConverter
-            ),
-            ["pages"] = new PageProcessor(_templateRenderer, folderReader)
-            //,["posts"] = new PostProcessor(_templateRenderer, folderReader)
-        };
+        // Process notes (from thoughts folder to notes folder)
+        var noteProcessor = new NoteProcessor(
+            backlinks,
+            _templateRenderer,
+            fileProvider,
+            markdownConverter
+        );
+        await noteProcessor.ProcessAsync(
+            Path.Combine(_contentPath, "thoughts"),
+            Path.Combine(_outputPath, "notes")
+        );
 
-        foreach (var (subdir, processor) in processors)
-        {
-            var inputPath = Path.Combine(_contentPath, subdir);
-            var outputPath = Path.Combine(_outputPath, subdir);
-
-            await processor.ProcessAsync(inputPath, outputPath);
-        }
+        // Process pages
+        var pageProcessor = new PageProcessor(_templateRenderer, fileProvider);
+        await pageProcessor.ProcessAsync(
+            Path.Combine(_contentPath, "pages"),
+            Path.Combine(_outputPath, "pages")
+        );
     }
 }
