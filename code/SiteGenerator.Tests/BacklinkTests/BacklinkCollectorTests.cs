@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using SiteGenerator.BacklinksProcessing;
+using SiteGenerator.Tests.Helpers;
 using Xunit;
 
 namespace SiteGenerator.Tests.BacklinkTests;
@@ -11,7 +12,12 @@ public class BacklinkCollectorTests
     {
         // Arrange
         var folderReader = Substitute.For<IFolderReader>();
-        folderReader.GetFileContents(Arg.Any<string>(), "*.md").Returns(GetTestFiles());
+        var testFiles = new List<ContentFile>
+        {
+            new ContentFile("Note1.md", "[[Note2]]"),
+            new ContentFile("Note2.md", "[[Note1]]")
+        };
+        folderReader.GetFileContents(Arg.Any<string>(), "*.md").Returns(testFiles.ToIAsyncEnumerable());
 
         var contentPath = "testPath";
 
@@ -26,11 +32,5 @@ public class BacklinkCollectorTests
         var backlinksForNote2 = backlinks.GetBacklinksForNote("Note2").ToList();
         Assert.Single(backlinksForNote2);
         Assert.Contains("Note1", backlinksForNote2);
-    }
-
-    private static async IAsyncEnumerable<ContentFile> GetTestFiles()
-    {
-        yield return new ContentFile("Note1.md", "[[Note2]]");
-        yield return new ContentFile("Note2.md", "[[Note1]]");
     }
 }

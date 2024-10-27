@@ -11,4 +11,18 @@ public static class AsyncEnumerableExtensions
         }
         return list;
     }
+
+    public static IAsyncEnumerable<T> ToIAsyncEnumerable<T>(this List<T> list)
+    {
+        return GetAsyncEnumerable(list);
+    }
+
+    private static async IAsyncEnumerable<T> GetAsyncEnumerable<T>(List<T> list)
+    {
+        foreach (var item in list)
+        {
+            await Task.Yield();
+            yield return item;
+        }
+    }
 }
