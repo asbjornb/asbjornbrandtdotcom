@@ -1,4 +1,4 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using Xunit;
 
 namespace SiteGenerator.Tests;
@@ -13,9 +13,9 @@ public class MarkdownConverterTests
     }
 
     [Theory]
-    [InlineData("# Header 1", "<h1 id=\"header-1\">Header 1</h1>")]
-    [InlineData("## Header 2", "<h2 id=\"header-2\">Header 2</h2>")]
-    [InlineData("### Header 3", "<h3 id=\"header-3\">Header 3</h3>")]
+    [InlineData("# Header 1", "<h1>Header 1</h1>")]
+    [InlineData("## Header 2", "<h2>Header 2</h2>")]
+    [InlineData("### Header 3", "<h3>Header 3</h3>")]
     public void ConvertsHeaders(string markdown, string expectedHtml)
     {
         // Act
@@ -123,9 +123,9 @@ public class MarkdownConverterTests
             .Should()
             .Be(
                 """
-                <h1 id="main-header">Main Header</h1>
+                <h1>Main Header</h1>
                 <p>This is a paragraph with <strong>bold</strong> and <em>italic</em> text.</p>
-                <h2 id="subheader">Subheader</h2>
+                <h2>Subheader</h2>
                 <p>Here's some <code>inline code</code> and a <a href="https://example.com">link</a>.</p>
                 <pre><code class="language-csharp">public class Example {}
                 </code></pre>

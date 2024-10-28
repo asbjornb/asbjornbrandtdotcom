@@ -1,4 +1,4 @@
-using Markdig;
+﻿using Markdig;
 
 namespace SiteGenerator;
 
@@ -8,7 +8,11 @@ public class MarkdownConverter : IMarkdownConverter
 
     public MarkdownConverter()
     {
-        _pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+        _pipeline = new MarkdownPipelineBuilder()
+            .UseAutoLinks()
+            .UseEmphasisExtras()
+            .UseTaskLists()
+            .Build();
     }
 
     public string ConvertToHtml(string markdown)
