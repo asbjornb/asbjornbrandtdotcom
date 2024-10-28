@@ -1,4 +1,5 @@
-﻿using SiteGenerator.BacklinksProcessing;
+﻿using System.Text.Json;
+using SiteGenerator.BacklinksProcessing;
 using SiteGenerator.Processors;
 using SiteGenerator.Templates;
 
@@ -28,6 +29,7 @@ public class Generator
     {
         var fileProvider = new FileProvider();
         var markdownConverter = new MarkdownConverter();
+        var config = await LoadConfigAsync();
         var backlinks = await BacklinkCollector.CollectBacklinksAsync(fileProvider, _contentPath);
 
         // Process notes (from thoughts folder to notes folder)
@@ -35,7 +37,8 @@ public class Generator
             backlinks,
             _templateRenderer,
             fileProvider,
-            markdownConverter
+            markdownConverter,
+            config
         );
         await noteProcessor.ProcessAsync(
             Path.Combine(_contentPath, "thoughts"),
@@ -43,7 +46,14 @@ public class Generator
         );
 
         // Process pages (from pages folder to root)
-        var pageProcessor = new PageProcessor(_templateRenderer, fileProvider);
+        var pageProcessor = new PageProcessor(_templateRenderer, fileProvider, config);
         await pageProcessor.ProcessAsync(Path.Combine(_contentPath, "pages"), _outputPath);
+    }
+
+    private async Task<Config> LoadConfigAsync()
+    {
+        var configJson = await File.ReadAllTextAsync(_configPath);
+        return JsonSerializer.Deserialize<Config>(configJson)
+            ?? throw new InvalidOperationException("Failed to load config");
     }
 }

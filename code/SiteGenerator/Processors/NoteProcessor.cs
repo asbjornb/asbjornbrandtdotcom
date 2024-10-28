@@ -10,18 +10,21 @@ public class NoteProcessor : IPageProcessor
     private readonly TemplateRenderer _templateRenderer;
     private readonly IFileProvider _folderReader;
     private readonly IMarkdownConverter _markdownConverter;
+    private readonly Config _config;
 
     public NoteProcessor(
         Backlinks backlinks,
         TemplateRenderer templateRenderer,
         IFileProvider folderReader,
-        IMarkdownConverter markdownConverter
+        IMarkdownConverter markdownConverter,
+        Config config
     )
     {
         _backlinks = backlinks;
         _templateRenderer = templateRenderer;
         _folderReader = folderReader;
         _markdownConverter = markdownConverter;
+        _config = config;
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)

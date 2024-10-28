@@ -13,6 +13,8 @@ public class NoteProcessorTests
     private readonly MarkdownConverter _markdownConverter;
     private readonly TemplateRenderer _templateRenderer;
     private readonly Backlinks _backlinks;
+    private readonly Config _config;
+
     private readonly NoteProcessor _processor;
 
     public NoteProcessorTests()
@@ -21,12 +23,14 @@ public class NoteProcessorTests
         _markdownConverter = new MarkdownConverter();
         _templateRenderer = new TemplateRenderer(new FileTemplateProvider("testdata/templates"));
         _backlinks = new Backlinks();
+        _config = new Config("https://example.com", "Title", "Description", "Author");
 
         _processor = new NoteProcessor(
             _backlinks,
             _templateRenderer,
             _fileProvider,
-            _markdownConverter
+            _markdownConverter,
+            _config
         );
     }
 

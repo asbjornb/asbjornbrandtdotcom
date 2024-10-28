@@ -8,11 +8,17 @@ public class PageProcessor : IPageProcessor
 {
     private readonly TemplateRenderer _templateRenderer;
     private readonly IFileProvider _folderReader;
+    private readonly Config _config;
 
-    public PageProcessor(TemplateRenderer templateRenderer, IFileProvider folderReader)
+    public PageProcessor(
+        TemplateRenderer templateRenderer,
+        IFileProvider folderReader,
+        Config config
+    )
     {
         _templateRenderer = templateRenderer;
         _folderReader = folderReader;
+        _config = config;
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -22,14 +28,23 @@ public class PageProcessor : IPageProcessor
             var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
             var htmlContent = Markdown.ToHtml(contentFile.Content, pipeline);
 
+            var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
+            var pageUrl = fileName.Equals("index", StringComparison.OrdinalIgnoreCase)
+                ? _config.BaseUrl
+                : $"{_config.BaseUrl}/{fileName}";
+
             var renderedContent = _templateRenderer.RenderPage(
-                new LayoutModel("SomeTitle", "SomeDescription", "Website", "SomeUrl", htmlContent)
+                new LayoutModel(
+                    _config.SiteTitle,
+                    _config.Description,
+                    "website",
+                    pageUrl,
+                    htmlContent
+                )
             );
 
-            var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
             if (fileName.Equals("index", StringComparison.OrdinalIgnoreCase))
             {
-                // Put index.html directly in the output folder
                 await _folderReader.WriteFileAsync(
                     Path.Combine(outputPath, "index.html"),
                     renderedContent
@@ -37,7 +52,6 @@ public class PageProcessor : IPageProcessor
             }
             else
             {
-                // Create a folder for the page and put index.html inside it
                 var pageFolder = Path.Combine(outputPath, fileName);
                 await _folderReader.WriteFileAsync(
                     Path.Combine(pageFolder, "index.html"),
