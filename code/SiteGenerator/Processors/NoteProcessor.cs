@@ -38,12 +38,10 @@ public class NoteProcessor : IPageProcessor
 
             if (fileName.Equals("index", StringComparison.OrdinalIgnoreCase))
             {
-                // Put index.html directly in the output folder
                 await SaveNoteToFile(renderedContent, fileName, outputPath);
             }
             else
             {
-                // Create a folder for each non-index note and put an index.html inside it
                 var noteFolder = Path.Combine(outputPath, fileName);
                 await SaveNoteToFile(renderedContent, "index", noteFolder);
             }
@@ -73,13 +71,12 @@ public class NoteProcessor : IPageProcessor
             .ToList();
 
         var noteModel = new NoteModel(htmlContent, backlinks);
-        var layoutModel = new LayoutModel(
-            "SomeTitle",
-            "SomeDescription",
-            "Website",
-            "SomeUrl",
-            null
-        );
+        var pageUrl = $"{_config.BaseUrl}/notes/{fileName}/";
+
+        var titleName = char.ToUpper(fileName[0]) + fileName[1..];
+        var pageTitle = $"{titleName} • {_config.Author}'s Notes";
+
+        var layoutModel = new LayoutModel(pageTitle, _config.Description, "article", pageUrl, null);
 
         return _templateRenderer.RenderNote(noteModel, layoutModel);
     }

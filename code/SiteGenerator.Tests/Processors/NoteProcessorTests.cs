@@ -23,7 +23,12 @@ public class NoteProcessorTests
         _markdownConverter = new MarkdownConverter();
         _templateRenderer = new TemplateRenderer(new FileTemplateProvider("TestData/templates"));
         _backlinks = new Backlinks();
-        _config = new Config("https://example.com", "Title", "Description", "Author");
+        _config = new Config(
+            SiteTitle: "Asbjørn Brandt",
+            BaseUrl: "https://asbjornbrandt.com",
+            Author: "Asbjørn Brandt",
+            Description: "A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming"
+        );
 
         _processor = new NoteProcessor(
             _backlinks,
