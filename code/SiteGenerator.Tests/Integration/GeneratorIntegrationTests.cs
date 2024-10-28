@@ -19,7 +19,7 @@ public sealed class GeneratorIntegrationTests : IDisposable
         _output = output;
         Directory.CreateDirectory(ActualOutputPath);
 
-        var templateRenderer = new TemplateRenderer(new FileTemplateProvider("testdata/templates"));
+        var templateRenderer = new TemplateRenderer(new FileTemplateProvider("TestData/templates"));
         _generator = new Generator(InputPath, ActualOutputPath, templateRenderer, "config.json");
     }
 
