@@ -21,7 +21,7 @@ public class NoteProcessorTests
     {
         _fileProvider = Substitute.For<IFileProvider>();
         _markdownConverter = new MarkdownConverter();
-        _templateRenderer = new TemplateRenderer(new FileTemplateProvider("testdata/templates"));
+        _templateRenderer = new TemplateRenderer(new FileTemplateProvider("TestData/templates"));
         _backlinks = new Backlinks();
         _config = new Config("https://example.com", "Title", "Description", "Author");
 
