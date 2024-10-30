@@ -30,7 +30,10 @@ public class Generator
         var fileProvider = new FileProvider();
         var markdownConverter = new MarkdownConverter();
         var config = await LoadConfigAsync();
-        var backlinks = await BacklinkCollector.CollectBacklinksAsync(fileProvider, _contentPath);
+        var backlinks = await BacklinkCollector.CollectBacklinksAsync(
+            fileProvider,
+            Path.Combine(_contentPath, "thoughts")
+        );
 
         // Process notes (from thoughts folder to notes folder)
         var noteProcessor = new NoteProcessor(
