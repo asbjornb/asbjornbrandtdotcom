@@ -33,8 +33,7 @@ public class NoteProcessor : IPageProcessor
         {
             var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
             var htmlContent = _markdownConverter.ConvertToHtml(contentFile.Content);
-            var processedHtml = AddBacklinksToHtml(htmlContent, fileName);
-            var renderedContent = RenderNoteWithTemplate(processedHtml, fileName);
+            var renderedContent = RenderNoteWithTemplate(htmlContent, fileName);
 
             if (fileName.Equals("index", StringComparison.OrdinalIgnoreCase))
             {
@@ -48,26 +47,11 @@ public class NoteProcessor : IPageProcessor
         }
     }
 
-    private string AddBacklinksToHtml(string html, string fileName)
-    {
-        var noteBacklinks = _backlinks.GetBacklinksForNote(fileName);
-        if (!noteBacklinks.Any())
-            return html;
-
-        return html
-            + "<h2>Backlinks</h2><ul>"
-            + string.Join(
-                "",
-                noteBacklinks.Select(link => $"<li><a href=\"/{link}/\">/{link}/</a></li>")
-            )
-            + "</ul>";
-    }
-
     private string RenderNoteWithTemplate(string htmlContent, string fileName)
     {
         var backlinks = _backlinks
             .GetBacklinksForNote(fileName)
-            .Select(b => new BacklinkModel($"/{b}/", b, ""))
+            .Select(b => new BacklinkModel($"/notes/{b}/", char.ToUpper(b[0]) + b[1..], ""))
             .ToList();
 
         var noteModel = new NoteModel(htmlContent, backlinks);
