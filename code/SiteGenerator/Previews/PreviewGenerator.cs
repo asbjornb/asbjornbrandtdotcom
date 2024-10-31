@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using System.Text.RegularExpressions;
+using HtmlAgilityPack;
 
 namespace SiteGenerator.Previews;
 
@@ -18,25 +19,48 @@ public class PreviewGenerator
         {
             if (node.NodeType == HtmlNodeType.Text)
             {
-                var text = node.InnerText;
-                int remainingLength = previewLength - currentLength;
+                var html = node.InnerHtml;
+                var tokens = TokenizeHtmlEntities(html);
+                var newHtmlContent = "";
 
-                if (remainingLength <= 0)
+                foreach (var token in tokens)
                 {
-                    node.ParentNode.RemoveChild(node);
-                    reachedLimit = true;
+                    int tokenLength = HtmlEntity.DeEntitize(token).Length;
+
+                    if (currentLength + tokenLength > previewLength)
+                    {
+                        reachedLimit = true;
+                        break;
+                    }
+                    else if (currentLength + tokenLength == previewLength)
+                    {
+                        // If the token is a space, don't include it
+                        if (HtmlEntity.DeEntitize(token) == " ")
+                        {
+                            reachedLimit = true;
+                            break;
+                        }
+                        else
+                        {
+                            newHtmlContent += token;
+                            currentLength += tokenLength;
+                            reachedLimit = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        newHtmlContent += token;
+                        currentLength += tokenLength;
+                    }
                 }
-                else if (text.Length > remainingLength)
+
+                if (reachedLimit)
                 {
-                    node.InnerHtml =
-                        HtmlEntity.Entitize(text.Substring(0, remainingLength)) + "...";
-                    currentLength += remainingLength;
-                    reachedLimit = true;
+                    newHtmlContent += "...";
                 }
-                else
-                {
-                    currentLength += text.Length;
-                }
+
+                node.InnerHtml = newHtmlContent;
             }
             else if (node.HasChildNodes)
             {
@@ -57,5 +81,20 @@ public class PreviewGenerator
         TruncateNode(doc.DocumentNode);
 
         return doc.DocumentNode.InnerHtml;
+    }
+
+    // Helper method to tokenize text into characters and entities
+    private static List<string> TokenizeHtmlEntities(string html)
+    {
+        var tokens = new List<string>();
+        var regex = new Regex(@"&\w+;|&#\d+;|&#x[0-9a-fA-F]+;|.", RegexOptions.Singleline);
+        var matches = regex.Matches(html);
+
+        foreach (Match match in matches)
+        {
+            tokens.Add(match.Value);
+        }
+
+        return tokens;
     }
 }
