@@ -5,11 +5,15 @@ namespace SiteGenerator.Previews;
 
 public class PreviewGenerator
 {
+    private const int PreviewLength = 200;
+
     public static string GeneratePreview(string htmlContent)
     {
-        const int previewLength = 200;
         var doc = new HtmlDocument();
         doc.LoadHtml(htmlContent);
+
+        // Remove comment and script nodes before processing
+        RemoveNodes(doc.DocumentNode, ["script"], [HtmlNodeType.Comment]);
 
         int currentLength = 0;
         bool reachedLimit = false;
@@ -27,12 +31,12 @@ public class PreviewGenerator
                 {
                     int tokenLength = HtmlEntity.DeEntitize(token).Length;
 
-                    if (currentLength + tokenLength > previewLength)
+                    if (currentLength + tokenLength > PreviewLength)
                     {
                         reachedLimit = true;
                         break;
                     }
-                    else if (currentLength + tokenLength == previewLength)
+                    else if (currentLength + tokenLength == PreviewLength)
                     {
                         // If the token is a space, don't include it
                         if (HtmlEntity.DeEntitize(token) == " ")
@@ -96,5 +100,25 @@ public class PreviewGenerator
         }
 
         return tokens;
+    }
+
+    // Helper method to remove specified nodes
+    private static void RemoveNodes(
+        HtmlNode node,
+        string[] tagsToRemove,
+        HtmlNodeType[] nodeTypesToRemove
+    )
+    {
+        foreach (var child in node.ChildNodes.ToList())
+        {
+            if (tagsToRemove.Contains(child.Name) || nodeTypesToRemove.Contains(child.NodeType))
+            {
+                node.RemoveChild(child);
+            }
+            else if (child.HasChildNodes)
+            {
+                RemoveNodes(child, tagsToRemove, nodeTypesToRemove);
+            }
+        }
     }
 }

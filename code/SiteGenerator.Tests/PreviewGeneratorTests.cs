@@ -104,6 +104,19 @@ public class PreviewGeneratorTests
     }
 
     [Fact]
+    public void GeneratePreview_ShouldExcludeNonTextNodes_LikeCommentsAndScripts()
+    {
+        // Arrange
+        var htmlContent = "<p>This is text.</p><!-- Comment --><script>alert('Hello');</script>";
+
+        // Act
+        var result = PreviewGenerator.GeneratePreview(htmlContent);
+
+        // Assert
+        result.Should().Be("<p>This is text.</p>");
+    }
+
+    [Fact]
     public void GeneratePreview_ShouldNotCutOffInMiddleOfHtmlEntity()
     {
         // Arrange
