@@ -1,4 +1,5 @@
 ﻿using SiteGenerator.BacklinksProcessing;
+using SiteGenerator.Previews;
 using SiteGenerator.Templates;
 using SiteGenerator.Templates.MetadataModels;
 
@@ -29,11 +30,20 @@ public class NoteProcessor : IPageProcessor
 
     public async Task ProcessAsync(string inputPath, string outputPath)
     {
-        await foreach (var contentFile in _folderReader.GetFileContents(inputPath, "*.md"))
+        // Load all markdown files into memory
+        var allNotesContent = await LoadAllMarkdownFilesAsync(inputPath);
+
+        // Generate previews for all notes
+        var notePreviews = GenerateNotePreviews(allNotesContent);
+
+        // Process each note using the in-memory content and previews
+        foreach (var kvp in allNotesContent)
         {
-            var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
-            var htmlContent = _markdownConverter.ConvertToHtml(contentFile.Content);
-            var renderedContent = RenderNoteWithTemplate(htmlContent, fileName);
+            var fileName = kvp.Key;
+            var markdownContent = kvp.Value;
+
+            var htmlContent = _markdownConverter.ConvertToHtml(markdownContent);
+            var renderedContent = RenderNoteWithTemplate(htmlContent, fileName, notePreviews);
 
             if (fileName.Equals("index", StringComparison.OrdinalIgnoreCase))
             {
@@ -47,11 +57,71 @@ public class NoteProcessor : IPageProcessor
         }
     }
 
-    private string RenderNoteWithTemplate(string htmlContent, string fileName)
+    private async Task<Dictionary<string, string>> LoadAllMarkdownFilesAsync(string inputPath)
     {
-        var backlinks = _backlinks
-            .GetBacklinksForNote(fileName)
-            .Select(b => new BacklinkModel($"/notes/{b}/", char.ToUpper(b[0]) + b[1..], ""))
+        var files = new Dictionary<string, string>();
+
+        await foreach (var contentFile in _folderReader.GetFileContents(inputPath, "*.md"))
+        {
+            var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
+            files[fileName] = contentFile.Content;
+        }
+
+        return files;
+    }
+
+    private Dictionary<string, string> GenerateNotePreviews(
+        Dictionary<string, string> allNotesContent
+    )
+    {
+        var previews = new Dictionary<string, string>();
+
+        foreach (var kvp in allNotesContent)
+        {
+            var fileName = kvp.Key;
+            var markdownContent = kvp.Value;
+
+            // Convert markdown to HTML
+            var htmlContent = _markdownConverter.ConvertToHtml(markdownContent);
+
+            // Generate preview
+            var previewHtml = PreviewGenerator.GeneratePreview(htmlContent);
+
+            // Store the preview
+            previews[fileName] = previewHtml;
+        }
+
+        return previews;
+    }
+
+    private string RenderNoteWithTemplate(
+        string htmlContent,
+        string fileName,
+        Dictionary<string, string> notePreviews
+    )
+    {
+        var backlinksList = _backlinks.GetBacklinksForNote(fileName);
+
+        var backlinks = backlinksList
+            .Select(backlinkFileName =>
+            {
+                // Retrieve the preview from the dictionary
+                if (notePreviews.TryGetValue(backlinkFileName, out var previewHtml))
+                {
+                    return new BacklinkModel(
+                        Url: $"/notes/{backlinkFileName}/",
+                        Title: char.ToUpper(backlinkFileName[0]) + backlinkFileName[1..],
+                        PreviewHtml: previewHtml
+                    );
+                }
+                else
+                {
+                    // This shouldn't happen since we assume all backlinks exist
+                    // But you can handle this case if necessary
+                    return null;
+                }
+            })
+            .Where(backlink => backlink != null)
             .ToList();
 
         var noteModel = new NoteModel(htmlContent, backlinks);

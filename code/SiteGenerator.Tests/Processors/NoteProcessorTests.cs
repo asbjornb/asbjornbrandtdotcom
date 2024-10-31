@@ -69,14 +69,23 @@ public class NoteProcessorTests
         // Arrange
         var inputPath = "input";
         var outputPath = "output";
-        var markdown = "# Test";
+        var testMarkdown = "# Test";
+        var otherNoteMarkdown = "# Other Note";
+        var anotherNoteMarkdown = "# Another Note";
 
         _backlinks.AddBacklink("test", "other-note");
         _backlinks.AddBacklink("test", "another-note");
 
         _fileProvider
             .GetFileContents(inputPath, "*.md")
-            .Returns(new[] { new ContentFile("test.md", markdown) }.ToAsyncEnumerable());
+            .Returns(
+                new[]
+                {
+                    new ContentFile("test.md", testMarkdown),
+                    new ContentFile("other-note.md", otherNoteMarkdown),
+                    new ContentFile("another-note.md", anotherNoteMarkdown)
+                }.ToAsyncEnumerable()
+            );
 
         // Act
         await _processor.ProcessAsync(inputPath, outputPath);
