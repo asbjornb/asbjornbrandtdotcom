@@ -97,6 +97,19 @@ public sealed class GeneratorIntegrationTests : IDisposable
         );
     }
 
+    [Fact]
+    public async Task GeneratePage_MatchesExpectedOutput()
+    {
+        // Act
+        await _generator.GenerateSiteAsync();
+
+        // Compare normalized contents
+        await CompareNormalizedContent(
+            Path.Combine(ActualOutputPath, "now", "index.html"),
+            Path.Combine(ExpectedOutputPath, "now", "index.html")
+        );
+    }
+
     private static async Task CompareNormalizedContent(
         string actualFilePath,
         string expectedFilePath

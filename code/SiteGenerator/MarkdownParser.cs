@@ -30,6 +30,6 @@ public class MarkdownParser
             }
         );
 
-        return Markdown.ToHtml(markdown, _pipeline);
+        return EmojiOne.EmojiOne.ShortnameToUnicode(Markdown.ToHtml(markdown, _pipeline));
     }
 }
