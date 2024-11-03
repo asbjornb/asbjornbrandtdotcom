@@ -62,7 +62,7 @@ public class MarkdownParserTests
 
         // Assert
         string expectedHtml =
-            "<p>This is a <a href=\"/test/\">test</a> of Obsidian-style links.</p>\n";
+            "<p>This is a <a href=\"/notes/test/\">test</a> of Obsidian-style links.</p>\n";
         result.Should().Be(expectedHtml);
     }
 
@@ -95,7 +95,7 @@ public class MarkdownParserTests
 
         // Assert
         string expectedHtml =
-            "<p>Here's an <a href=\"/obsidian-link/\">obsidian link</a> and a <a href=\"https://example.com\">regular link</a>.</p>\n";
+            "<p>Here's an <a href=\"/notes/obsidian-link/\">obsidian link</a> and a <a href=\"https://example.com\">regular link</a>.</p>\n";
         result.Should().Be(expectedHtml);
     }
 
@@ -111,7 +111,7 @@ public class MarkdownParserTests
 
         // Assert
         string expectedHtml =
-            "<p>This is a link to <a href=\"/note-title/\">note title</a> and another to <a href=\"/another-note/\">another note</a>.</p>\n";
+            "<p>This is a link to <a href=\"/notes/note-title/\">note title</a> and another to <a href=\"/notes/another-note/\">another note</a>.</p>\n";
         result.Should().Be(expectedHtml);
     }
 

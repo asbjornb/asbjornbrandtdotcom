@@ -26,7 +26,7 @@ public class MarkdownParser
             {
                 var noteTitle = match.Groups[1].Value;
                 var displayTitle = noteTitle.Replace("-", " ");
-                return $"[{displayTitle}](/{noteTitle}/)";
+                return $"[{displayTitle}](/notes/{noteTitle}/)";
             }
         );
 
