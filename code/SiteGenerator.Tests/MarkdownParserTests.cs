@@ -30,9 +30,9 @@ public class MarkdownParserTests
 
         // Assert
         string expectedHtml = """
-            <h1 id="example-markdown-file">Example Markdown File</h1>
+            <h1>Example Markdown File</h1>
             <p>This is an example Markdown file that will be parsed to HTML.</p>
-            <h2 id="features">Features</h2>
+            <h2>Features</h2>
             <ul>
             <li>Lists</li>
             <li><strong>Bold text</strong></li>
@@ -116,9 +116,9 @@ public class MarkdownParserTests
     }
 
     [Theory]
-    [InlineData("# Header 1", "<h1 id=\"header-1\">Header 1</h1>\n")]
-    [InlineData("## Header 2", "<h2 id=\"header-2\">Header 2</h2>\n")]
-    [InlineData("### Header 3", "<h3 id=\"header-3\">Header 3</h3>\n")]
+    [InlineData("# Header 1", "<h1>Header 1</h1>\n")]
+    [InlineData("## Header 2", "<h2>Header 2</h2>\n")]
+    [InlineData("### Header 3", "<h3>Header 3</h3>\n")]
     public void ParseToHtml_ShouldConvertHeaders(string markdown, string expectedHtml)
     {
         // Arrange
@@ -233,9 +233,9 @@ public class MarkdownParserTests
 
         // Assert
         string expectedHtml = """
-            <h1 id="main-header">Main Header</h1>
+            <h1>Main Header</h1>
             <p>This is a paragraph with <strong>bold</strong> and <em>italic</em> text.</p>
-            <h2 id="subheader">Subheader</h2>
+            <h2>Subheader</h2>
             <p>Here's some <code>inline code</code> and a <a href="https://example.com">link</a>.</p>
             <pre><code class="language-csharp">public class Example {}
             </code></pre>

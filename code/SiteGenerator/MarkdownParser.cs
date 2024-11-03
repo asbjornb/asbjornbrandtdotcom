@@ -9,7 +9,11 @@ public class MarkdownParser
 
     public MarkdownParser()
     {
-        _pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+        _pipeline = new MarkdownPipelineBuilder()
+            .UseAutoLinks()
+            .UseEmphasisExtras()
+            .UseTaskLists()
+            .Build();
     }
 
     public string ParseToHtml(string markdown)

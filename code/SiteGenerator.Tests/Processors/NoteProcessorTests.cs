@@ -60,7 +60,7 @@ public class NoteProcessorTests
             .Received(1)
             .WriteFileAsync(
                 Arg.Is<string>(s => s == expectedPath),
-                Arg.Is<string>(s => s.Contains("<h1 id=\"test\">Test</h1>"))
+                Arg.Is<string>(s => s.Contains("<h1>Test</h1>"))
             );
     }
 
