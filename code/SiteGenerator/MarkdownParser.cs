@@ -12,17 +12,19 @@ public class MarkdownParser
         _pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
     }
 
-    public string ParseToHtml(string markdown, Dictionary<string, string> noteMapping)
+    public string ParseToHtml(string markdown)
     {
-        // Replace [[note-title]] with [note-title](note-title.html)
-        foreach (var note in noteMapping)
-        {
-            markdown = Regex.Replace(
-                markdown,
-                $@"\[\[{Regex.Escape(note.Key)}\]\]",
-                $"[{note.Key}]({note.Value})"
-            );
-        }
+        // Replace [[note-title]] with [note title](/note-title/)
+        markdown = Regex.Replace(
+            markdown,
+            @"\[\[(.+?)\]\]",
+            match =>
+            {
+                var noteTitle = match.Groups[1].Value;
+                var displayTitle = noteTitle.Replace("-", " ");
+                return $"[{displayTitle}](/{noteTitle}/)";
+            }
+        );
 
         return Markdown.ToHtml(markdown, _pipeline);
     }

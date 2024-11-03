@@ -23,10 +23,9 @@ public class MarkdownParserTests
 
             > This is a blockquote.
             """;
-        var noteMapping = new Dictionary<string, string>();
 
         // Act
-        string result = parser.ParseToHtml(markdown, noteMapping);
+        string result = parser.ParseToHtml(markdown);
 
         // Assert
         string expectedHtml = """
@@ -57,14 +56,13 @@ public class MarkdownParserTests
         // Arrange
         var parser = new MarkdownParser();
         var markdown = "This is a [[test]] of Obsidian-style links.";
-        var noteMapping = new Dictionary<string, string> { { "test", "notes/test.html" } };
 
         // Act
-        string result = parser.ParseToHtml(markdown, noteMapping);
+        string result = parser.ParseToHtml(markdown);
 
         // Assert
         string expectedHtml =
-            "<p>This is a <a href=\"notes/test.html\">test</a> of Obsidian-style links.</p>\n";
+            "<p>This is a <a href=\"/test/\">test</a> of Obsidian-style links.</p>\n";
         Assert.Equal(expectedHtml, result);
     }
 
@@ -75,10 +73,9 @@ public class MarkdownParserTests
         var parser = new MarkdownParser();
         var markdown =
             "This is a [regular link](https://example.com) and an [internal link](internal-page.md).";
-        var noteMapping = new Dictionary<string, string>();
 
         // Act
-        string result = parser.ParseToHtml(markdown, noteMapping);
+        string result = parser.ParseToHtml(markdown);
 
         // Assert
         string expectedHtml =
@@ -92,17 +89,13 @@ public class MarkdownParserTests
         // Arrange
         var parser = new MarkdownParser();
         var markdown = "Here's an [[obsidian-link]] and a [regular link](https://example.com).";
-        var noteMapping = new Dictionary<string, string>
-        {
-            { "obsidian-link", "notes/obsidian-link.html" }
-        };
 
         // Act
-        string result = parser.ParseToHtml(markdown, noteMapping);
+        string result = parser.ParseToHtml(markdown);
 
         // Assert
         string expectedHtml =
-            "<p>Here's an <a href=\"notes/obsidian-link.html\">obsidian-link</a> and a <a href=\"https://example.com\">regular link</a>.</p>\n";
+            "<p>Here's an <a href=\"/obsidian-link/\">obsidian link</a> and a <a href=\"https://example.com\">regular link</a>.</p>\n";
         Assert.Equal(expectedHtml, result);
     }
 }
