@@ -8,16 +8,19 @@ public class PageProcessor : IPageProcessor
 {
     private readonly TemplateRenderer _templateRenderer;
     private readonly IFileProvider _folderReader;
+    private readonly MarkdownParser _markdownParser;
     private readonly Config _config;
 
     public PageProcessor(
         TemplateRenderer templateRenderer,
         IFileProvider folderReader,
+        MarkdownParser markdownParser,
         Config config
     )
     {
         _templateRenderer = templateRenderer;
         _folderReader = folderReader;
+        _markdownParser = markdownParser;
         _config = config;
     }
 
@@ -25,13 +28,12 @@ public class PageProcessor : IPageProcessor
     {
         await foreach (var contentFile in _folderReader.GetFileContents(inputPath, "*.md"))
         {
-            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-            var htmlContent = Markdown.ToHtml(contentFile.Content, pipeline);
+            var htmlContent = _markdownParser.ParseToHtml(contentFile.Content);
 
             var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
             var pageUrl = fileName.Equals("index", StringComparison.OrdinalIgnoreCase)
                 ? _config.BaseUrl
-                : $"{_config.BaseUrl}/{fileName}";
+                : $"{_config.BaseUrl}/{fileName}/";
 
             var renderedContent = _templateRenderer.RenderPage(
                 new LayoutModel(

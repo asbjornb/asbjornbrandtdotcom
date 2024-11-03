@@ -49,7 +49,12 @@ public class Generator
         );
 
         // Process pages (from pages folder to root)
-        var pageProcessor = new PageProcessor(_templateRenderer, fileProvider, config);
+        var pageProcessor = new PageProcessor(
+            _templateRenderer,
+            fileProvider,
+            markdownParser,
+            config
+        );
         await pageProcessor.ProcessAsync(Path.Combine(_contentPath, "pages"), _outputPath);
     }
 
