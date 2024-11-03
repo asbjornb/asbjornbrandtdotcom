@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Markdig;
 
 namespace SiteGenerator;
@@ -25,22 +25,5 @@ public class MarkdownParser
         }
 
         return Markdown.ToHtml(markdown, _pipeline);
-    }
-
-    public async Task<string> ParseFileToHtmlAsync(
-        string filePath,
-        Dictionary<string, string> noteMapping
-    )
-    {
-        try
-        {
-            string markdown = await File.ReadAllTextAsync(filePath);
-            return ParseToHtml(markdown, noteMapping);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error parsing file {filePath}: {ex.Message}");
-            return string.Empty;
-        }
     }
 }
