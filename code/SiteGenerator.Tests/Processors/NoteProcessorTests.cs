@@ -10,7 +10,7 @@ namespace SiteGenerator.Tests.Processors;
 public class NoteProcessorTests
 {
     private readonly IFileProvider _fileProvider;
-    private readonly MarkdownConverter _markdownConverter;
+    private readonly MarkdownParser _markdownParser;
     private readonly TemplateRenderer _templateRenderer;
     private readonly Backlinks _backlinks;
     private readonly Config _config;
@@ -20,7 +20,7 @@ public class NoteProcessorTests
     public NoteProcessorTests()
     {
         _fileProvider = Substitute.For<IFileProvider>();
-        _markdownConverter = new MarkdownConverter();
+        _markdownParser = new MarkdownParser();
         _templateRenderer = new TemplateRenderer(new FileTemplateProvider("TestData/templates"));
         _backlinks = new Backlinks();
         _config = new Config(
@@ -34,7 +34,7 @@ public class NoteProcessorTests
             _backlinks,
             _templateRenderer,
             _fileProvider,
-            _markdownConverter,
+            _markdownParser,
             _config
         );
     }
@@ -55,11 +55,12 @@ public class NoteProcessorTests
         await _processor.ProcessAsync(inputPath, outputPath);
 
         // Assert
+        var expectedPath = Path.Combine(outputPath, "test", "index.html");
         await _fileProvider
             .Received(1)
             .WriteFileAsync(
-                Arg.Is<string>(s => s == Path.Combine(outputPath, "test", "index.html")),
-                Arg.Is<string>(s => s.Contains("<h1>Test</h1>"))
+                Arg.Is<string>(s => s == expectedPath),
+                Arg.Is<string>(s => s.Contains("<h1 id=\"test\">Test</h1>"))
             );
     }
 

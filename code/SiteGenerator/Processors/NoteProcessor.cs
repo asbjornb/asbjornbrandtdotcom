@@ -10,21 +10,21 @@ public class NoteProcessor : IPageProcessor
     private readonly Backlinks _backlinks;
     private readonly TemplateRenderer _templateRenderer;
     private readonly IFileProvider _folderReader;
-    private readonly IMarkdownConverter _markdownConverter;
+    private readonly MarkdownParser _markdownParser;
     private readonly Config _config;
 
     public NoteProcessor(
         Backlinks backlinks,
         TemplateRenderer templateRenderer,
         IFileProvider folderReader,
-        IMarkdownConverter markdownConverter,
+        MarkdownParser markdownParser,
         Config config
     )
     {
         _backlinks = backlinks;
         _templateRenderer = templateRenderer;
         _folderReader = folderReader;
-        _markdownConverter = markdownConverter;
+        _markdownParser = markdownParser;
         _config = config;
     }
 
@@ -42,7 +42,7 @@ public class NoteProcessor : IPageProcessor
             var fileName = kvp.Key;
             var markdownContent = kvp.Value;
 
-            var htmlContent = _markdownConverter.ConvertToHtml(markdownContent);
+            var htmlContent = _markdownParser.ParseToHtml(markdownContent);
             var renderedContent = RenderNoteWithTemplate(htmlContent, fileName, notePreviews);
 
             if (fileName.Equals("index", StringComparison.OrdinalIgnoreCase))
@@ -82,7 +82,7 @@ public class NoteProcessor : IPageProcessor
             var markdownContent = kvp.Value;
 
             // Convert markdown to HTML
-            var htmlContent = _markdownConverter.ConvertToHtml(markdownContent);
+            var htmlContent = _markdownParser.ParseToHtml(markdownContent);
 
             // Generate preview
             var previewHtml = PreviewGenerator.GeneratePreview(htmlContent);

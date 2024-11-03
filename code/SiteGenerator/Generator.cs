@@ -28,7 +28,7 @@ public class Generator
     public async Task GenerateSiteAsync()
     {
         var fileProvider = new FileProvider();
-        var markdownConverter = new MarkdownConverter();
+        var markdownParser = new MarkdownParser();
         var config = await LoadConfigAsync();
         var backlinks = await BacklinkCollector.CollectBacklinksAsync(
             fileProvider,
@@ -40,7 +40,7 @@ public class Generator
             backlinks,
             _templateRenderer,
             fileProvider,
-            markdownConverter,
+            markdownParser,
             config
         );
         await noteProcessor.ProcessAsync(
