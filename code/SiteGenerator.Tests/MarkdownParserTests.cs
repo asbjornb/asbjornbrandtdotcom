@@ -98,4 +98,20 @@ public class MarkdownParserTests
             "<p>Here's an <a href=\"/obsidian-link/\">obsidian link</a> and a <a href=\"https://example.com\">regular link</a>.</p>\n";
         Assert.Equal(expectedHtml, result);
     }
+
+    [Fact]
+    public void ParseToHtml_ShouldReplaceHyphensWithSpacesInLinkTitles()
+    {
+        // Arrange
+        var parser = new MarkdownParser();
+        var markdown = "This is a link to [[note-title]] and another to [[another-note]].";
+
+        // Act
+        string result = parser.ParseToHtml(markdown);
+
+        // Assert
+        string expectedHtml =
+            "<p>This is a link to <a href=\"/note-title/\">note title</a> and another to <a href=\"/another-note/\">another note</a>.</p>\n";
+        Assert.Equal(expectedHtml, result);
+    }
 }
