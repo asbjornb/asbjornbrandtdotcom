@@ -103,12 +103,22 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
     }
 
     [Fact]
-    public async Task GeneratePage_MatchesExpectedOutput()
+    public async Task GenerateNowPage_MatchesExpectedOutput()
     {
         // Compare normalized contents
         await CompareNormalizedContent(
             Path.Combine(ActualOutputPath, "now", "index.html"),
             Path.Combine(ExpectedOutputPath, "now", "index.html")
+        );
+    }
+
+    [Fact]
+    public async Task GenerateInspirationPage_MatchesExpectedOutput()
+    {
+        // Compare normalized contents
+        await CompareNormalizedContent(
+            Path.Combine(ActualOutputPath, "inspiration", "index.html"),
+            Path.Combine(ExpectedOutputPath, "inspiration", "index.html")
         );
     }
 
