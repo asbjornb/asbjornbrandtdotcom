@@ -8,7 +8,7 @@ using Xunit.Abstractions;
 
 namespace SiteGenerator.Tests.Integration;
 
-public sealed class GeneratorIntegrationTests : IDisposable
+public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
 {
     private readonly ITestOutputHelper _output;
     private readonly Generator _generator;
@@ -25,6 +25,18 @@ public sealed class GeneratorIntegrationTests : IDisposable
         _generator = new Generator(InputPath, ActualOutputPath, templateRenderer, "config.json");
     }
 
+    public async Task InitializeAsync()
+    {
+        // Generate all files once before any tests run
+        await _generator.GenerateSiteAsync();
+    }
+
+    public Task DisposeAsync()
+    {
+        // Cleanup async resources if necessary
+        return Task.CompletedTask;
+    }
+
     public void Dispose()
     {
         if (Directory.Exists(ActualOutputPath))
@@ -36,7 +48,6 @@ public sealed class GeneratorIntegrationTests : IDisposable
     [Fact]
     public async Task GenerateSite_CompletesWithinReasonableTime()
     {
-        // Arrange
         var stopwatch = new Stopwatch();
 
         // Act
@@ -50,11 +61,8 @@ public sealed class GeneratorIntegrationTests : IDisposable
     }
 
     [Fact]
-    public async Task GenerateSite_CreatesAllExpectedFiles()
+    public void GenerateSite_CreatesAllExpectedFiles()
     {
-        // Act
-        await _generator.GenerateSiteAsync();
-
         // Assert
         var expectedFiles = Directory
             .GetFiles(ExpectedOutputPath, "*.html", SearchOption.AllDirectories)
@@ -87,9 +95,6 @@ public sealed class GeneratorIntegrationTests : IDisposable
     [Fact]
     public async Task GenerateNote_MatchesExpectedOutput()
     {
-        // Act
-        await _generator.GenerateSiteAsync();
-
         // Compare normalized contents
         await CompareNormalizedContent(
             Path.Combine(ActualOutputPath, "notes", "csharp", "index.html"),
@@ -100,9 +105,6 @@ public sealed class GeneratorIntegrationTests : IDisposable
     [Fact]
     public async Task GeneratePage_MatchesExpectedOutput()
     {
-        // Act
-        await _generator.GenerateSiteAsync();
-
         // Compare normalized contents
         await CompareNormalizedContent(
             Path.Combine(ActualOutputPath, "now", "index.html"),
@@ -115,14 +117,12 @@ public sealed class GeneratorIntegrationTests : IDisposable
         string expectedFilePath
     )
     {
-        // Read and normalize content
         var actualContent = await File.ReadAllTextAsync(actualFilePath);
         var expectedContent = await File.ReadAllTextAsync(expectedFilePath);
 
         var normalizedActual = NormalizeContent(actualContent).ToList();
         var normalizedExpected = NormalizeContent(expectedContent).ToList();
 
-        // Perform line-by-line comparison
         int mismatchLine = -1;
         using (new AssertionScope())
         {
@@ -131,11 +131,10 @@ public sealed class GeneratorIntegrationTests : IDisposable
                 if (normalizedActual[i] != normalizedExpected[i])
                 {
                     mismatchLine = i;
-                    break; // Break the loop on the first mismatch
+                    break;
                 }
             }
 
-            // Report the first error found
             if (mismatchLine > -1)
             {
                 normalizedActual[mismatchLine]
@@ -146,7 +145,6 @@ public sealed class GeneratorIntegrationTests : IDisposable
                     );
             }
 
-            // Final assertion to check if the entire content matches
             normalizedActual
                 .Should()
                 .BeEquivalentTo(
@@ -158,39 +156,35 @@ public sealed class GeneratorIntegrationTests : IDisposable
 
     private static IEnumerable<string> NormalizeContent(string content)
     {
-        // Normalize list items by removing <p> tags within <li>, as Markdig adds <p> for best-practice formatting.
-        // This keeps test comparisons focused on content rather than HTML structural differences.
-        content = content.Replace("\r\n", "\n"); // Standardize newline format
-        content = Regex.Replace(content, @"\n\s*</li>", "</li>"); // Remove newlines before <li>
-        content = Regex.Replace(content, @"<li>\s*\n", "<li>"); // Remove newlines after </li>
-        content = Regex.Replace(content, @"<li><p>(.*?)</p></li>", "<li>$1</li>"); // Remove <p> tags within <li>
-        // Remove newlines before and after <ul>
+        content = content.Replace("\r\n", "\n");
+        content = Regex.Replace(content, @"\n\s*</li>", "</li>");
+        content = Regex.Replace(content, @"<li>\s*\n", "<li>");
+        content = Regex.Replace(content, @"<li><p>(.*?)</p></li>", "<li>$1</li>");
         content = Regex.Replace(content, @"<ul>\s*\n", "<ul>");
         content = Regex.Replace(content, @"\n\s*</ul>", "</ul>");
 
-        // Add normalization for link text with hyphen vs. space differences
         content = Regex.Replace(
             content,
             @"<a href=""(.*?)"">(.*?)</a>",
             match =>
             {
                 string href = match.Groups[1].Value;
-                string linkText = match.Groups[2].Value.Replace(" ", "-"); // Replace space with hyphen in link text
+                string linkText = match.Groups[2].Value.Replace(" ", "-");
                 return $"<a href=\"{href}\">{linkText}</a>";
             }
         );
 
         return Regex
-            .Replace(content, @"<li><p>(.*?)</p></li>", "<li>$1</li>") // Remove <p> tags within <li>
-            .Replace("&#248;", "ø") // Replace specific HTML entities with equivalent characters
+            .Replace(content, @"<li><p>(.*?)</p></li>", "<li>$1</li>")
+            .Replace("&#248;", "ø")
             .Replace("&#198;", "Æ")
             .Replace("&#230;", "æ")
             .Replace("&#216;", "Ø")
             .Replace("&#229;", "å")
             .Replace("&#197;", "Å")
-            .Replace("&#8226;", "•") // Replace bullet character entity
+            .Replace("&#8226;", "•")
             .Split('\n')
-            .Select(line => line.Trim()) // Trim whitespace from each line for cleaner comparisons
-            .Where(line => !string.IsNullOrEmpty(line)); // Ignore blank lines for focused comparison
+            .Select(line => line.Trim())
+            .Where(line => !string.IsNullOrEmpty(line));
     }
 }
