@@ -13,6 +13,7 @@ public class MarkdownParser
             .UseAutoLinks()
             .UseEmphasisExtras()
             .UseTaskLists()
+            .UseEmojiAndSmiley()
             .Build();
     }
 
@@ -30,6 +31,6 @@ public class MarkdownParser
             }
         );
 
-        return EmojiOne.EmojiOne.ShortnameToUnicode(Markdown.ToHtml(markdown, _pipeline));
+        return Markdown.ToHtml(markdown, _pipeline);
     }
 }
