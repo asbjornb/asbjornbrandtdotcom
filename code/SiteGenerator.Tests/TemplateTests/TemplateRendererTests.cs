@@ -56,7 +56,7 @@ public class TemplateRendererTests
         var backlinks = new List<BacklinkModel>
         {
             new(Url: "/note1.html", Title: "Note 1", PreviewHtml: "<p>Preview of Note 1</p>"),
-            new(Url: "/note2.html", Title: "Note 2", PreviewHtml: "<p>Preview of Note 2</p>")
+            new(Url: "/note2.html", Title: "Note 2", PreviewHtml: "<p>Preview of Note 2</p>"),
         };
 
         var noteData = new NoteModel(noteContent, backlinks);

@@ -84,7 +84,7 @@ public class NoteProcessorTests
                 {
                     new ContentFile("test.md", testMarkdown),
                     new ContentFile("other-note.md", otherNoteMarkdown),
-                    new ContentFile("another-note.md", anotherNoteMarkdown)
+                    new ContentFile("another-note.md", anotherNoteMarkdown),
                 }.ToAsyncEnumerable()
             );
 
@@ -109,7 +109,7 @@ public class NoteProcessorTests
         var files = new[]
         {
             new ContentFile("note1.md", "# Note 1"),
-            new ContentFile("note2.md", "# Note 2")
+            new ContentFile("note2.md", "# Note 2"),
         };
 
         _fileProvider.GetFileContents(inputPath, "*.md").Returns(files.ToAsyncEnumerable());

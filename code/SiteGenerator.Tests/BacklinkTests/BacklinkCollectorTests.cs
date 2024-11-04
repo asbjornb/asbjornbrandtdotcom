@@ -15,7 +15,7 @@ public class BacklinkCollectorTests
         var testFiles = new List<ContentFile>
         {
             new ContentFile("Note1.md", "[[Note2]]"),
-            new ContentFile("Note2.md", "[[Note1]]")
+            new ContentFile("Note2.md", "[[Note1]]"),
         };
         folderReader
             .GetFileContents(Arg.Any<string>(), "*.md")
