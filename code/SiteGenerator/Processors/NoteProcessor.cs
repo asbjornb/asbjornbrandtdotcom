@@ -111,7 +111,7 @@ public class NoteProcessor : IPageProcessor
                 {
                     return new BacklinkModel(
                         Url: $"/notes/{backlinkFileName}/",
-                        Title: char.ToUpper(backlinkFileName[0]) + backlinkFileName[1..],
+                        Title: FormatFileName(backlinkFileName, '-'),
                         PreviewHtml: previewHtml
                     );
                 }
@@ -144,11 +144,11 @@ public class NoteProcessor : IPageProcessor
         return h1Match.Success ? h1Match.Groups[1].Value : null;
     }
 
-    private static string FormatFileName(string fileName)
+    private static string FormatFileName(string fileName, char join = ' ')
     {
         // Fallback if no h1 is found - more sophisticated filename formatting
         return string.Join(
-            " ",
+            join,
             fileName.Split('-', '_').Select(word => char.ToUpper(word[0]) + word[1..])
         );
     }

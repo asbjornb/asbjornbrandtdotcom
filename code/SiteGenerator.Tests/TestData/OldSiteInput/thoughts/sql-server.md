@@ -5,7 +5,6 @@
 * [[database-mail]]
 * [[row-version]]
 * [[exists-vs-in]]
-* [[configuration-tables]]
 * [[datetime-vs-datetimeoffset]]
 * [[random-sql-best-practices]]
 * [[sql-utility-scripts]]

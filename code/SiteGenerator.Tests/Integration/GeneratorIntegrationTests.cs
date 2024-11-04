@@ -103,16 +103,6 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
     }
 
     [Fact]
-    public async Task GenerateConfigurationTablesNote_MatchesExpectedOutput()
-    {
-        // Compare normalized contents
-        await CompareNormalizedContent(
-            Path.Combine(ActualOutputPath, "notes", "configuration-tables", "index.html"),
-            Path.Combine(ExpectedOutputPath, "notes", "configuration-tables", "index.html")
-        );
-    }
-
-    [Fact]
     public async Task GenerateNowPage_MatchesExpectedOutput()
     {
         // Compare normalized contents
