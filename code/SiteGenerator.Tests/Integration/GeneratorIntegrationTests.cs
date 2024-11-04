@@ -93,12 +93,22 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
     }
 
     [Fact]
-    public async Task GenerateNote_MatchesExpectedOutput()
+    public async Task GenerateCSharpNote_MatchesExpectedOutput()
     {
         // Compare normalized contents
         await CompareNormalizedContent(
             Path.Combine(ActualOutputPath, "notes", "csharp", "index.html"),
             Path.Combine(ExpectedOutputPath, "notes", "csharp", "index.html")
+        );
+    }
+
+    [Fact]
+    public async Task GenerateConfigurationTablesNote_MatchesExpectedOutput()
+    {
+        // Compare normalized contents
+        await CompareNormalizedContent(
+            Path.Combine(ActualOutputPath, "notes", "configuration-tables", "index.html"),
+            Path.Combine(ExpectedOutputPath, "notes", "configuration-tables", "index.html")
         );
     }
 

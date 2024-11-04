@@ -1,4 +1,5 @@
-﻿using SiteGenerator.BacklinksProcessing;
+﻿using System.Text.RegularExpressions;
+using SiteGenerator.BacklinksProcessing;
 using SiteGenerator.Previews;
 using SiteGenerator.Templates;
 using SiteGenerator.Templates.MetadataModels;
@@ -127,12 +128,29 @@ public class NoteProcessor : IPageProcessor
         var noteModel = new NoteModel(htmlContent, backlinks);
         var pageUrl = $"{_config.BaseUrl}/notes/{fileName}/";
 
-        var titleName = char.ToUpper(fileName[0]) + fileName[1..];
+        // Extract title from first header in the content
+        var titleName = ExtractTitle(htmlContent) ?? FormatFileName(fileName);
         var pageTitle = $"{titleName} • {_config.Author}'s Notes";
 
         var layoutModel = new LayoutModel(pageTitle, _config.Description, "article", pageUrl, null);
 
         return _templateRenderer.RenderNote(noteModel, layoutModel);
+    }
+
+    private static string? ExtractTitle(string htmlContent)
+    {
+        // Look for first h1 tag
+        var h1Match = Regex.Match(htmlContent, @"<h1>(.*?)</h1>");
+        return h1Match.Success ? h1Match.Groups[1].Value : null;
+    }
+
+    private static string FormatFileName(string fileName)
+    {
+        // Fallback if no h1 is found - more sophisticated filename formatting
+        return string.Join(
+            " ",
+            fileName.Split('-', '_').Select(word => char.ToUpper(word[0]) + word[1..])
+        );
     }
 
     private async Task SaveNoteToFile(string content, string fileName, string outputPath)
