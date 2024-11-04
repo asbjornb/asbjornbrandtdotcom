@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Markdig;
 using Xunit;
 
 namespace SiteGenerator.Tests;
@@ -242,5 +243,21 @@ public class MarkdownParserTests
             """;
 
         result.Trim().Should().Be(expectedHtml);
+    }
+
+    [Fact]
+    public void ParseToHtml_ShouldLinkifyEmailAddresses2()
+    {
+        // Arrange
+        var markdown = "Here is my mail <asbjoernbrandt@gmail.com>";
+        var expectedHtml =
+            "<p>Here is my mail <a href=\"mailto:asbjoernbrandt@gmail.com\">asbjoernbrandt@gmail.com</a></p>\n";
+        var parser = new MarkdownParser();
+
+        // Act
+        var result = parser.ParseToHtml(markdown);
+
+        // Assert
+        result.Should().Be(expectedHtml);
     }
 }
