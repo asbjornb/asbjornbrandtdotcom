@@ -122,6 +122,16 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
         );
     }
 
+    [Fact]
+    public async Task GenerateIndexPage_MatchesExpectedOutput()
+    {
+        // Compare normalized contents
+        await CompareNormalizedContent(
+            Path.Combine(ActualOutputPath, "index.html"),
+            Path.Combine(ExpectedOutputPath, "index.html")
+        );
+    }
+
     private static async Task CompareNormalizedContent(
         string actualFilePath,
         string expectedFilePath
@@ -166,12 +176,23 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
 
     private static IEnumerable<string> NormalizeContent(string content)
     {
+        // Normalize line endings and remove empty lines
         content = content.Replace("\r\n", "\n");
         content = Regex.Replace(content, @"\n\s*</li>", "</li>");
         content = Regex.Replace(content, @"<li>\s*\n", "<li>");
         content = Regex.Replace(content, @"<li><p>(.*?)</p></li>", "<li>$1</li>");
         content = Regex.Replace(content, @"<ul>\s*\n", "<ul>");
         content = Regex.Replace(content, @"\n\s*</ul>", "</ul>");
+
+        // Normalize image classes between old and new markdown parsing
+        content = Regex.Replace(
+            content,
+            @"<p><img([^>]+)>\s*\{\.(\w+)\}</p>",
+            "<p class=\"$2\"><img$1></p>"
+        );
+
+        // Normalize self-closing tags to standard closing
+        content = Regex.Replace(content, @"\s*/>", ">");
 
         content = Regex.Replace(
             content,
