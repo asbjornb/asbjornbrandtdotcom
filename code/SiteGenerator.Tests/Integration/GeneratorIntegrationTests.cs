@@ -61,7 +61,7 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
     }
 
     [Fact]
-    public void GenerateSite_CreatesAllExpectedFiles()
+    public void GenerateSite_CreatesAllExpectedHtmlFiles()
     {
         // Assert
         var expectedFiles = Directory
@@ -88,6 +88,25 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
         {
             _output.WriteLine($"  {file}");
         }
+
+        actualFiles.Should().BeEquivalentTo(expectedFiles);
+    }
+
+    [Fact]
+    public void GenerateSite_CopiesAllExpectedAssets()
+    {
+        // Assert
+        var expectedFiles = Directory
+            .GetFiles(Path.Combine(ExpectedOutputPath, "assets"), "*", SearchOption.AllDirectories)
+            .Select(f => f.Replace(ExpectedOutputPath, "").TrimStart('\\'))
+            .OrderBy(f => f)
+            .ToList();
+
+        var actualFiles = Directory
+            .GetFiles(Path.Combine(ActualOutputPath, "assets"), "*", SearchOption.AllDirectories)
+            .Select(f => f.Replace(ActualOutputPath, "").TrimStart('\\'))
+            .OrderBy(f => f)
+            .ToList();
 
         actualFiles.Should().BeEquivalentTo(expectedFiles);
     }

@@ -41,10 +41,23 @@
       <Link>TestData\templates\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\assets\**\*">
-      <Link>TestData\assets\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    <Content Include="..\..\assets\**\*">
+      <Link>TestData\OldSiteInput\assets\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TestData\OldSiteInput\assets\android-chrome-192x192.png" />
+    <None Remove="TestData\OldSiteInput\assets\android-chrome-512x512.png" />
+    <None Remove="TestData\OldSiteInput\assets\apple-touch-icon.png" />
+    <None Remove="TestData\OldSiteInput\assets\chart.svg" />
+    <None Remove="TestData\OldSiteInput\assets\favicon-16x16.png" />
+    <None Remove="TestData\OldSiteInput\assets\favicon-32x32.png" />
+    <None Remove="TestData\OldSiteInput\assets\favicon.ico" />
+    <None Remove="TestData\OldSiteInput\assets\profile.png" />
+    <None Remove="TestData\OldSiteInput\assets\site.webmanifest" />
+    <None Remove="TestData\OldSiteInput\assets\style.css" />
   </ItemGroup>
 
 </Project>

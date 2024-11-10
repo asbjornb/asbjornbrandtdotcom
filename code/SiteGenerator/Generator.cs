@@ -56,6 +56,12 @@ public class Generator
             config
         );
         await pageProcessor.ProcessAsync(Path.Combine(_contentPath, "pages"), _outputPath);
+
+        // Copy assets
+        fileProvider.CopyFolderAsync(
+            Path.Combine(_contentPath, "assets"),
+            Path.Combine(_outputPath, "assets")
+        );
     }
 
     private async Task<Config> LoadConfigAsync()

@@ -32,4 +32,28 @@ public class FileProvider : IFileProvider
         }
         await File.WriteAllTextAsync(filePath, content);
     }
+
+    public void CopyFolderAsync(string sourceFolder, string destinationFolder)
+    {
+        Directory.CreateDirectory(destinationFolder);
+        foreach (
+            string dir in Directory.GetDirectories(sourceFolder, "*", SearchOption.AllDirectories)
+        )
+        {
+            Directory.CreateDirectory(
+                Path.Combine(destinationFolder, dir.Substring(sourceFolder.Length + 1))
+            );
+        }
+
+        foreach (
+            string file_name in Directory.GetFiles(sourceFolder, "*", SearchOption.AllDirectories)
+        )
+        {
+            var destinationPath = Path.Combine(
+                destinationFolder,
+                file_name.Substring(sourceFolder.Length + 1)
+            );
+            File.Copy(file_name, destinationPath, true);
+        }
+    }
 }
