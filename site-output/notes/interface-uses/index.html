@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+    
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+<title>Interface-Uses • Asbjørn Brandt's Notes</title>
+
+<meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<meta property="og:title" content="Interface-Uses • Asbjørn Brandt's Notes">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tbd.netlify.app/notes/interface-uses/">
+<meta property="og:image" content="/assets/chart.svg">
+<meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<link rel="canonical" href="https://tbd.netlify.app/notes/interface-uses/">
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <a href="/" class="page-header__logo" title="Go home">
+            <img src="/assets/chart.svg" alt="" width="48">
+        </a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/notes">Notes</a>
+            <a href="/inspiration">Inspiration</a>
+            <a href="/now">Now</a>
+        </nav>
+    </header>
+    <main>
+        <article>
+    <h1>Interface Uses</h1>
+<h2>One-to-one misuse</h2>
+<p>Often in .net one-to-one interfaces are introduced for every class. Arguments are typically:</p>
+<ul>
+<li>They ease tests/mocking</li>
+<li>They decouple</li>
+<li>To assist dependency injection</li>
+</ul>
+<p>For tests/mocking just use the original class unless it has dependencies like SQL, HTTP etc. If so create an interface to be able to mock it.
+For decoupling - if interface and class are the same and there is no abstraction the coupling is just moved to the interface instead.
+For dependency injection just inject the concrete class</p>
+<h2>Guidelines (just my own dynamic list)</h2>
+<ul>
+<li>Anything that is shared in api's or platform packages should probably use interfaces to allow changes easier without breaking dependents you don't know about</li>
+<li>In general only create interfaces that actually abstract or where multiple implementations exist</li>
+<li>It's easy to switch to an interface down the line if more implementations are needed by:
+<ul>
+<li>Rename the class to the new interface name with the built in refactoring tool</li>
+<li>Rename the class back (or to a new name since you've learned that there are two implementations and how they differ) without using the refactoring tool</li>
+<li>Create the interface - its name is used everywhere</li>
+</ul>
+</li>
+</ul>
+<h2>See also</h2>
+<ul>
+<li>Good discussion in this reddit thread: <a href="https://www.reddit.com/r/dotnet/comments/mzxlrc/comment/gw3jo2t/?utm_source=share&amp;utm_medium=web2x&amp;context=3">https://www.reddit.com/r/dotnet/comments/mzxlrc/comment/gw3jo2t/?utm_source=share&amp;utm_medium=web2x&amp;context=3</a></li>
+<li>Short and to the point blog post <a href="https://blog.ploeh.dk/2010/12/02/Interfacesarenotabstractions/">https://blog.ploeh.dk/2010/12/02/Interfacesarenotabstractions/</a></li>
+</ul>
+
+</article>
+<hr>
+<p class="backlinks-title larger">Backlinks</p>
+
+<p class="backlinks-default">No backlinks found.</p>
+
+    </main>
+    
+    <footer class="page-footer">
+        <small>Copyright Asbjørn Brandt</small>
+    </footer>
+</body>
+</html>

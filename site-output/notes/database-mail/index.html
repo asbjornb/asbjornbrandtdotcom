@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+    
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+<title>Database-Mail • Asbjørn Brandt's Notes</title>
+
+<meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<meta property="og:title" content="Database-Mail • Asbjørn Brandt's Notes">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tbd.netlify.app/notes/database-mail/">
+<meta property="og:image" content="/assets/chart.svg">
+<meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<link rel="canonical" href="https://tbd.netlify.app/notes/database-mail/">
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <a href="/" class="page-header__logo" title="Go home">
+            <img src="/assets/chart.svg" alt="" width="48">
+        </a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/notes">Notes</a>
+            <a href="/inspiration">Inspiration</a>
+            <a href="/now">Now</a>
+        </nav>
+    </header>
+    <main>
+        <article>
+    <h1>Database Mail</h1>
+<p>3 Steps to get job error mails:</p>
+<ul>
+<li>Enable and set up database mail</li>
+<li>Set up an operator</li>
+<li>Set notifications on individual jobs</li>
+</ul>
+<p><a href="http://thesqlnomad.com/set-up-email-notifications-for-sql-agent-jobs/">How To: Set Up Email Notifications for SQL Agent Jobs</a></p>
+<p>References:</p>
+<ul>
+<li><a href="https://social.msdn.microsoft.com/Forums/en-US/39698a87-1400-4711-991c-1d9d4ea20f58/how-to-get-the-name-of-the-job-from-with-in-the-job-itself">https://social.msdn.microsoft.com/Forums/en-US/39698a87-1400-4711-991c-1d9d4ea20f58/how-to-get-the-name-of-the-job-from-with-in-the-job-itself</a></li>
+<li><a href="https://dba.stackexchange.com/questions/4734/how-can-i-have-sql-server-email-me-the-error-details-when-a-job-fails">https://dba.stackexchange.com/questions/4734/how-can-i-have-sql-server-email-me-the-error-details-when-a-job-fails</a></li>
+</ul>
+<p>Code example:</p>
+<pre><code class="language-sql">USE [master]
+GO 
+--Turn on database mail feature:
+sp_configure 'show advanced options',1 
+GO 
+reconfigure with override 
+GO 
+sp_configure 'Database Mail XPs',1 
+GO 
+reconfigure 
+GO 
+
+-- Set up mail profile AgentMailProfile
+IF NOT EXISTS(SELECT * FROM msdb.dbo.sysmail_profile WHERE  name = 'AgentMailProfile')  
+  BEGIN 
+    EXECUTE msdb.dbo.sysmail_add_profile_sp 
+      @profile_name = 'AgentMailProfile', 
+      @description  = 'Mail profile for server agent to send out emails'; 
+  END
+
+-- Set up account sendinblue for smtp
+  IF NOT EXISTS(SELECT * FROM msdb.dbo.sysmail_account WHERE  name = 'sendinblue') 
+  BEGIN 
+    EXECUTE msdb.dbo.sysmail_add_account_sp 
+    @account_name            = 'sendinblue', 
+    @email_address           = 'someemail', 
+    @display_name            = 'somedisplayname', 
+    @replyto_address         = 'someemail', 
+    @description             = '', 
+    @mailserver_name         = 'smtp-relay.sendinblue.com', 
+    @mailserver_type         = 'SMTP', 
+    @port                    = 'someport', 
+    @username                = 'someemail', 
+    @password                = 'somepassword',  
+    @use_default_credentials =  0 , 
+    @enable_ssl              =  0 ;
+  END
+
+-- Associate Account [sendinblue] to Profile [AgentMailProfile] 
+IF NOT EXISTS(SELECT * 
+              FROM msdb.dbo.sysmail_profileaccount pa 
+                INNER JOIN msdb.dbo.sysmail_profile p ON pa.profile_id = p.profile_id 
+                INNER JOIN msdb.dbo.sysmail_account a ON pa.account_id = a.account_id   
+              WHERE p.name = 'AgentMailProfile' 
+                AND a.name = 'sendinblue')  
+  BEGIN 
+    EXECUTE msdb.dbo.sysmail_add_profileaccount_sp 
+      @profile_name = 'AgentMailProfile', 
+      @account_name = 'sendinblue', 
+      @sequence_number = 1 ; 
+  END
+
+-- Create operator to target with mails
+USE [msdb]
+GO
+
+IF NOT EXISTS(select '1' from dbo.sysoperators where name = 'DataTeam')
+EXEC msdb.dbo.sp_add_operator @name=N'DataTeam', 
+  @enabled=1, 
+  @weekday_pager_start_time=90000, 
+  @weekday_pager_end_time=180000, 
+  @saturday_pager_start_time=90000, 
+  @saturday_pager_end_time=180000, 
+  @sunday_pager_start_time=90000, 
+  @sunday_pager_end_time=180000, 
+  @pager_days=0, 
+  @email_address=N'listofemailadresses', 
+  @category_name=N'[Uncategorized]'
+GO
+
+</code></pre>
+
+</article>
+<hr>
+<p class="backlinks-title larger">Backlinks</p>
+
+<ul class="backlinks-container">
+    
+        <li class="backlink">
+            <a href="/notes/sql-server/" class="backlink__link">Sql-Server</a>
+            <div class="backlink__preview" role="none">
+                <h1>Sql Server</h1>
+<ul>
+<li><a href="/notes/fragmentation/">fragmentation</a></li>
+<li><a href="/notes/statebased-vs-migrationsbased/">statebased-vs-migrationsbased</a></li>
+<li><a href="/notes/database-mail/">database-mail</a></li>
+<li><a href="/notes/row-version/">row-version</a></li>
+</ul>
+
+            </div>
+        </li>
+    
+</ul>
+
+    </main>
+    
+    <footer class="page-footer">
+        <small>Copyright Asbjørn Brandt</small>
+    </footer>
+</body>
+</html>
