@@ -41,7 +41,7 @@ public class FileProvider : IFileProvider
         )
         {
             Directory.CreateDirectory(
-                Path.Combine(destinationFolder, dir.Substring(sourceFolder.Length + 1))
+                Path.Combine(destinationFolder, dir[(sourceFolder.Length + 1)..])
             );
         }
 
@@ -51,7 +51,7 @@ public class FileProvider : IFileProvider
         {
             var destinationPath = Path.Combine(
                 destinationFolder,
-                file_name.Substring(sourceFolder.Length + 1)
+                file_name[(sourceFolder.Length + 1)..]
             );
             File.Copy(file_name, destinationPath, true);
         }
