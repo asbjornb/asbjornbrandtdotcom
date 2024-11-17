@@ -103,7 +103,7 @@ public class NoteProcessor : IPageProcessor
     {
         var backlinksList = _backlinks.GetBacklinksForNote(fileName);
 
-        var backlinks = backlinksList
+        List<BacklinkModel> backlinks = backlinksList
             .Select(backlinkFileName =>
             {
                 // Retrieve the preview from the dictionary
@@ -123,7 +123,7 @@ public class NoteProcessor : IPageProcessor
                 }
             })
             .Where(backlink => backlink != null)
-            .ToList();
+            .ToList()!;
 
         var noteModel = new NoteModel(htmlContent, backlinks);
         var pageUrl = $"{_config.BaseUrl}/notes/{fileName}/";
