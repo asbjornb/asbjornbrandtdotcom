@@ -11,17 +11,17 @@
 <link rel="manifest" href="/assets/site.webmanifest">
 <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
-<title>Chrome Shortcuts &#8226; Asbj&#248;rn Brandt's Notes</title>
+<title>Remote development &#8226; Asbj&#248;rn Brandt's Notes</title>
 
 <meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<meta property="og:title" content="Chrome Shortcuts &#8226; Asbj&#248;rn Brandt's Notes">
+<meta property="og:title" content="Remote development &#8226; Asbj&#248;rn Brandt's Notes">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://asbjornbrandt.com/notes/chrome-shortcuts/">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/remote-development/">
 <meta property="og:image" content="/assets/chart.svg">
 <meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<link rel="canonical" href="https://asbjornbrandt.com/notes/chrome-shortcuts/">
+<link rel="canonical" href="https://asbjornbrandt.com/notes/remote-development/">
 
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
@@ -46,34 +46,30 @@
     </header>
     <main>
         <article>
-    <h1>Chrome Shortcuts</h1>
-<p>| Key Combination | Action |
-| --- | --- |
-| Ctrl + L | Select all text in the address bar |
-| Ctrl + W | Close tab |</p>
+    <h1>Remote development</h1>
+<p>With <a href="/notes/vscode/">vscode</a> there is an option to develop inside a container.</p>
+<h2>Pros</h2>
+<ul>
+<li>Development is consistent across developer laptops - no more tests that work on one pc due to internationalization settings but not on another</li>
+<li>No more python virtual environment shenanigans</li>
+</ul>
+<h2>Cons</h2>
+<ul>
+<li>It's a bit slow on both startup and intellisense</li>
+<li>Setup is not difficult, but not completely trivial either - especially with vscode settings, extensions etc.</li>
+</ul>
+<h2>How to</h2>
+<p>For a quick setup to build upon:</p>
+<ul>
+<li>Use command (ctrl+shift+p) <code>Remote-Containers: Add Development Container Configuration Files...</code> and follow the dialog to add a suitable <code>Dovkerfile</code> and <code>devcontainer.json</code> file</li>
+<li>Use command <code>Remote-Containers: Rebuild and Reopen in container</code> to run the container and start developing inside</li>
+<li>Commit and then start tweaking to your liking</li>
+</ul>
 
 </article>
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
-<ul class="backlinks-container">
-        <li class="backlink">
-            <a href="/notes/keyboard-shortcuts/" class="backlink__link">Keyboard-Shortcuts</a>
-            <div class="backlink__preview" role="none">
-                <h1>Keyboard shortcuts</h1>
-<p>Keyboard shortcuts for most used programs:</p>
-<ul>
-<li><a href="/notes/ssms-shortcuts/">ssms shortcuts</a></li>
-<li><a href="/notes/shortcuts-vscode/">shortcuts vscode</a></li>
-<li><a href="/notes/chrome-shortcuts/">chrome shortcuts</a></li>
-<li><a href="/notes/windows-shortcuts/">windows shortcuts</a></li>
-<li><a href="/notes/visual-studio-shortcuts/">visual studio shortcuts</a></li>
-</ul>
-<h2>List of shortcuts for current workflow</h2>
-<ul>
-<li><code>win+r...</code></li></ul>
-            </div>
-        </li>
-</ul>
+<p class="backlinks-default">No backlinks found.</p>
 
     </main>
     

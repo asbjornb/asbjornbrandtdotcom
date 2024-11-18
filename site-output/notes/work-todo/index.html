@@ -1,24 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-
-
-    
-
-
-
-    
-
-
-
-
-
-
-
-    
-
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -29,17 +11,17 @@
 <link rel="manifest" href="/assets/site.webmanifest">
 <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
-<title>Work-Todo • Asbjørn Brandt's Notes</title>
+<title>Work Todo &#8226; Asbj&#248;rn Brandt's Notes</title>
 
 <meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<meta property="og:title" content="Work-Todo • Asbjørn Brandt's Notes">
+<meta property="og:title" content="Work Todo &#8226; Asbj&#248;rn Brandt's Notes">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://tbd.netlify.app/notes/work-todo/">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/work-todo/">
 <meta property="og:image" content="/assets/chart.svg">
 <meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<link rel="canonical" href="https://tbd.netlify.app/notes/work-todo/">
+<link rel="canonical" href="https://asbjornbrandt.com/notes/work-todo/">
 
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
@@ -66,20 +48,20 @@
         <article>
     <h1>Work Todo</h1>
 <h2>Implement</h2>
-<ul>
-<li>[ ] ApexSqlCodeFormatter</li>
-<li>[ ] ApexSqlSnippetsAndRepository</li>
-<li>[ ] Quick SSAS cube &amp; power bi demo</li>
-<li>[ ] db mail for jobs</li>
-<li>[ ] Implement delta on fact TradingPL</li>
-<li>[ ] Test sql prompt? Everyone in slack and SQLBI swears to it.</li>
-<li>[ ] Write small script that checks entire solution for classes not named the same as their files. Add other functionality, schedule it and help clean up code.
-<ul>
-<li>[ ] Ideas:
-<ul>
-<li>[ ] Analyse for methods that rename interface parameters</li>
-<li>[ ] Analyse for circular references</li>
-<li>[ ] Analyse for excessive references</li>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> ApexSqlCodeFormatter</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> ApexSqlSnippetsAndRepository</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Quick SSAS cube &amp; power bi demo</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> db mail for jobs</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Implement delta on fact TradingPL</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test sql prompt? Everyone in slack and SQLBI swears to it.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Write small script that checks entire solution for classes not named the same as their files. Add other functionality, schedule it and help clean up code.
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Ideas:
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Analyse for methods that rename interface parameters</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Analyse for circular references</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Analyse for excessive references</li>
 </ul>
 </li>
 </ul>
@@ -87,28 +69,28 @@
 </ul>
 <h2>Research</h2>
 <h3>Direct use</h3>
-<ul>
-<li>[ ] Options for jobs and other server based entities in db-projects. Check <a href="/notes/ssdt/">ssdt</a></li>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Options for jobs and other server based entities in db-projects. Check <a href="/notes/ssdt/">ssdt</a></li>
 </ul>
 <h3>Fun/long term</h3>
-<ul>
-<li>[ ] Polybase to read and write parquet - see <a href="https://docs.microsoft.com/en-us/sql/t-sql/statements/create-external-file-format-transact-sql?view=sql-server-ver15">docs</a></li>
-<li>[ ] Alternatively try synapse serverless</li>
-<li>[ ] Try clustered columnstore with partitions for ticker/date - performance?</li>
-<li>[ ] Testing TsqlT or other?</li>
-<li>[ ] Setup diagnostics book in Azure Data Studio</li>
-<li>[ ] Test python as alternative to SSIS for ETL. Test speed. Might be much more scalable running from another pc. See also <a href="/notes/etl/">etl</a>.</li>
-<li>[ ] Would it be possible to build a small c#/python script that reads through sp's and checks all insert/update/delete statements and the from clauses that lead there and use that to build a dependency graph? Hard since it has to take into account WITH, temp tables etc. Might be easier to just parse the execution plans that involve insert/update/deletes? Alternatively use sys.dm_sql_referenced_entities to better build dependency graphs.</li>
-<li>[ ] Setup configuration tables in each db for stuff like Ola's scripts: <a href="/notes/configuration-tables/">configuration-tables</a></li>
-<li>[ ] Link git commit history to individual database objects in doc database via git log parsing.</li>
-<li>[ ] Store job info and other similar in doc</li>
-<li>[ ] Build dependency table in doc instead of inside individual procedures via sys.dm_sql_referenced_entities</li>
-<li>[ ] Check out <a href="https://www.linkedin.com/learning/sql-server-machine-learning-services-python">machine learning in python</a> - Looks cool</li>
-<li>[ ] Create a code statistics db and report. First do file length distribution in project (files have type, projects are in solutions?), then line length, function length. Check how it goes over time by using different git checkouts. Can then also see total line growth on projects.</li>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Polybase to read and write parquet - see <a href="https://docs.microsoft.com/en-us/sql/t-sql/statements/create-external-file-format-transact-sql?view=sql-server-ver15">docs</a></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Alternatively try synapse serverless</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Try clustered columnstore with partitions for ticker/date - performance?</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Testing TsqlT or other?</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Setup diagnostics book in Azure Data Studio</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test python as alternative to SSIS for ETL. Test speed. Might be much more scalable running from another pc. See also <a href="/notes/etl/">etl</a>.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Would it be possible to build a small c#/python script that reads through sp's and checks all insert/update/delete statements and the from clauses that lead there and use that to build a dependency graph? Hard since it has to take into account WITH, temp tables etc. Might be easier to just parse the execution plans that involve insert/update/deletes? Alternatively use sys.dm_sql_referenced_entities to better build dependency graphs.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Setup configuration tables in each db for stuff like Ola's scripts: <a href="/notes/configuration-tables/">configuration tables</a></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Link git commit history to individual database objects in doc database via git log parsing.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Store job info and other similar in doc</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Build dependency table in doc instead of inside individual procedures via sys.dm_sql_referenced_entities</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Check out <a href="https://www.linkedin.com/learning/sql-server-machine-learning-services-python">machine learning in python</a> - Looks cool</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Create a code statistics db and report. First do file length distribution in project (files have type, projects are in solutions?), then line length, function length. Check how it goes over time by using different git checkouts. Can then also see total line growth on projects.</li>
 </ul>
 <h2>Business ideas</h2>
-<ul>
-<li>[ ] Add budget data to Qlik PL-app?</li>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add budget data to Qlik PL-app?</li>
 </ul>
 <h2>Hackathon</h2>
 <ul>
@@ -119,36 +101,38 @@
 </article>
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
-
 <ul class="backlinks-container">
-    
         <li class="backlink">
-            <a href="/notes/" class="backlink__link">Notes</a>
+            <a href="/notes/index/" class="backlink__link">Index</a>
             <div class="backlink__preview" role="none">
                 <h1>Index</h1>
 <h2>Top of mind</h2>
 <ul>
-<li><a href="/notes/keyboard-shortcuts/">keyboard-shortcuts</a></li>
-<li><a href="/notes/cheat-sheets/">cheat-sheets</a></li>
-<li><a href="/notes/personal-blog/">personal-blog</a></li>
+<li><a href="/notes/keyboard-shortcuts/">keyboard shortcuts</a></li>
+<li><a href="/notes/cheat-sheets/">cheat sheets</a></li>
+<li><a href="/notes/personal-blog/">personal blog</a></li>
 <li><a href="/notes/ssdt/">ssdt</a></li>
 </ul>
 <h2>Organizational</h2>
 <ul>
 <li><a href="/notes/inbox/">inbox</a></li>
-<li><a href="/notes/work-todo/">work-todo</a></li>
-<li><a href="/notes/work-tools/">work-tools</a></li>
-<li><a href="/notes/work-reading/">work-reading</a></li>
+<li><a href="/notes/work-todo/">work todo</a></li>
+<li><a href="/notes/work-tools/">work tools</a></li>
+<li><a href="/notes/work-reading/">work reading</a></li>
 </ul>
 <h2>Categories</h2>
 <ul>
 <li><a href="/notes/podcasts/">podcasts</a></li>
-<li>[[ca</li>
+<li><a href="/notes/career/">career</a></li>
+<li><a href="/notes/finance/">finance</a></li>
+<li><a href="/notes/tech/">tech</a></li>
+<li><a href="/notes/home-lab/">home lab</a></li>
+<li><a href="/notes/recipes/">recipes</a></li>
+<li><a href="/notes/taking-notes/">taking notes</a></li>
 </ul>
-
+...
             </div>
         </li>
-    
 </ul>
 
     </main>

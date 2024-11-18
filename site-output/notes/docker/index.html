@@ -1,24 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-
-
-    
-
-
-
-    
-
-
-
-
-
-
-
-    
-
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -29,17 +11,17 @@
 <link rel="manifest" href="/assets/site.webmanifest">
 <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
-<title>Docker • Asbjørn Brandt's Notes</title>
+<title>Docker &#8226; Asbj&#248;rn Brandt's Notes</title>
 
 <meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<meta property="og:title" content="Docker • Asbjørn Brandt's Notes">
+<meta property="og:title" content="Docker &#8226; Asbj&#248;rn Brandt's Notes">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://tbd.netlify.app/notes/docker/">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/docker/">
 <meta property="og:image" content="/assets/chart.svg">
 <meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<link rel="canonical" href="https://tbd.netlify.app/notes/docker/">
+<link rel="canonical" href="https://asbjornbrandt.com/notes/docker/">
 
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
@@ -71,14 +53,19 @@
 <p>run <code>docker</code> to see a list of commands. Then <code>docker &lt;command&gt; --help</code> to get help on individual commands.</p>
 <h2>Pull to pull an image or build to build from a dockerfile</h2>
 <ul>
-<li>docker pull <a href="http://mcr.microsoft.com/powershell:lts-debian-10">mcr.microsoft.com/powershell:lts-debian-10</a>
+<li>docker pull mcr.microsoft.com/powershell:lts-debian-10
 <ul>
-<li>pulls image <a href="http://mcr.microsoft.com/powershell">mcr.microsoft.com/powershell</a> with tag lts-debian-10</li>
+<li>pulls image mcr.microsoft.com/powershell with tag lts-debian-10</li>
 </ul>
 </li>
 <li>docker build -t linux-powershell .
 <ul>
 <li>builds from dockerfile in current folder (&quot;.&quot;) and tags with linux-powershell.</li>
+</ul>
+</li>
+<li>using a file not named dockerfile can be done with -file
+<ul>
+<li>docker build -f mydockerfile .</li>
 </ul>
 </li>
 </ul>
@@ -88,7 +75,8 @@
 <li>docker run -it --name linux-powershell linux-powershell
 <ul>
 <li>creates and starts a docker container based on given image, names it linux-powershell and sets it to interactive so standard in/out is written from/to console.</li>
-<li>can also be a remote image: docker run -it --name linux-powershell <a href="http://mcr.microsoft.com/powershell:lts-debian-10">mcr.microsoft.com/powershell:lts-debian-10</a></li>
+<li>can also be a remote image: docker run -it --name linux-powershell mcr.microsoft.com/powershell:lts-debian-10</li>
+<li>use docker create instead to split and allow for docker start afterwards</li>
 </ul>
 </li>
 <li>docker start -i linux-powershell
@@ -97,20 +85,28 @@
 </ul>
 </li>
 </ul>
+<h2>Common issues</h2>
+<ul>
+<li>Sometimes updated files used in COPY doesn't update inside container when rebuild. In that case it might help to build with --no-cache:
+<ul>
+<li>docker build --no-cache</li>
+</ul>
+</li>
+<li>Connecting to something on the host machine can be done with host.docker.internal on windows and linux systems</li>
+<li>Can't easily use kerberos/ad from inside docker</li>
+</ul>
 <p>See also <a href="/notes/rancher/">rancher</a></p>
 
 </article>
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
-
 <ul class="backlinks-container">
-    
         <li class="backlink">
             <a href="/notes/tech/" class="backlink__link">Tech</a>
             <div class="backlink__preview" role="none">
                 <h1>Tech</h1>
 <ul>
-<li><a href="/notes/sql-server/">sql-server</a></li>
+<li><a href="/notes/sql-server/">sql server</a></li>
 <li><a href="/notes/web/">web</a></li>
 <li><a href="/notes/csharp/">csharp</a></li>
 <li><a href="/notes/docker/">docker</a></li>
@@ -119,7 +115,6 @@
 
             </div>
         </li>
-    
 </ul>
 
     </main>

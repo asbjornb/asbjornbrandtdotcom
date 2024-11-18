@@ -1,24 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-
-
-    
-
-
-
-    
-
-
-
-
-
-
-
-    
-
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -29,17 +11,17 @@
 <link rel="manifest" href="/assets/site.webmanifest">
 <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
-<title>Csharp • Asbjørn Brandt's Notes</title>
+<title>C# &#8226; Asbj&#248;rn Brandt's Notes</title>
 
 <meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<meta property="og:title" content="Csharp • Asbjørn Brandt's Notes">
+<meta property="og:title" content="C# &#8226; Asbj&#248;rn Brandt's Notes">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://tbd.netlify.app/notes/csharp/">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/csharp/">
 <meta property="og:image" content="/assets/chart.svg">
 <meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<link rel="canonical" href="https://tbd.netlify.app/notes/csharp/">
+<link rel="canonical" href="https://asbjornbrandt.com/notes/csharp/">
 
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
@@ -113,78 +95,57 @@ See also: <a href="https://www.youtube.com/watch?v=-9b8NRqjUFM">https://www.yout
 <h2>Clean code</h2>
 <p><a href="https://www.youtube.com/watch?v=7EmboKQH8lM">https://www.youtube.com/watch?v=7EmboKQH8lM</a></p>
 <ul>
-<li>
-<p>Inside a function every line should operate in the same level of abstraction that is exactly one level below the name.</p>
+<li><p>Inside a function every line should operate in the same level of abstraction that is exactly one level below the name.</p>
 </li>
-<li>
-<p>Take as long to clean the code as it took to write it (well take as long as it needs but...).</p>
+<li><p>Take as long to clean the code as it took to write it (well take as long as it needs but...).</p>
 </li>
-<li>
-<p>Functions should be small. Smaller than that! The function should do one thing. A function does one thing if you cannot meaningfully extract another function from it!</p>
+<li><p>Functions should be small. Smaller than that! The function should do one thing. A function does one thing if you cannot meaningfully extract another function from it!</p>
 </li>
-<li>
-<p>Large functions with variables are probably actually classes. You see this when extracting functions.</p>
+<li><p>Large functions with variables are probably actually classes. You see this when extracting functions.</p>
 </li>
-<li>
-<p>Indent level of a function should not be greater than one or two (no nested structures in small functions).</p>
+<li><p>Indent level of a function should not be greater than one or two (no nested structures in small functions).</p>
 </li>
-<li function="">
-<p>If statements are if(function()){function()}else</p>
+<li><p>If statements are if(function()){function()}else{function}</p>
 </li>
-<li>
-<p>Functions should at best have 0-&gt;max 3 arguments. If you pass more than 3 things that are cohesive they should probably be an object.</p>
+<li><p>Functions should at best have 0-&gt;max 3 arguments. If you pass more than 3 things that are cohesive they should probably be an object.</p>
 </li>
-<li>
-<p>Don't pass booleans into a function - just split function in two and call the correct one.</p>
+<li><p>Don't pass booleans into a function - just split function in two and call the correct one.</p>
 </li>
-<li>
-<p>Don't use output arguments (where you input something just to manipulate it for later reference).</p>
+<li><p>Don't use output arguments (where you input something just to manipulate it for later reference).</p>
 </li>
-<li>
-<p>Don't use switch statements! Because you have to use them everywhere - not dry. Use polymorphism instead.</p>
+<li><p>Don't use switch statements! Because you have to use them everywhere - not dry. Use polymorphism instead.</p>
 </li>
-<li>
-<p>Always close in same method you open so you don't get side effects.</p>
+<li><p>Always close in same method you open so you don't get side effects.</p>
 </li>
-<li>
-<p>A function that returns void has side effect, a function that returns a value should never have side effects. It's a convention (query and command).</p>
+<li><p>A function that returns void has side effect, a function that returns a value should never have side effects. It's a convention (query and command).</p>
 </li>
-<li>
-<p>A function with try catch finally should have nothing else. Just try(someErrorableFunction())catch. And no nested try blocks!</p>
+<li><p>A function with try catch finally should have nothing else. Just try(someErrorableFunction())catch. And no nested try blocks!</p>
 </li>
-<li>
-<p>Generally don't comment unless necessary or at least don't check it in! Worst is commented out code.</p>
+<li><p>Generally don't comment unless necessary or at least don't check it in! Worst is commented out code.</p>
 </li>
-<li>
-<p>Naming:</p>
+<li><p>Naming:</p>
 <ul>
 <li>Variables - the smaller the scope the smaller the name. For a single line scope a single letter is ok. For a global variable use multiple words.</li>
 <li>Functions - opposite. The larger the scope the more generic/abstract the function is so can be small like &quot;Open&quot;. In smaller scope it's more specific like OpenFilestreamAndHandleErrors.</li>
 </ul>
 </li>
-<li>
-<p><strong>Don't ship shit!</strong></p>
+<li><p><strong>Don't ship shit!</strong></p>
 </li>
-<li>
-<p>Agile means it should be deployable at the end of every sprint. Even if sprint is one day. Some companies have 1 day sprints - unit tests in the morning then code to make them not fail.</p>
+<li><p>Agile means it should be deployable at the end of every sprint. Even if sprint is one day. Some companies have 1 day sprints - unit tests in the morning then code to make them not fail.</p>
 </li>
-<li>
-<p>Tests allow cleaning the code so it will always get better instead of rotting.</p>
+<li><p>Tests allow cleaning the code so it will always get better instead of rotting.</p>
 </li>
-<li>
-<p>Do pair programming. It's more efficient than code then review. Just .5-1.5 hours 3 times a week.</p>
+<li><p>Do pair programming. It's more efficient than code then review. Just .5-1.5 hours 3 times a week.</p>
 </li>
-<li>
-<p>Pert(?) estimating: always 3 numbers. Best case, nominal case, worst case. Worst case(sick colleagues to cover for, production breakdowns to fix, personal illness). 1 week, 3 weeks, 8 weeks for example.</p>
+<li><p>Pert(?) estimating: always 3 numbers. Best case, nominal case, worst case. Worst case(sick colleagues to cover for, production breakdowns to fix, personal illness). 1 week, 3 weeks, 8 weeks for example.</p>
 </li>
-<li>
-<p><strong>Test driven development</strong>: One line of tests, then one line of code. Three laws:</p>
+<li><p><strong>Test driven development</strong>: One line of tests, then one line of code. Three laws:</p>
 <pre><code>  First Law:      You may not write production code until
                   you have written a *failing* unit test.
-  
+
   Second Law:     You may not write more of a unit test than is
                   sufficient to fail, and not compiling is failing.
-  
+
   Third Law:      You may not write more production code than
                   is sufficient to pass the current failing test.
 </code></pre>
@@ -192,17 +153,13 @@ See also: <a href="https://www.youtube.com/watch?v=-9b8NRqjUFM">https://www.yout
 <li>See <a href="https://www.youtube.com/watch?v=58jGpV2Cg50&amp;t=2628s">https://www.youtube.com/watch?v=58jGpV2Cg50&amp;t=2628s</a> for example test driven development.</li>
 </ul>
 </li>
-<li>
-<p>If statements and while loops should have 1 line.</p>
+<li><p>If statements and while loops should have 1 line.</p>
 </li>
-<li>
-<p>View models in MVC only contains strings? See <a href="https://www.youtube.com/watch?v=sn0aFEMVTpA&amp;t=5421s">https://www.youtube.com/watch?v=sn0aFEMVTpA&amp;t=5421s</a></p>
+<li><p>View models in MVC only contains strings? See <a href="https://www.youtube.com/watch?v=sn0aFEMVTpA&amp;t=5421s">https://www.youtube.com/watch?v=sn0aFEMVTpA&amp;t=5421s</a></p>
 </li>
-<li>
-<p>Architecture is to defer decisions until they're necessary. Good architecture maximizes the number of decisions NOT made</p>
+<li><p>Architecture is to defer decisions until they're necessary. Good architecture maximizes the number of decisions NOT made</p>
 </li>
-<li>
-<p>Plugin architecture is to point all dependencies in one direction. Defends f.e. business rules from gui changes if the UI is a plugin. Same - let the database be a plugin so it can be swap-able for another db or for flat files.</p>
+<li><p>Plugin architecture is to point all dependencies in one direction. Defends f.e. business rules from gui changes if the UI is a plugin. Same - let the database be a plugin so it can be swap-able for another db or for flat files.</p>
 </li>
 </ul>
 <h2>Other notable watches</h2>
@@ -284,15 +241,13 @@ cleanup();
 </article>
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
-
 <ul class="backlinks-container">
-    
         <li class="backlink">
             <a href="/notes/tech/" class="backlink__link">Tech</a>
             <div class="backlink__preview" role="none">
                 <h1>Tech</h1>
 <ul>
-<li><a href="/notes/sql-server/">sql-server</a></li>
+<li><a href="/notes/sql-server/">sql server</a></li>
 <li><a href="/notes/web/">web</a></li>
 <li><a href="/notes/csharp/">csharp</a></li>
 <li><a href="/notes/docker/">docker</a></li>
@@ -301,7 +256,6 @@ cleanup();
 
             </div>
         </li>
-    
 </ul>
 
     </main>

@@ -1,24 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-
-
-    
-
-
-
-    
-
-
-
-
-
-
-
-    
-
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -29,17 +11,17 @@
 <link rel="manifest" href="/assets/site.webmanifest">
 <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
-<title>Git • Asbjørn Brandt's Notes</title>
+<title>Git &#8226; Asbj&#248;rn Brandt's Notes</title>
 
 <meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<meta property="og:title" content="Git • Asbjørn Brandt's Notes">
+<meta property="og:title" content="Git &#8226; Asbj&#248;rn Brandt's Notes">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://tbd.netlify.app/notes/git/">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/git/">
 <meta property="og:image" content="/assets/chart.svg">
 <meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<link rel="canonical" href="https://tbd.netlify.app/notes/git/">
+<link rel="canonical" href="https://asbjornbrandt.com/notes/git/">
 
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
@@ -137,10 +119,11 @@ git reset --hard origin/CurrentBranch
 git remote show origin
 git remote prune origin
 
---git clean -n viser hvad der ville slettes ved en Git clean. Skift til -f for faktisk at køre med force. Alternativt kan vist bruges git stash push -a for at sikre en backup  hvis noget går galt.
-git clean -x -d -n
+--git clean -n shows what would be deleted by Git clean. change to -f to actually run with force. Alternatively use `git stash push -a` to ensure a backup if something bad happens.
+git clean -Xdn
+    -Careful -x removes EVERYTHING, -X only removes ignored files
 
---git log has 100's of arguments for finetuning. See this for some examples also: &lt;https://stackoverflow.com/questions/1441010/the-shortest-possible-output-from-git-log-containing-author-and-date&gt;
+--git log has 100's of arguments for fine tuning. See this for some examples also: &lt;https://stackoverflow.com/questions/1441010/the-shortest-possible-output-from-git-log-containing-author-and-date&gt;
 --also ;q to exit viewing logs
 --and end with &gt;log.txt to output to file.
 --date=local --after=&quot;2014-02-12T16:36:00-07:00&quot; can be used or alternatively just --since=&quot;2020-01-01&quot;
@@ -151,15 +134,22 @@ git log --pretty=format:&quot;%h %ad%x09%&lt;(50,trunc)%s&quot; --date=short --a
 --Add a first empty commit to a new repo:
 `git commit --allow-empty -m &quot;Initial empty commit&quot;`
 
+--To interactively rebase/edit first commit in a repo use:
+`git rebase --root`
+
+--To reset author from a given commit and forward use. DO NOTE THIS UPDATES DATES AS WELL. Also remember distinction between author and committer:
+`git rebase -r &lt;someCommitHash&gt; --exec 'git commit --amend --no-edit --reset-author'`
+
+--To find strings in historic commits use pickaxe (git log -S) like:
+`git log -S'using MyLibrary.Logging.LoggingServices;' --oneline`
+
 --Not git but cmd in windows - to terminate END on long outputs press ;q
 </code></pre>
 
 </article>
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
-
 <ul class="backlinks-container">
-    
         <li class="backlink">
             <a href="/notes/cheat-sheets/" class="backlink__link">Cheat-Sheets</a>
             <div class="backlink__preview" role="none">
@@ -171,7 +161,6 @@ git log --pretty=format:&quot;%h %ad%x09%&lt;(50,trunc)%s&quot; --date=short --a
 
             </div>
         </li>
-    
         <li class="backlink">
             <a href="/notes/work-tools/" class="backlink__link">Work-Tools</a>
             <div class="backlink__preview" role="none">
@@ -183,12 +172,9 @@ git log --pretty=format:&quot;%h %ad%x09%&lt;(50,trunc)%s&quot; --date=short --a
 <li>nBI: testing</li>
 <li>scales for dynamics na</li>
 <li>Schema crawler looks awesome: <a href="https://www.schemacrawler.com/scripting.html">https://www.schemacrawler.com/scripting.html</a></li>
-<li><a href="http://plopjs.com">plopjs.com</a>: Plop creates ge</li>
-</ul>
-
+<li>plopjs.com: Plop...</li></ul>
             </div>
         </li>
-    
 </ul>
 
     </main>

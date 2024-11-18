@@ -1,24 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-
-
-    
-
-
-
-    
-
-
-
-
-
-
-
-    
-
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -29,17 +11,17 @@
 <link rel="manifest" href="/assets/site.webmanifest">
 <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
-<title>Python • Asbjørn Brandt's Notes</title>
+<title>Python &#8226; Asbj&#248;rn Brandt's Notes</title>
 
 <meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<meta property="og:title" content="Python • Asbjørn Brandt's Notes">
+<meta property="og:title" content="Python &#8226; Asbj&#248;rn Brandt's Notes">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://tbd.netlify.app/notes/python/">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/python/">
 <meta property="og:image" content="/assets/chart.svg">
 <meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<link rel="canonical" href="https://tbd.netlify.app/notes/python/">
+<link rel="canonical" href="https://asbjornbrandt.com/notes/python/">
 
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
@@ -105,13 +87,26 @@ deactivate
 <ul>
 <li><a href="https://github.com/drivendata/cookiecutter-data-science">Cookiecutter data science template</a></li>
 </ul>
+<h2>Notes on useful language elements, functions etc.</h2>
+<p>List comprehension (with condition):</p>
+<pre><code class="language-python3">fruits = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;, &quot;kiwi&quot;, &quot;mango&quot;]
+newlist = [x for x in fruits if &quot;a&quot; in x]
+</code></pre>
+<p>Dict comprehensions and enumeration:</p>
+<pre><code class="language-python3">fruits = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;, &quot;kiwi&quot;, &quot;mango&quot;]
+newDict = {fruit: index for index, fruit in enumerate(fruits)]
+</code></pre>
+<p>Sort with key:</p>
+<pre><code class="language-python3">numLetters = [(1,b),(2,a),(3,d)]
+sortedByFirst = numLetters.sort(key=itemgetter(0))
+sortedByFirstThenSecond = numLetters.sort(key=itemgetter(0,1))
+reverseSortedByFirst = numLetters.sort(key=itemgetter(0), reverse=True)
+</code></pre>
 
 </article>
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
-
 <ul class="backlinks-container">
-    
         <li class="backlink">
             <a href="/notes/cheat-sheets/" class="backlink__link">Cheat-Sheets</a>
             <div class="backlink__preview" role="none">
@@ -123,7 +118,20 @@ deactivate
 
             </div>
         </li>
-    
+        <li class="backlink">
+            <a href="/notes/tech/" class="backlink__link">Tech</a>
+            <div class="backlink__preview" role="none">
+                <h1>Tech</h1>
+<ul>
+<li><a href="/notes/sql-server/">sql server</a></li>
+<li><a href="/notes/web/">web</a></li>
+<li><a href="/notes/csharp/">csharp</a></li>
+<li><a href="/notes/docker/">docker</a></li>
+<li><a href="/notes/python/">python</a></li>
+</ul>
+
+            </div>
+        </li>
         <li class="backlink">
             <a href="/notes/work-tools/" class="backlink__link">Work-Tools</a>
             <div class="backlink__preview" role="none">
@@ -135,27 +143,9 @@ deactivate
 <li>nBI: testing</li>
 <li>scales for dynamics na</li>
 <li>Schema crawler looks awesome: <a href="https://www.schemacrawler.com/scripting.html">https://www.schemacrawler.com/scripting.html</a></li>
-<li><a href="http://plopjs.com">plopjs.com</a>: Plop creates ge</li>
-</ul>
-
+<li>plopjs.com: Plop...</li></ul>
             </div>
         </li>
-    
-        <li class="backlink">
-            <a href="/notes/tech/" class="backlink__link">Tech</a>
-            <div class="backlink__preview" role="none">
-                <h1>Tech</h1>
-<ul>
-<li><a href="/notes/sql-server/">sql-server</a></li>
-<li><a href="/notes/web/">web</a></li>
-<li><a href="/notes/csharp/">csharp</a></li>
-<li><a href="/notes/docker/">docker</a></li>
-<li><a href="/notes/python/">python</a></li>
-</ul>
-
-            </div>
-        </li>
-    
 </ul>
 
     </main>
