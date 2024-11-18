@@ -1,6 +1,6 @@
 # Hi, I'm Asbjørn
 
-![profile](assets/profile.png) {.sideimg}
+<p class="sideimg"><img src="assets/profile.png" alt="profile"></p>
 
 A developer, data-enthusiast, nerd and a life long learner. I love learning new things and this site is another attempt at trying out new tech rather than just reading about it.
 
