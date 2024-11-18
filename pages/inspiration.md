@@ -1,6 +1,3 @@
----
-layout: default
----
 # Inspiration for this site
 
 I've long been fascinated with zettelkasten, personal wikis, gtd and similar but never committed. Finding [Foam](https://github.com/foambubble/foam) gave me an easy way to try it out and I collected some simple notes. Reading more blogposts this one really resonated with me: [Building a digital Garden](https://tomcritchlow.com/2019/02/17/building-digital-garden/) - give it a read and see if you agree.
