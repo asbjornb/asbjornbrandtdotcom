@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+<title>Healthchecks in .NET &#8226; Asbj&#248;rn Brandt's Notes</title>
+
+<meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<meta property="og:title" content="Healthchecks in .NET &#8226; Asbj&#248;rn Brandt's Notes">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/healthchecks-net/">
+<meta property="og:image" content="/assets/chart.svg">
+<meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<link rel="canonical" href="https://asbjornbrandt.com/notes/healthchecks-net/">
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <a href="/" class="page-header__logo" title="Go home">
+            <img src="/assets/chart.svg" alt="" width="48">
+        </a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/notes">Notes</a>
+            <a href="/inspiration">Inspiration</a>
+            <a href="/now">Now</a>
+        </nav>
+    </header>
+    <main>
+        <article>
+    <h1>Healthchecks in .NET</h1>
+<p>Healthchecks are a common way to monitor the health of a service. They are typically implemented as a HTTP endpoint that returns a 200 OK response if the service is healthy, but for non-HTTP services like a worker service healthchecks can be done over TCP or as a file write. Healthchecks are often used in Kubernetes to determine if a pod should be restarted.</p>
+<h2>Implementation in .NET</h2>
+<p>For ASP.NET Core applications (typically web apps or APIs) healthchecks are implemented as a simple HTTP endpoint. It can often look like:</p>
+<pre><code class="language-csharp">app.MapGet(&quot;/health&quot;, () =&gt; HealthCheckResult.Healthy());
+</code></pre>
+<p>This is the most trivial implementation, but it can work as a simple check that the app is running and responding to HTTP requests.</p>
+<p>For e.g. worker services that don't have an HTTP endpoint healthchecks can be implemented with an HttpListener or a small Kestrel server - or for simpler variations with a file write or a TCP check. They can also just use the Microsoft.NET.Sdk.Web similar to the ASP.NET Core apps at a cost of a bit of extra memory usage (~30MB per instance).</p>
+<h2>Common pitfalls</h2>
+<p>Deep healthchecks have been the cause of multiple well documented outages like <a href="https://careersatdoordash.com/blog/how-to-handle-kubernetes-health-checks/">DoorDash</a>.</p>
+<p>Generally pitfalls are often variations over using them inappropriately. That is, often health checks are used by Kubernetes to determine if a pod should be restarted, but then they are implemented in a way like checking a database connection - but a slow database won't necessarily be helped by restarting the pod. So determine the purpose of your healthcheck and implement it accordingly.</p>
+<h2>Types of healthchecks</h2>
+<p>For kubernetes specifically there are three types of healthchecks:</p>
+<ol>
+<li><strong>Liveness</strong> - This is to determine if the pod is running or not. If this fails the pod will be restarted.</li>
+<li><strong>Readiness</strong> - This is to determine if the pod is ready to accept traffic and as such mostly applies to web apps or APIs. If the pod can't connect to the database, it might not help to restart the pod, but it also won't help to direct traffic to it. So here it might make sense to make deep healthchecks or e.g. try to reroute traffic if just responses on this pod are failing or slow.</li>
+<li><strong>Startup</strong> - This is to determine if the pod has completed its startup sequence and is ready to accept traffic. It mostly makes sense if e.g. caches need to be warmed up or other long running tasks need to complete before requests can be processed.</li>
+</ol>
+<p>But there are also other way to use healthchecks. A common one is to just make a service overview page where one can then dive in and see that service x has health=degraded and that the cause is that the database is slow. In this case deep healthchecks can also make sense to explain the current health.</p>
+<h2>Useful healthchecks</h2>
+<ul>
+<li>A simple ping check can be good to just see if the service is running and responding to requests.</li>
+<li>A database connection check can make sense, especially for readiness checks.</li>
+<li>A stream or queue check, e.g. checking that we can successfully write and read from a queue or stream, can make sense for readiness checks.</li>
+<li>It can also make sense to check on queue depth or stream position to see if we are falling behind - again this is a case where a restart might not make much sense, but surfacing this as a degraded state (or alternatively alerting on it) can be useful.</li>
+<li>It might also make sense to have checks for core infrastructure - not inside specific services, but as separate healthchecks. Vpn, file systems, database, the kubernetes cluster, the logging setup, NGinx (home pages being reachable from the outside), build pipeline, etc.</li>
+</ul>
+<h2>Asp.Net Core Healthchecks.UI</h2>
+<p>See especially this Tim Corey video: <a href="https://www.youtube.com/watch?v=Kbfto6Y2xdw">Health Checks in ASP.NET Core</a>.
+See the package here: <a href="https://www.nuget.org/packages/AspNetCore.HealthChecks.UI/">AspNetCore.HealthChecks.UI</a> and the site here: <a href="https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks">Healthchecks.UI</a>.</p>
+<h2>More reading</h2>
+<ul>
+<li><a href="https://copyconstruct.medium.com/health-checks-in-distributed-systems-aa8a0e8c1672">Health Checks in Distributed Systems</a></li>
+<li><a href="https://encore.dev/blog/horror-stories-k8s">Horror Stories: Kubernetes Deep Health Checks</a></li>
+</ul>
+
+</article>
+<hr>
+<p class="backlinks-title larger">Backlinks</p>
+<p class="backlinks-default">No backlinks found.</p>
+
+    </main>
+    
+    <footer class="page-footer">
+        <small>Copyright Asbjørn Brandt</small>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+<title>Make &#8226; Asbj&#248;rn Brandt's Notes</title>
+
+<meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<meta property="og:title" content="Make &#8226; Asbj&#248;rn Brandt's Notes">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/make/">
+<meta property="og:image" content="/assets/chart.svg">
+<meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<link rel="canonical" href="https://asbjornbrandt.com/notes/make/">
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <a href="/" class="page-header__logo" title="Go home">
+            <img src="/assets/chart.svg" alt="" width="48">
+        </a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/notes">Notes</a>
+            <a href="/inspiration">Inspiration</a>
+            <a href="/now">Now</a>
+        </nav>
+    </header>
+    <main>
+        <article>
+    <h1>Make</h1>
+<p>Make is a common way to standardize the commands used in a software repository. It can be helpful to have a standard way to build, test, run and deploy software across different repositories with e.g. different languages, package managers, testing frameworks, formatting tools, etc.</p>
+<h2>Makefile</h2>
+<p>A Makefile is a file that contains the commands to build, test, run and deploy software. It is typically named <code>Makefile</code> or <code>makefile</code>.</p>
+<p>Example of a Makefile with phony targets:</p>
+<pre><code class="language-makefile">PHONY=test all package build clean
+
+test:
+    poetry run pytest
+    poetry run mypy -p some.module
+
+format:
+    poetry run ruff format
+
+clean:
+    poetry lock --no-update
+    poetry install
+
+build: format clean
+    poetry build
+</code></pre>
+<p><code>PHONY</code> targets are used to define commands that are not associated with a file. Without <code>PHONY</code> targets, Make will assume that the target is a file and will not run the command if the file exists.</p>
+<p>With make installed, you can run <code>make test</code> to run the <code>test</code> target.</p>
+<h2>Limitations &amp; Alternatives</h2>
+<p>A common limitation of Make is that you can't easily pass arguments to the commands. One way to work around this is to have make call a shell script that prompts the user for the arguments.</p>
+<p>A recent alternative to make is <a href="https://github.com/casey/just">Just</a> which is more of a command runner than a build system and as such has some niceties over Make like build arguments, simple <code>just -l</code> to list all commands, no need for PHONY etc.</p>
+
+</article>
+<hr>
+<p class="backlinks-title larger">Backlinks</p>
+<p class="backlinks-default">No backlinks found.</p>
+
+    </main>
+    
+    <footer class="page-footer">
+        <small>Copyright Asbjørn Brandt</small>
+    </footer>
+</body>
+</html>
