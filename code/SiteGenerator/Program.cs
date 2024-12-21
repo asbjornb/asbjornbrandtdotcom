@@ -18,7 +18,7 @@ public class Program
             Path.Combine(assemblyDirectory, "../../../../../")
         );
 
-        string contentDirectory = gitRootDirectory;
+        string contentDirectory = Path.Combine(gitRootDirectory, "content");
         string outputDirectory = Path.Combine(gitRootDirectory, "site-output");
         string templateDirectory = Path.Combine(gitRootDirectory, "code", "templates");
         string configPath = Path.Combine(assemblyDirectory, "config.json");
