@@ -1,4 +1,5 @@
 ﻿using Markdig;
+using SiteGenerator.Configuration;
 using SiteGenerator.Templates;
 using SiteGenerator.Templates.MetadataModels;
 
@@ -9,13 +10,13 @@ public class PageProcessor : IPageProcessor
     private readonly TemplateRenderer _templateRenderer;
     private readonly IFileProvider _folderReader;
     private readonly MarkdownParser _markdownParser;
-    private readonly Config _config;
+    private readonly SiteMetadata _config;
 
     public PageProcessor(
         TemplateRenderer templateRenderer,
         IFileProvider folderReader,
         MarkdownParser markdownParser,
-        Config config
+        SiteMetadata config
     )
     {
         _templateRenderer = templateRenderer;
