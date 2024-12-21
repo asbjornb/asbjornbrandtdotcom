@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Microsoft.Extensions.Configuration;
+using SiteGenerator.Configuration;
 using SiteGenerator.Templates;
 
 namespace SiteGenerator;
@@ -9,37 +10,37 @@ public class Program
     {
         Console.WriteLine("Starting Site Generation...");
 
-        // Get the directory of the executing assembly
-        string assemblyDirectory =
-            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
-            ?? throw new Exception("Could not determine the executing assembly location.");
+        // Build configuration
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddCommandLine(args)
+            .Build();
 
-        string gitRootDirectory = Path.GetFullPath(
-            Path.Combine(assemblyDirectory, "../../../../../")
-        );
+        // Bind configuration sections to records
+        var siteMetadata = configuration.GetSection("SiteMetadata").Get<SiteMetadata>();
+        var pathsConfig = configuration.GetSection("Paths").Get<PathsConfig>();
+        if (siteMetadata is null || pathsConfig is null)
+        {
+            throw new Exception("Could not bind configuration sections to records.");
+        }
 
-        string contentDirectory = gitRootDirectory;
-        string outputDirectory = Path.Combine(gitRootDirectory, "site-output");
-        string templateDirectory = Path.Combine(gitRootDirectory, "code", "templates");
-        string configPath = Path.Combine(assemblyDirectory, "config.json");
+        //Paths
+        var basePath = pathsConfig.BasePath;
+        var contentPath = Path.Combine(basePath, pathsConfig.ContentDirectory);
+        var outputPath = Path.Combine(basePath, pathsConfig.OutputDirectory);
+        var templatePath = Path.Combine(basePath, pathsConfig.TemplateDirectory);
 
-        Console.WriteLine($"Content Directory: {contentDirectory}");
-        Console.WriteLine($"Output Directory: {outputDirectory}");
-        Console.WriteLine($"Template Directory: {templateDirectory}");
-        Console.WriteLine($"Config Path: {configPath}");
-
-        // Validate paths (optional)
-        ValidatePath(contentDirectory, nameof(contentDirectory));
-        ValidatePath(outputDirectory, nameof(outputDirectory));
-        ValidatePath(templateDirectory, nameof(templateDirectory));
-        ValidatePath(configPath, nameof(configPath));
+        // Validate paths
+        ValidatePath(contentPath, nameof(pathsConfig.ContentDirectory));
+        ValidatePath(outputPath, nameof(pathsConfig.OutputDirectory));
+        ValidatePath(templatePath, nameof(pathsConfig.TemplateDirectory));
 
         // Run the generator
         var generator = new Generator(
-            contentDirectory,
-            outputDirectory,
-            new(new FileTemplateProvider(templateDirectory)),
-            configPath
+            contentPath,
+            outputPath,
+            new(new FileTemplateProvider(templatePath)),
+            siteMetadata
         );
         await generator.GenerateSiteAsync();
 

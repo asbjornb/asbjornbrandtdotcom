@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using SiteGenerator.BacklinksProcessing;
+using SiteGenerator.Configuration;
 using SiteGenerator.Processors;
 using SiteGenerator.Templates;
 using SiteGenerator.Tests.Helpers;
@@ -13,7 +14,7 @@ public class NoteProcessorTests
     private readonly MarkdownParser _markdownParser;
     private readonly TemplateRenderer _templateRenderer;
     private readonly Backlinks _backlinks;
-    private readonly Config _config;
+    private readonly SiteMetadata _config;
 
     private readonly NoteProcessor _processor;
 
@@ -23,7 +24,7 @@ public class NoteProcessorTests
         _markdownParser = new MarkdownParser();
         _templateRenderer = new TemplateRenderer(new FileTemplateProvider("TestData/templates"));
         _backlinks = new Backlinks();
-        _config = new Config(
+        _config = new SiteMetadata(
             SiteTitle: "Asbjørn Brandt",
             BaseUrl: "https://asbjornbrandt.com",
             Author: "Asbjørn Brandt",

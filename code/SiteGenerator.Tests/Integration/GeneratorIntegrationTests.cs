@@ -2,6 +2,8 @@
 using System.Text.RegularExpressions;
 using FluentAssertions;
 using FluentAssertions.Execution;
+using Microsoft.Extensions.Configuration;
+using SiteGenerator.Configuration;
 using SiteGenerator.Templates;
 using Xunit;
 using Xunit.Abstractions;
@@ -20,9 +22,16 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
     {
         _output = output;
         Directory.CreateDirectory(ActualOutputPath);
+        var siteMetadata =
+            new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build()
+                .GetSection("SiteMetadata")
+                .Get<SiteMetadata>()
+            ?? throw new Exception("Could not bind configuration sections to records.");
 
         var templateRenderer = new TemplateRenderer(new FileTemplateProvider("TestData/templates"));
-        _generator = new Generator(InputPath, ActualOutputPath, templateRenderer, "config.json");
+        _generator = new Generator(InputPath, ActualOutputPath, templateRenderer, siteMetadata);
     }
 
     public async Task InitializeAsync()
