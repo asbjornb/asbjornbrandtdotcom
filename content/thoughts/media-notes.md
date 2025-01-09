@@ -2,10 +2,7 @@
 
 Collection of notes on books I've read, podcasts I've heard etc.
 
-## Books
-
-* Pragmatic programmer
-* [[code-that-fits-in-your-head]]
+* [[books]]
 
 ## Podcasts
 
