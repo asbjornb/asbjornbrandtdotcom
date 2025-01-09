@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using SiteGenerator.Configuration;
 using SiteGenerator.Templates;
 
@@ -9,6 +10,7 @@ public class Program
     public static async Task Main(string[] args)
     {
         Console.WriteLine("Starting Site Generation...");
+        var stopwatch = Stopwatch.StartNew();
 
         // Build configuration
         var configuration = new ConfigurationBuilder()
@@ -44,7 +46,8 @@ public class Program
         );
         await generator.GenerateSiteAsync();
 
-        Console.WriteLine("Site Generation Complete!");
+        stopwatch.Stop();
+        Console.WriteLine($"Site Generation Complete! Elapsed time: {stopwatch.Elapsed}");
     }
 
     private static void ValidatePath(string path, string pathName)
