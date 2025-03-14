@@ -6,3 +6,4 @@ Some meme templates that are just great:
 * <https://imgflip.com/memegenerator/Drake-Hotline-Bling>
 * <https://imgflip.com/memegenerator/Two-Buttons>
 * <https://imgflip.com/memegenerator/This-Is-Fine>
+* <https://imgflip.com/memegenerator/101956210/Whisper-and-Goosebumps>
