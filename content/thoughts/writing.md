@@ -10,7 +10,7 @@
   * Pick a passage/sample of 150-250 words
   * Count number of words
   * Count number of sentences
-  * Count number of words with 3 sentences or more
+  * Count number of words with 3 syllables or more
   * Divide #words/#sentences - ~15 is a good target
   * Divide #LongWords/#Words as percent - ~15% is a good target
   * Add both for clarity score - ~20-40 is good. Most people will be over 40 if they don't edit to lower it.
