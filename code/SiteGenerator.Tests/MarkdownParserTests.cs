@@ -6,6 +6,11 @@ namespace SiteGenerator.Tests;
 
 public class MarkdownParserTests
 {
+    private static string NormalizeWhitespace(string input)
+    {
+        return input.Trim().Replace("\r\n", "\n").Replace("\r", "\n");
+    }
+
     [Fact]
     public void ParseToHtml_ShouldParseBasicMarkdown()
     {
@@ -176,7 +181,7 @@ public class MarkdownParserTests
             </code></pre>
             """;
 
-        result.Trim().Should().Be(expectedHtml);
+        NormalizeWhitespace(result).Should().Be(NormalizeWhitespace(expectedHtml));
     }
 
     [Theory]
@@ -242,7 +247,7 @@ public class MarkdownParserTests
             </code></pre>
             """;
 
-        result.Trim().Should().Be(expectedHtml);
+        NormalizeWhitespace(result).Should().Be(NormalizeWhitespace(expectedHtml));
     }
 
     [Fact]
