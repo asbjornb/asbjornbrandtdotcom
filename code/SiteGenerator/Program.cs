@@ -26,8 +26,8 @@ public class Program
             throw new Exception("Could not bind configuration sections to records.");
         }
 
-        //Paths
-        var basePath = pathsConfig.BasePath;
+        //Paths - auto-detect BasePath
+        var basePath = PathResolver.ResolveBasePath(pathsConfig.BasePath);
         var contentPath = Path.Combine(basePath, pathsConfig.ContentDirectory);
         var outputPath = Path.Combine(basePath, pathsConfig.OutputDirectory);
         var templatePath = Path.Combine(basePath, pathsConfig.TemplateDirectory);
