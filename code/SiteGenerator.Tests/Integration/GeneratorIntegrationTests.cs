@@ -50,7 +50,73 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
     {
         if (Directory.Exists(ActualOutputPath))
         {
-            Directory.Delete(ActualOutputPath, true);
+            DeleteDirectoryWithRetry(ActualOutputPath);
+        }
+    }
+
+    private static void DeleteDirectoryWithRetry(string path, int maxRetries = 3)
+    {
+        for (int i = 0; i < maxRetries; i++)
+        {
+            try
+            {
+                Directory.Delete(path, true);
+                return;
+            }
+            catch (IOException) when (i < maxRetries - 1)
+            {
+                // Wait a bit for any file handles to be released
+                Thread.Sleep(100 * (i + 1));
+            }
+            catch (UnauthorizedAccessException) when (i < maxRetries - 1)
+            {
+                // Wait a bit for any file handles to be released
+                Thread.Sleep(100 * (i + 1));
+            }
+        }
+
+        // If we still can't delete after retries, try to delete individual files
+        try
+        {
+            DeleteDirectoryContents(path);
+            Directory.Delete(path, false);
+        }
+        catch
+        {
+            // If cleanup still fails, ignore it - it's just test cleanup
+            // The test results are still valid
+        }
+    }
+
+    private static void DeleteDirectoryContents(string path)
+    {
+        if (!Directory.Exists(path))
+            return;
+
+        foreach (var file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
+        {
+            try
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+            catch
+            {
+                // Ignore individual file deletion failures
+            }
+        }
+
+        foreach (var dir in Directory.GetDirectories(path))
+        {
+            try
+            {
+                DeleteDirectoryContents(dir);
+                Directory.Delete(dir, false);
+            }
+            catch
+            {
+                // Ignore individual directory deletion failures
+            }
         }
     }
 
