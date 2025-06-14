@@ -98,4 +98,6 @@ Here are some commands I often use:
     --To find strings in historic commits use pickaxe (git log -S) like:
     `git log -S'using MyLibrary.Logging.LoggingServices;' --oneline`
 
+    --Note that files can be ignored locally without adding them to .gitignore by adding them to .git/info/exclude. This is useful for files that are not relevant to the project but should not be committed, like local configuration files or temporary files.
+
     --Not git but cmd in windows - to terminate END on long outputs press ;q
