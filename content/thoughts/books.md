@@ -10,7 +10,7 @@ Should this all go in goodreads or similar service?
 * Observability Engineering
 * Database Reliability Engineering by
 * The Software Engineer's Guidebook
-* Implementnig Service Level Objectives
+* Implementing Service Level Objectives
 * The effective engineer
 * Working effectively with legacy applications
 * Domain Modelling Made Functional

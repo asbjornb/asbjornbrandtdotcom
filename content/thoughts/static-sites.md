@@ -9,7 +9,7 @@ Static site generators work by just delivering html, js, css files directly. Thi
 
 ## Options
 
-To see and compare many options check [jamstack.org/generators](]https://jamstack.org/generators/)
+To see and compare many options check [jamstack.org/generators](https://jamstack.org/generators/)
 
 * [[11ty]] - currently preferred. Very simple and can separate all site code from all content so that content is at the root.
 * Jekyll

@@ -22,4 +22,4 @@ FROM(SELECT​r=ROW_NUMBER()OVER(ORDER​BY​1/0)FROM​a,a​b,a​c,a​d)b
 ![Even for sysnames](Assets/ZalgoSql.png)
 
 Also see this link for postgres weirdness which might largely be replicateable in sql:
-[Select wat from sql](https://scattered-thoughts.net/writing/select-wat-from-sql/)]
+[Select wat from sql](https://scattered-thoughts.net/writing/select-wat-from-sql/)
