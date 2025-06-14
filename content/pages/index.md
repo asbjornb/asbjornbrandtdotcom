@@ -6,4 +6,4 @@ A developer, data-enthusiast, nerd and a life long learner. I love learning new 
 
 I previously blogged a bit on personal finance over at firedk.com (I've since lost the domain) but learned quickly that I prefer to just write when I have time and inspiration rather than try to publish on a schedule. This site will run with that observation so no regular blog posts with dates - rather this is a [digital garden](inspiration).
 
-To get in touch just reach out at asbjoernbrandt@gmail.com or interact at the [github for this site](https://github.com/asbjornb/personal-site).
+To get in touch just reach out at asbjoernbrandt@gmail.com or interact at the [github for this site](https://github.com/asbjornb/asbjornbrandtdotcom).
