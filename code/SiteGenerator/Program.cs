@@ -27,7 +27,7 @@ public class Program
         }
 
         //Paths - auto-detect BasePath
-        var basePath = PathResolver.ResolveBasePath(pathsConfig.BasePath);
+        var basePath = PathResolver.ResolveBasePath();
         var contentPath = Path.Combine(basePath, pathsConfig.ContentDirectory);
         var outputPath = Path.Combine(basePath, pathsConfig.OutputDirectory);
         var templatePath = Path.Combine(basePath, pathsConfig.TemplateDirectory);

@@ -3,28 +3,43 @@ name: Build and Test
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.0.x'
+
+    - name: Restore Dependencies
+      run: |
+        cd code
+        dotnet restore SiteGenerator.sln
 
     - name: Build Solution
       run: |
         cd code
-        dotnet build SiteGenerator.sln --configuration Release
+        dotnet build SiteGenerator.sln --configuration Release --no-restore
 
     - name: Run Tests
       run: |
         cd code
-        dotnet test SiteGenerator.sln --no-build --configuration Release
+        dotnet test SiteGenerator.sln --configuration Release --no-build --verbosity normal
+
+    - name: Test Site Generation (Cross-platform)
+      run: |
+        cd code/SiteGenerator
+        dotnet run --configuration Release
 
     # Commented out deployment step until secrets are available
     # - name: Deploy to Cloudflare Pages
