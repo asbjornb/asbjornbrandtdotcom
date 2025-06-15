@@ -1,0 +1,17 @@
+<div class="posts-index">
+    <h1>Posts</h1>
+    <p>Musings on work, technology, and life.</p>
+    
+    {{#if Posts}}
+        <div class="posts-list">
+            {{#each Posts}}
+                <article class="post-summary">
+                    <h2><a href="{{Url}}">{{Title}}</a></h2>
+                    <time class="post-date">{{formatDate PublishedDate}}</time>
+                </article>
+            {{/each}}
+        </div>
+    {{else}}
+        <p>No posts yet.</p>
+    {{/if}}
+</div>
