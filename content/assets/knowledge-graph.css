@@ -1,0 +1,146 @@
+/* Knowledge Graph Styles */
+.note-graph {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.note-graph h2 {
+    margin: 0 0 1rem 0;
+    color: #333;
+    font-size: 1.2em;
+}
+
+.graph-info {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9em;
+}
+
+.graph-info span {
+    padding: 0.25rem 0.5rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #666;
+}
+
+.connected-notes h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1em;
+    color: #555;
+}
+
+.note-connections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.connection-link {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    min-width: 120px;
+    transition: all 0.2s ease;
+}
+
+.connection-link:hover {
+    border-color: #007acc;
+    background: #f0f8ff;
+}
+
+.connection-title {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.connection-category {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+.connection-hub {
+    border-left: 4px solid #ff6b6b;
+}
+
+.connection-category {
+    border-left: 4px solid #4ecdc4;
+}
+
+.connection-note {
+    border-left: 4px solid #95a5a6;
+}
+
+.mini-graph-container h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1em;
+    color: #555;
+}
+
+.mini-graph {
+    height: 200px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.explore-graph-btn {
+    padding: 0.5rem 1rem;
+    background: #007acc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.explore-graph-btn:hover {
+    background: #005a9e;
+}
+
+/* D3 specific styles for mini-graph */
+.mini-link {
+    stroke: #999;
+    stroke-width: 2;
+}
+
+.mini-node {
+    stroke: #fff;
+    stroke-width: 2;
+    cursor: pointer;
+}
+
+.mini-label {
+    font-size: 10px;
+    font-family: Arial, sans-serif;
+    fill: #333;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .graph-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .note-connections {
+        flex-direction: column;
+    }
+    
+    .connection-link {
+        min-width: auto;
+    }
+}

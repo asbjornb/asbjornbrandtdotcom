@@ -52,6 +52,37 @@
 <p>Eleventy uses .eleventyignore and .gitignore from the generators root (same folder as .eleventy.js).</p>
 
 </article>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<section class="note-graph">
+    <h2>Knowledge Connections</h2>
+    <div class="graph-info">
+        <span class="graph-category">Category: General</span>
+        <span class="graph-type">Type: Note</span>
+        <span class="graph-connections"> connections</span>
+    </div>
+    
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="note-connections">
+            <a href="/notes/11ty/" class="connection-link connection-Note">
+                <span class="connection-title">11ty</span>
+                <span class="connection-category">General</span>
+            </a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <h3>Visual Map</h3>
+        <div id="mini-graph" class="mini-graph" data-current-note="11ty-build"></div>
+        <button class="explore-graph-btn" onclick="openFullGraph()">Explore Full Graph →</button>
+    </div>
+</section>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
+
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <ul class="backlinks-container">
