@@ -2,40 +2,31 @@
     {{{content}}}
 </article>
 
-{{#if GraphData}}
+<hr>
+
+{{> backlinks }}
+
+{{#if GraphData.ConnectedNodes}}
 <link rel="stylesheet" href="/assets/knowledge-graph.css">
 
-<section class="note-graph">
-    <h2>Knowledge Connections</h2>
-    <div class="graph-info">
-        <span class="graph-category">Category: {{GraphData.Category}}</span>
-        <span class="graph-type">Type: {{GraphData.NodeType}}</span>
-        <span class="graph-connections">{{GraphData.ConnectedNodes.length}} connections</span>
-    </div>
-    
-    {{#if GraphData.ConnectedNodes}}
+<div class="connections-section">
     <div class="connected-notes">
         <h3>Connected Notes</h3>
-        <div class="note-connections">
+        <div class="connection-links">
             {{#each GraphData.ConnectedNodes}}
-            <a href="{{Url}}" class="connection-link connection-{{Type}}">
-                <span class="connection-title">{{Title}}</span>
-                <span class="connection-category">{{Category}}</span>
-            </a>
+            <a href="{{Url}}" class="connection-link">{{Title}}</a>
             {{/each}}
         </div>
     </div>
     
     <div class="mini-graph-container">
-        <h3>Visual Map</h3>
+        <div class="graph-header">
+            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+        </div>
         <div id="mini-graph" class="mini-graph" data-current-note="{{GraphData.CurrentNoteId}}"></div>
-        <button class="explore-graph-btn" onclick="openFullGraph()">Explore Full Graph →</button>
     </div>
-    {{/if}}
-</section>
+</div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="/assets/knowledge-graph.js"></script>
 {{/if}}
-
-{{> backlinks }}
