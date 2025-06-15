@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using SiteGenerator.BacklinksProcessing;
 using SiteGenerator.Configuration;
+using SiteGenerator.KnowledgeGraph;
 using SiteGenerator.Previews;
 using SiteGenerator.Templates;
 using SiteGenerator.Templates.MetadataModels;
@@ -14,13 +15,15 @@ public class NoteProcessor : IPageProcessor
     private readonly IFileProvider _folderReader;
     private readonly MarkdownParser _markdownParser;
     private readonly SiteMetadata _config;
+    private readonly GraphData? _graphData;
 
     public NoteProcessor(
         Backlinks backlinks,
         TemplateRenderer templateRenderer,
         IFileProvider folderReader,
         MarkdownParser markdownParser,
-        SiteMetadata config
+        SiteMetadata config,
+        GraphData? graphData = null
     )
     {
         _backlinks = backlinks;
@@ -28,6 +31,7 @@ public class NoteProcessor : IPageProcessor
         _folderReader = folderReader;
         _markdownParser = markdownParser;
         _config = config;
+        _graphData = graphData;
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -126,7 +130,10 @@ public class NoteProcessor : IPageProcessor
             .Where(backlink => backlink != null)
             .ToList()!;
 
-        var noteModel = new NoteModel(htmlContent, backlinks);
+        // Extract graph data for the current note
+        var noteGraphData = ExtractNoteGraphData(fileName);
+
+        var noteModel = new NoteModel(htmlContent, backlinks, noteGraphData);
         var pageUrl = $"{_config.BaseUrl}/notes/{fileName}/";
 
         // Extract title from first header in the content
@@ -136,6 +143,38 @@ public class NoteProcessor : IPageProcessor
         var layoutModel = new LayoutModel(pageTitle, _config.Description, "article", pageUrl, null);
 
         return _templateRenderer.RenderNote(noteModel, layoutModel);
+    }
+
+    private NoteGraphData? ExtractNoteGraphData(string fileName)
+    {
+        if (_graphData == null)
+            return null;
+
+        // Find the current note in the graph data
+        var currentNode = _graphData.Nodes.FirstOrDefault(n => n.Id == fileName);
+        if (currentNode == null)
+            return null;
+
+        // Find all connections to/from this note
+        var connections = _graphData
+            .Links.Where(l => l.Source == fileName || l.Target == fileName)
+            .ToList();
+
+        // Find all connected nodes
+        var connectedNodeIds = connections
+            .Select(l => l.Source == fileName ? l.Target : l.Source)
+            .Distinct()
+            .ToList();
+
+        var connectedNodes = _graphData.Nodes.Where(n => connectedNodeIds.Contains(n.Id)).ToList();
+
+        return new NoteGraphData(
+            fileName,
+            connectedNodes,
+            connections,
+            currentNode.Category,
+            currentNode.Type
+        );
     }
 
     private static string? ExtractTitle(string htmlContent)

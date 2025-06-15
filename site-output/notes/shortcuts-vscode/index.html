@@ -79,6 +79,37 @@
 </ul>
 
 </article>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<section class="note-graph">
+    <h2>Knowledge Connections</h2>
+    <div class="graph-info">
+        <span class="graph-category">Category: Tools</span>
+        <span class="graph-type">Type: Note</span>
+        <span class="graph-connections"> connections</span>
+    </div>
+    
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="note-connections">
+            <a href="/notes/keyboard-shortcuts/" class="connection-link connection-Note">
+                <span class="connection-title">Keyboard shortcuts</span>
+                <span class="connection-category">Tools</span>
+            </a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <h3>Visual Map</h3>
+        <div id="mini-graph" class="mini-graph" data-current-note="shortcuts-vscode"></div>
+        <button class="explore-graph-btn" onclick="openFullGraph()">Explore Full Graph →</button>
+    </div>
+</section>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
+
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <ul class="backlinks-container">
