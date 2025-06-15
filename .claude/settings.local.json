@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build:*)",
+      "Bash(dotnet --version)",
+      "Bash(dotnet --list-sdks)",
+      "Bash(echo $PATH)",
+      "Bash(dotnet run:*)",
+      "Bash(dotnet test)",
+      "Bash(dotnet test:*)",
+      "Bash(find:*)",
+      "Bash(rm:*)",
+      "Bash(rg:*)",
+      "Bash(mkdir:*)",
+      "Bash(ls:*)",
+      "Bash(cp:*)"
+    ],
+    "deny": []
+  }
+}

@@ -57,6 +57,19 @@ public class Generator
         );
         await pageProcessor.ProcessAsync(Path.Combine(_contentPath, "pages"), _outputPath);
 
+        // Process posts (from posts folder to posts folder) - only if posts folder exists
+        var postsPath = Path.Combine(_contentPath, "posts");
+        if (Directory.Exists(postsPath))
+        {
+            var postProcessor = new PostProcessor(
+                _templateRenderer,
+                fileProvider,
+                markdownParser,
+                _siteMetadata
+            );
+            await postProcessor.ProcessAsync(postsPath, _outputPath);
+        }
+
         // Copy assets
         fileProvider.CopyFolderAsync(
             Path.Combine(_contentPath, "assets"),
