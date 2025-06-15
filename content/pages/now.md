@@ -2,8 +2,7 @@
 
 ## :house: Personal
 
-* 4 small kids - both great joy and lots of funny moments, but also lots of small stuff to do all the time
-* Paternity leave soon, looking forward to spending some quality time with the little one
+* 4 small kids - both great joy and lots of funny moments, but fairly busy
 
 ## :dollar: Work
 
@@ -12,12 +11,12 @@
 
 ## :computer: Tech
 
-* Building this site
+* Experimenting with Claude Code and OpenAI Codex - it is great fun! Claude Code is the first tool that really has me pondering about the future of software development.
 
 ## :books: Reading
 
-For tech books I finished Software Engineering at Google, Accelerate, The Phoenix Project, Modern Software Engineering and Leading Effective Engineering Teams this year.
+For tech books I finished Software Engineering at Google, Accelerate, The Phoenix Project, Modern Software Engineering and Leading Effective Engineering Teams this year. Currently listening to The Software Engineer's Guidebook by Gergely Orosz.
 
-I also read Digital Minimalism, the Brandon Sanderson Reckoners series and The Emperor of Portugallia.
+I also read Digital Minimalism, the Brandon Sanderson Reckoners series and The Emperor of Portugallia. Most recent fiction was Brandon Sanderson's Mistborn series.
 
 (This list is inspired by [now](https://nownownow.com/))
