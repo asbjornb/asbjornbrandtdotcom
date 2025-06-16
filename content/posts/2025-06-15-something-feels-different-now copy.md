@@ -1,4 +1,4 @@
-# 𝐒𝐨𝐦𝐞𝐭𝐡𝐢𝐧𝐠 𝐟𝐞𝐞𝐥𝐬 𝐝𝐢𝐟𝐟𝐞𝐫𝐞𝐧𝐭 𝐧𝐨𝐰.
+# Something feels different now
 
 I’ve used ChatGPT and Claude since they came out, including a fair bit for coding. Helpful, sometimes surprisingly so. Useful, but not transformative.
 
