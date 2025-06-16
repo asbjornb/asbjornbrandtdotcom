@@ -268,9 +268,23 @@ function renderGlobalGraph(graphData) {
     
     // Use all nodes and links for the global view
     const nodes = [...graphData.nodes];
-    const links = [...graphData.links];
+    const allLinks = [...graphData.links];
     
-    console.log('Creating simulation with', nodes.length, 'nodes and', links.length, 'links');
+    // Create a set of valid node IDs for quick lookup
+    const validNodeIds = new Set(nodes.map(n => n.id));
+    
+    // Filter out links that reference non-existent nodes
+    const links = allLinks.filter(link => {
+        const sourceValid = validNodeIds.has(link.source);
+        const targetValid = validNodeIds.has(link.target);
+        if (!sourceValid || !targetValid) {
+            console.warn('Filtering out invalid link:', link.source, '->', link.target, 
+                        'Source exists:', sourceValid, 'Target exists:', targetValid);
+        }
+        return sourceValid && targetValid;
+    });
+    
+    console.log('Creating simulation with', nodes.length, 'nodes and', links.length, 'valid links (filtered from', allLinks.length, 'total)');
     
     // Give nodes initial random positions to ensure they're visible
     nodes.forEach((d, i) => {
