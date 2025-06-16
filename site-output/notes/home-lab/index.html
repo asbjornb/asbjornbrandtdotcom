@@ -60,47 +60,7 @@ Also check saved comments on reddit - saved some great security posts for homela
 
 </article>
 
-<link rel="stylesheet" href="/assets/knowledge-graph.css">
-
-<section class="note-graph">
-    <h2>Knowledge Connections</h2>
-    <div class="graph-info">
-        <span class="graph-category">Category: General</span>
-        <span class="graph-type">Type: Category</span>
-        <span class="graph-connections"> connections</span>
-    </div>
-    
-    <div class="connected-notes">
-        <h3>Connected Notes</h3>
-        <div class="note-connections">
-            <a href="/notes/backup/" class="connection-link connection-Note">
-                <span class="connection-title">Backup</span>
-                <span class="connection-category">General</span>
-            </a>
-            <a href="/notes/index/" class="connection-link connection-Note">
-                <span class="connection-title">Index</span>
-                <span class="connection-category">Organization</span>
-            </a>
-            <a href="/notes/pc-setup/" class="connection-link connection-Note">
-                <span class="connection-title">PC Setup</span>
-                <span class="connection-category">General</span>
-            </a>
-            <a href="/notes/retropie/" class="connection-link connection-Note">
-                <span class="connection-title">Retropie</span>
-                <span class="connection-category">General</span>
-            </a>
-        </div>
-    </div>
-    
-    <div class="mini-graph-container">
-        <h3>Visual Map</h3>
-        <div id="mini-graph" class="mini-graph" data-current-note="home-lab"></div>
-        <button class="explore-graph-btn" onclick="openFullGraph()">Explore Full Graph →</button>
-    </div>
-</section>
-
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="/assets/knowledge-graph.js"></script>
+<hr>
 
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
@@ -145,6 +105,30 @@ Also check saved comments on reddit - saved some great security posts for homela
             </div>
         </li>
 </ul>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<div class="connections-section">
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="connection-links">
+            <a href="/notes/backup/" class="connection-link">Backup</a>
+            <a href="/notes/index/" class="connection-link">Index</a>
+            <a href="/notes/pc-setup/" class="connection-link">PC Setup</a>
+            <a href="/notes/retropie/" class="connection-link">Retropie</a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <div class="graph-header">
+            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+        </div>
+        <div id="mini-graph" class="mini-graph" data-current-note="home-lab"></div>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
 
     </main>
     

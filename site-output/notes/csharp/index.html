@@ -106,7 +106,7 @@ See also: <a href="https://www.youtube.com/watch?v=-9b8NRqjUFM">https://www.yout
 </li>
 <li><p>Indent level of a function should not be greater than one or two (no nested structures in small functions).</p>
 </li>
-<li><p>If statements are if(function()){function()}else{function}</p>
+<li><p>If statements are if(function()){function()}else{function()}</p>
 </li>
 <li><p>Functions should at best have 0-&gt;max 3 arguments. If you pass more than 3 things that are cohesive they should probably be an object.</p>
 </li>
@@ -241,35 +241,7 @@ cleanup();
 
 </article>
 
-<link rel="stylesheet" href="/assets/knowledge-graph.css">
-
-<section class="note-graph">
-    <h2>Knowledge Connections</h2>
-    <div class="graph-info">
-        <span class="graph-category">Category: Programming</span>
-        <span class="graph-type">Type: Note</span>
-        <span class="graph-connections"> connections</span>
-    </div>
-    
-    <div class="connected-notes">
-        <h3>Connected Notes</h3>
-        <div class="note-connections">
-            <a href="/notes/tech/" class="connection-link connection-Note">
-                <span class="connection-title">Tech</span>
-                <span class="connection-category">General</span>
-            </a>
-        </div>
-    </div>
-    
-    <div class="mini-graph-container">
-        <h3>Visual Map</h3>
-        <div id="mini-graph" class="mini-graph" data-current-note="csharp"></div>
-        <button class="explore-graph-btn" onclick="openFullGraph()">Explore Full Graph →</button>
-    </div>
-</section>
-
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="/assets/knowledge-graph.js"></script>
+<hr>
 
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
@@ -289,6 +261,27 @@ cleanup();
             </div>
         </li>
 </ul>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<div class="connections-section">
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="connection-links">
+            <a href="/notes/tech/" class="connection-link">Tech</a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <div class="graph-header">
+            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+        </div>
+        <div id="mini-graph" class="mini-graph" data-current-note="csharp"></div>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
 
     </main>
     

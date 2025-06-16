@@ -57,35 +57,7 @@
 
 </article>
 
-<link rel="stylesheet" href="/assets/knowledge-graph.css">
-
-<section class="note-graph">
-    <h2>Knowledge Connections</h2>
-    <div class="graph-info">
-        <span class="graph-category">Category: Database</span>
-        <span class="graph-type">Type: Note</span>
-        <span class="graph-connections"> connections</span>
-    </div>
-    
-    <div class="connected-notes">
-        <h3>Connected Notes</h3>
-        <div class="note-connections">
-            <a href="/notes/sql-server/" class="connection-link connection-Category">
-                <span class="connection-title">Sql Server</span>
-                <span class="connection-category">Database</span>
-            </a>
-        </div>
-    </div>
-    
-    <div class="mini-graph-container">
-        <h3>Visual Map</h3>
-        <div id="mini-graph" class="mini-graph" data-current-note="tsql-codesmells"></div>
-        <button class="explore-graph-btn" onclick="openFullGraph()">Explore Full Graph →</button>
-    </div>
-</section>
-
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="/assets/knowledge-graph.js"></script>
+<hr>
 
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
@@ -109,6 +81,27 @@
             </div>
         </li>
 </ul>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<div class="connections-section">
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="connection-links">
+            <a href="/notes/sql-server/" class="connection-link">Sql Server</a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <div class="graph-header">
+            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+        </div>
+        <div id="mini-graph" class="mini-graph" data-current-note="tsql-codesmells"></div>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
 
     </main>
     
