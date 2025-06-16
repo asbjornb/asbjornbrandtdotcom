@@ -184,6 +184,10 @@ function closeGlobalGraph() {
     container.selectAll('*').remove();
 }
 
+// Global variables for zoom control
+let globalSvg = null;
+let globalZoom = null;
+
 function renderGlobalGraph(graphData) {
     const container = d3.select('#global-graph');
     const containerRect = container.node().getBoundingClientRect();
@@ -198,6 +202,9 @@ function renderGlobalGraph(graphData) {
         .attr('width', width)
         .attr('height', height);
     
+    // Store reference for zoom controls
+    globalSvg = svg;
+    
     // Add zoom behavior
     const zoom = d3.zoom()
         .scaleExtent([0.1, 4])
@@ -205,6 +212,7 @@ function renderGlobalGraph(graphData) {
             g.attr('transform', event.transform);
         });
     
+    globalZoom = zoom;
     svg.call(zoom);
     
     // Create a group for all graph elements
@@ -316,6 +324,49 @@ function renderGlobalGraph(graphData) {
         if (!event.active) simulation.alphaTarget(0);
         d.fx = null;
         d.fy = null;
+    }
+    
+    // Update stats display
+    updateGraphStats(graphData);
+}
+
+// Zoom control functions
+function zoomIn() {
+    if (globalSvg && globalZoom) {
+        globalSvg.transition().duration(300).call(
+            globalZoom.scaleBy, 1.5
+        );
+    }
+}
+
+function zoomOut() {
+    if (globalSvg && globalZoom) {
+        globalSvg.transition().duration(300).call(
+            globalZoom.scaleBy, 0.67
+        );
+    }
+}
+
+function resetZoom() {
+    if (globalSvg && globalZoom) {
+        globalSvg.transition().duration(500).call(
+            globalZoom.transform,
+            d3.zoomIdentity
+        );
+    }
+}
+
+function updateGraphStats(graphData) {
+    const statsContainer = document.getElementById('graph-stats');
+    if (statsContainer) {
+        const stats = graphData.stats;
+        statsContainer.innerHTML = `
+            <strong>Graph Statistics</strong><br>
+            Nodes: ${stats.totalNodes}<br>
+            Links: ${stats.totalLinks}<br>
+            Hubs: ${stats.hubNodes}<br>
+            Categories: ${stats.categoryNodes}
+        `;
     }
 }
 
