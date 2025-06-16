@@ -101,6 +101,72 @@
 
 /* Arrow marker styles are handled in JavaScript for dynamic coloring */
 
+/* Global Graph Modal */
+.global-graph-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.global-graph-modal.active {
+    display: flex;
+    flex-direction: column;
+}
+
+.global-graph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.global-graph-title {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.global-graph-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.global-graph-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.global-graph-container {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    position: relative;
+    min-height: 0;
+}
+
+.global-graph {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
 .mini-node {
     stroke: #fff;
     stroke-width: 2;
