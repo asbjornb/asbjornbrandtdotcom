@@ -37,13 +37,19 @@ public class GraphBuilder
             links.AddRange(nodeLinks);
         }
 
+        // Filter out links to non-existent nodes
+        var validNodeIds = nodes.Select(n => n.Id).ToHashSet();
+        var validLinks = links
+            .Where(l => validNodeIds.Contains(l.Source) && validNodeIds.Contains(l.Target))
+            .ToList();
+
         // Classify hub nodes based on connectivity
-        ClassifyHubNodes(nodes, links);
+        ClassifyHubNodes(nodes, validLinks);
 
         // Add hierarchical links based on categories
-        AddHierarchicalLinks(nodes, links);
+        AddHierarchicalLinks(nodes, validLinks);
 
-        return new GraphData(nodes, links, categories);
+        return new GraphData(nodes, validLinks, categories);
     }
 
     private GraphNode CreateNodeFromContent(ContentFile contentFile, string contentPath)
