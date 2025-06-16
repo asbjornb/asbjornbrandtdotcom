@@ -272,6 +272,12 @@ function renderGlobalGraph(graphData) {
     
     console.log('Creating simulation with', nodes.length, 'nodes and', links.length, 'links');
     
+    // Give nodes initial random positions to ensure they're visible
+    nodes.forEach((d, i) => {
+        d.x = width/2 + (Math.random() - 0.5) * 200;
+        d.y = height/2 + (Math.random() - 0.5) * 200;
+    });
+    
     // Create simulation
     const simulation = d3.forceSimulation(nodes)
         .force('link', d3.forceLink(links).id(d => d.id).distance(80))
@@ -284,10 +290,16 @@ function renderGlobalGraph(graphData) {
         .data(links)
         .enter().append('line')
         .attr('class', 'global-link')
+        .attr('x1', width/2)
+        .attr('y1', height/2)
+        .attr('x2', width/2)
+        .attr('y2', height/2)
         .style('stroke', d => getLinkColor(d.type))
         .style('stroke-width', d => d.type === 'hierarchical' ? 3 : 2)
         .style('opacity', 0.7)
         .attr('marker-end', 'url(#global-arrowhead)');
+    
+    console.log('Created', link.size(), 'link elements');
     
     // Create nodes
     const node = g.selectAll('.global-node')
@@ -295,6 +307,8 @@ function renderGlobalGraph(graphData) {
         .enter().append('circle')
         .attr('class', 'global-node')
         .attr('r', d => getNodeRadius(d))
+        .attr('cx', d => d.x || width/2)
+        .attr('cy', d => d.y || height/2)
         .style('fill', d => getNodeColor(d))
         .style('stroke', '#fff')
         .style('stroke-width', 2)
@@ -304,11 +318,15 @@ function renderGlobalGraph(graphData) {
             .on('drag', dragged)
             .on('end', dragEnded));
     
+    console.log('Created', node.size(), 'node elements');
+    
     // Add labels
     const label = g.selectAll('.global-label')
         .data(nodes)
         .enter().append('text')
         .attr('class', 'global-label')
+        .attr('x', d => d.x || width/2)
+        .attr('y', d => (d.y || height/2) + 4)
         .text(d => d.title)
         .style('font-size', '12px')
         .style('font-family', 'sans-serif')
