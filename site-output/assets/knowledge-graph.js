@@ -164,15 +164,18 @@ function openGlobalGraph() {
     const modal = document.getElementById('global-graph-modal');
     modal.classList.add('active');
     
-    // Load and render the full graph
-    fetch('/assets/graph-data.json')
-        .then(response => response.json())
-        .then(data => {
-            renderGlobalGraph(data);
-        })
-        .catch(error => {
-            console.error('Failed to load global graph data:', error);
-        });
+    // Wait for modal to render before calculating dimensions and loading graph
+    setTimeout(() => {
+        fetch('/assets/graph-data.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Graph data loaded:', data.nodes.length, 'nodes,', data.links.length, 'links');
+                renderGlobalGraph(data);
+            })
+            .catch(error => {
+                console.error('Failed to load global graph data:', error);
+            });
+    }, 100);
 }
 
 function closeGlobalGraph() {
@@ -189,18 +192,48 @@ let globalSvg = null;
 let globalZoom = null;
 
 function renderGlobalGraph(graphData) {
+    console.log('Starting renderGlobalGraph');
     const container = d3.select('#global-graph');
-    const containerRect = container.node().getBoundingClientRect();
+    const containerNode = container.node();
     
-    const width = containerRect.width;
-    const height = containerRect.height;
+    if (!containerNode) {
+        console.error('Global graph container not found');
+        return;
+    }
+    
+    const containerRect = containerNode.getBoundingClientRect();
+    let width = containerRect.width;
+    let height = containerRect.height;
+    
+    console.log('Container dimensions from getBoundingClientRect:', width, 'x', height);
+    
+    // Fallback to parent dimensions or viewport if container dimensions are zero
+    if (width === 0 || height === 0) {
+        const modal = document.getElementById('global-graph-modal');
+        if (modal) {
+            const modalRect = modal.getBoundingClientRect();
+            width = modalRect.width - 280; // Account for controls panel and padding
+            height = modalRect.height - 120; // Account for header and padding
+            console.log('Using fallback dimensions:', width, 'x', height);
+        }
+    }
+    
+    // Final fallback to reasonable defaults
+    if (width <= 0) width = 800;
+    if (height <= 0) height = 600;
+    
+    console.log('Final dimensions:', width, 'x', height);
     
     // Clear any existing content
     container.selectAll('*').remove();
     
     const svg = container.append('svg')
         .attr('width', width)
-        .attr('height', height);
+        .attr('height', height)
+        .style('border', '2px solid red') // Temporary debug border
+        .style('background', '#f0f0f0'); // Temporary debug background
+    
+    console.log('SVG created with dimensions:', width, 'x', height);
     
     // Store reference for zoom controls
     globalSvg = svg;
@@ -236,6 +269,8 @@ function renderGlobalGraph(graphData) {
     // Use all nodes and links for the global view
     const nodes = [...graphData.nodes];
     const links = [...graphData.links];
+    
+    console.log('Creating simulation with', nodes.length, 'nodes and', links.length, 'links');
     
     // Create simulation
     const simulation = d3.forceSimulation(nodes)
