@@ -1132,12 +1132,6 @@
     },
     {
       "source": "index",
-      "target": "finance",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
       "target": "tech",
       "type": "reference",
       "strength": 2
@@ -1221,12 +1215,6 @@
       "strength": 2
     },
     {
-      "source": "personal-blog",
-      "target": "recipe-for-11ty-multi-repo-site",
-      "type": "reference",
-      "strength": 2
-    },
-    {
       "source": "podcasts",
       "target": "staff-eng",
       "type": "reference",
@@ -1239,20 +1227,8 @@
       "strength": 2
     },
     {
-      "source": "posts",
-      "target": "./../posts/2025-01-09-linkedin-vs-internal-comms",
-      "type": "reference",
-      "strength": 2
-    },
-    {
       "source": "project-euler",
       "target": "project-euler-tactics",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "remote-development",
-      "target": "vscode",
       "type": "reference",
       "strength": 2
     },
@@ -1383,12 +1359,6 @@
       "strength": 2
     },
     {
-      "source": "thank-you-notes",
-      "target": "private/people.md",
-      "type": "reference",
-      "strength": 2
-    },
-    {
       "source": "work-todo",
       "target": "ssdt",
       "type": "reference",
@@ -1441,7 +1411,7 @@
   },
   "stats": {
     "totalNodes": 88,
-    "totalLinks": 70,
+    "totalLinks": 65,
     "hubNodes": 1,
     "categoryNodes": 9
   }
