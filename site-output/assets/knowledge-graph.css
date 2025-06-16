@@ -90,9 +90,16 @@
 
 /* D3 specific styles for mini-graph */
 .mini-link {
-    stroke: #999;
-    stroke-width: 1.5;
+    fill: none;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
 }
+
+.mini-link:hover {
+    opacity: 1;
+}
+
+/* Arrow marker styles are handled in JavaScript for dynamic coloring */
 
 .mini-node {
     stroke: #fff;

@@ -61,6 +61,21 @@ function renderMiniGraph(graphData) {
     const svg = container.append('svg')
         .attr('width', width)
         .attr('height', height);
+    
+    // Define a single arrow marker that will work for all link types
+    svg.append('defs')
+        .append('marker')
+        .attr('id', 'arrowhead')
+        .attr('viewBox', '0 -5 10 10')
+        .attr('refX', 12)
+        .attr('refY', 0)
+        .attr('markerWidth', 6)
+        .attr('markerHeight', 6)
+        .attr('orient', 'auto')
+        .append('path')
+        .attr('d', 'M0,-5L10,0L0,5')
+        .style('fill', '#666')
+        .style('stroke', 'none');
         
     const simulation = d3.forceSimulation(nodes)
         .force('link', d3.forceLink(links).id(d => d.id).distance(35))
@@ -71,7 +86,30 @@ function renderMiniGraph(graphData) {
     const link = svg.selectAll('.mini-link')
         .data(links)
         .enter().append('line')
-        .attr('class', 'mini-link');
+        .attr('class', 'mini-link')
+        .style('stroke', d => {
+            switch(d.type) {
+                case 'hierarchical': return '#e74c3c';
+                case 'reference': return '#4a90e2';
+                case 'related': return '#27ae60';
+                case 'external': return '#999';
+                default: return '#4a90e2'; // Default to blue for reference links
+            }
+        })
+        .style('stroke-width', d => d.type === 'hierarchical' ? 2 : 1.5)
+        .attr('marker-end', 'url(#arrowhead)');
+        
+    // Add tooltips to links
+    link.append('title')
+        .text(d => {
+            const linkTypes = {
+                'reference': 'Reference link (blue)',
+                'hierarchical': 'Hierarchical connection (red)',
+                'related': 'Related content (green)',
+                'external': 'External link (gray)'
+            };
+            return linkTypes[d.type] || 'Connection';
+        });
         
     const node = svg.selectAll('.mini-node')
         .data(nodes)
