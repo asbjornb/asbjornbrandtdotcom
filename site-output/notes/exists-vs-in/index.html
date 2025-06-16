@@ -55,6 +55,9 @@ The blog further links to comparisons for IN vs. INNER JOIN, NOT EXISTS vs. LEFT
 Summary - performance is not too different so use what semantically makes the most sense. WHERE ... IN ... makes more sense if that is what you're checking.</p>
 
 </article>
+
+<hr>
+
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <ul class="backlinks-container">
@@ -77,6 +80,27 @@ Summary - performance is not too different so use what semantically makes the mo
             </div>
         </li>
 </ul>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<div class="connections-section">
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="connection-links">
+            <a href="/notes/sql-server/" class="connection-link">Sql Server</a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <div class="graph-header">
+            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+        </div>
+        <div id="mini-graph" class="mini-graph" data-current-note="exists-vs-in"></div>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
 
     </main>
     

@@ -62,9 +62,33 @@
 <p>Comes from <a href="/notes/career-tools/">career tools</a></p>
 
 </article>
+
+<hr>
+
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <p class="backlinks-default">No backlinks found.</p>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<div class="connections-section">
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="connection-links">
+            <a href="/notes/career-tools/" class="connection-link">Career tools</a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <div class="graph-header">
+            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+        </div>
+        <div id="mini-graph" class="mini-graph" data-current-note="taking-meeting-notes"></div>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
 
     </main>
     

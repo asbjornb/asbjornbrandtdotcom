@@ -150,6 +150,9 @@ git log --pretty=format:&quot;%h %ad%x09%&lt;(50,trunc)%s&quot; --date=short --a
 </code></pre>
 
 </article>
+
+<hr>
+
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <ul class="backlinks-container">
@@ -179,6 +182,28 @@ git log --pretty=format:&quot;%h %ad%x09%&lt;(50,trunc)%s&quot; --date=short --a
             </div>
         </li>
 </ul>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<div class="connections-section">
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="connection-links">
+            <a href="/notes/cheat-sheets/" class="connection-link">Cheat sheets</a>
+            <a href="/notes/work-tools/" class="connection-link">Work Tools</a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <div class="graph-header">
+            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+        </div>
+        <div id="mini-graph" class="mini-graph" data-current-note="git"></div>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
 
     </main>
     

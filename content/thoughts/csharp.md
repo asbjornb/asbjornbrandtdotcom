@@ -40,7 +40,7 @@ Practical programmer has some simpler design principles:
 * Functions should be small. Smaller than that! The function should do one thing. A function does one thing if you cannot meaningfully extract another function from it!
 * Large functions with variables are probably actually classes. You see this when extracting functions.
 * Indent level of a function should not be greater than one or two (no nested structures in small functions).
-* If statements are if(function()){function()}else{function}
+* If statements are if(function()){function()}else{function()}
 * Functions should at best have 0->max 3 arguments. If you pass more than 3 things that are cohesive they should probably be an object.
 * Don't pass booleans into a function - just split function in two and call the correct one.
 * Don't use output arguments (where you input something just to manipulate it for later reference).

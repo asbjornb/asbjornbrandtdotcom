@@ -60,6 +60,9 @@
 <p>See also <a href="/notes/11ty-build/">11ty build</a></p>
 
 </article>
+
+<hr>
+
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <ul class="backlinks-container">
@@ -72,6 +75,28 @@
             </div>
         </li>
 </ul>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<div class="connections-section">
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="connection-links">
+            <a href="/notes/11ty-build/" class="connection-link">11ty-build</a>
+            <a href="/notes/static-sites/" class="connection-link">Static sites</a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <div class="graph-header">
+            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+        </div>
+        <div id="mini-graph" class="mini-graph" data-current-note="11ty"></div>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
 
     </main>
     

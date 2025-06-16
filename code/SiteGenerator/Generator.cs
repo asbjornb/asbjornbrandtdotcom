@@ -35,13 +35,25 @@ public class Generator
             Path.Combine(_contentPath, "thoughts")
         );
 
-        // Process notes (from thoughts folder to notes folder)
+        // Generate knowledge graph data first
+        var graphProcessor = new GraphProcessor(
+            _templateRenderer,
+            fileProvider,
+            markdownParser,
+            _siteMetadata
+        );
+        var graphData = await graphProcessor.GetGraphDataAsync(
+            Path.Combine(_contentPath, "thoughts")
+        );
+
+        // Process notes (from thoughts folder to notes folder) with graph data
         var noteProcessor = new NoteProcessor(
             backlinks,
             _templateRenderer,
             fileProvider,
             markdownParser,
-            _siteMetadata
+            _siteMetadata,
+            graphData
         );
         await noteProcessor.ProcessAsync(
             Path.Combine(_contentPath, "thoughts"),
@@ -69,6 +81,9 @@ public class Generator
             );
             await postProcessor.ProcessAsync(postsPath, _outputPath);
         }
+
+        // Generate knowledge graph JSON data for frontend
+        await graphProcessor.ProcessAsync(Path.Combine(_contentPath, "thoughts"), _outputPath);
 
         // Copy assets
         fileProvider.CopyFolderAsync(

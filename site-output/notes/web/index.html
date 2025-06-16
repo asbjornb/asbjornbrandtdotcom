@@ -54,6 +54,9 @@ Also check my <a href="https://raindrop.io/asbjornb/all-23863527/search/sort=-so
 <p>Rather than rely on cookies and embedded javascript to see info on visits, it might be possible to do it in the backend with server stats. Unique ip's might serve as a decent proxy for unique visitors.</p>
 
 </article>
+
+<hr>
+
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <ul class="backlinks-container">
@@ -72,6 +75,27 @@ Also check my <a href="https://raindrop.io/asbjornb/all-23863527/search/sort=-so
             </div>
         </li>
 </ul>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<div class="connections-section">
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="connection-links">
+            <a href="/notes/tech/" class="connection-link">Tech</a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <div class="graph-header">
+            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+        </div>
+        <div id="mini-graph" class="mini-graph" data-current-note="web"></div>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
 
     </main>
     

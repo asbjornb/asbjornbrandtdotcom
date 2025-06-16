@@ -57,6 +57,9 @@
 </ul>
 
 </article>
+
+<hr>
+
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <ul class="backlinks-container">
@@ -92,6 +95,32 @@
             </div>
         </li>
 </ul>
+
+<link rel="stylesheet" href="/assets/knowledge-graph.css">
+
+<div class="connections-section">
+    <div class="connected-notes">
+        <h3>Connected Notes</h3>
+        <div class="connection-links">
+            <a href="/notes/csharp/" class="connection-link">C#</a>
+            <a href="/notes/docker/" class="connection-link">Docker</a>
+            <a href="/notes/index/" class="connection-link">Index</a>
+            <a href="/notes/python/" class="connection-link">Python</a>
+            <a href="/notes/sql-server/" class="connection-link">Sql Server</a>
+            <a href="/notes/web/" class="connection-link">web</a>
+        </div>
+    </div>
+    
+    <div class="mini-graph-container">
+        <div class="graph-header">
+            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+        </div>
+        <div id="mini-graph" class="mini-graph" data-current-note="tech"></div>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="/assets/knowledge-graph.js"></script>
 
     </main>
     

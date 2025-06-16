@@ -1,6 +1,6 @@
 # C\#
 
-## Design rules of thump (these actually go for any object oriented language - maybe should be moved to design patterns or similar?)
+## Design rules of thumb (these actually go for any object oriented language - maybe should be moved to design patterns or similar?)
 
 * Single responsibility principle
   * If your class does two different things, split it
