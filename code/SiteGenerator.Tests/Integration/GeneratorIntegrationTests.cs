@@ -197,6 +197,53 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
     }
 
     [Fact]
+    public void GeneratedNotesWithConnections_ShouldIncludeGlobalGraphModal()
+    {
+        // Arrange
+        var noteWithConnectionsPath = Path.Combine(
+            ActualOutputPath,
+            "notes",
+            "csharp",
+            "index.html"
+        );
+
+        // Act
+        var content = File.ReadAllText(noteWithConnectionsPath);
+
+        // Assert
+        content
+            .Should()
+            .Contain(
+                "global-graph-modal",
+                "notes with connections should include the global graph modal"
+            );
+        content
+            .Should()
+            .Contain("openGlobalGraph()", "should have the function to open global graph");
+        content
+            .Should()
+            .Contain("knowledge-graph.js", "should include the knowledge graph JavaScript");
+        content.Should().Contain("zoom-btn", "should include zoom controls in the modal");
+        content.Should().Contain("legend", "should include the legend in the modal");
+    }
+
+    [Fact]
+    public void GraphDataFile_ShouldBeGenerated()
+    {
+        // Arrange
+        var graphDataPath = Path.Combine(ActualOutputPath, "assets", "graph-data.json");
+
+        // Act & Assert
+        File.Exists(graphDataPath).Should().BeTrue("graph-data.json should be generated");
+
+        var content = File.ReadAllText(graphDataPath);
+        content.Should().NotBeEmpty("graph data should not be empty");
+        content.Should().Contain("nodes", "should contain nodes array");
+        content.Should().Contain("links", "should contain links array");
+        content.Should().Contain("stats", "should contain statistics");
+    }
+
+    [Fact]
     public async Task GenerateNowPage_MatchesExpectedOutput()
     {
         // Compare normalized contents
