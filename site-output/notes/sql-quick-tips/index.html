@@ -94,9 +94,51 @@
     
     <div class="mini-graph-container">
         <div class="graph-header">
-            <span class="graph-icon" onclick="openFullGraph()" title="Explore connections">⚡</span>
+            <span class="graph-icon" onclick="openGlobalGraph()" title="Explore full knowledge graph">⚡</span>
         </div>
         <div id="mini-graph" class="mini-graph" data-current-note="sql-quick-tips"></div>
+    </div>
+</div>
+
+<!-- Global Graph Modal -->
+<div id="global-graph-modal" class="global-graph-modal">
+    <div class="global-graph-header">
+        <h2 class="global-graph-title">Knowledge Graph</h2>
+        <button class="global-graph-close" onclick="closeGlobalGraph()" title="Close">&times;</button>
+    </div>
+    <div class="global-graph-container">
+        <div id="global-graph" class="global-graph"></div>
+        <div class="global-graph-controls">
+            <h4>Controls</h4>
+            <div class="control-group">
+                <label>Zoom</label>
+                <div class="zoom-controls">
+                    <button class="zoom-btn" onclick="zoomIn()">+</button>
+                    <button class="zoom-btn" onclick="zoomOut()">−</button>
+                    <button class="zoom-btn" onclick="resetZoom()">Reset</button>
+                </div>
+            </div>
+            <div class="control-group">
+                <label>Legend</label>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e74c3c;"></div>
+                        <span>Hub Nodes</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #f39c12;"></div>
+                        <span>Categories</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #3498db;"></div>
+                        <span>Notes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div id="graph-stats" class="graph-stats"></div>
+            </div>
+        </div>
     </div>
 </div>
 

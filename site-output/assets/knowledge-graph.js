@@ -159,24 +159,261 @@ function renderMiniGraph(graphData) {
     });
 }
 
-function openFullGraph() {
-    // Future: could open a modal with full interactive graph
-    // For now, show a subtle notification
-    const icon = document.querySelector('.graph-icon');
-    const originalText = icon.textContent;
+// Global graph modal functions
+function openGlobalGraph() {
+    const modal = document.getElementById('global-graph-modal');
+    modal.classList.add('active');
     
-    icon.textContent = '✓';
-    icon.style.background = '#28a745';
-    icon.style.color = 'white';
+    // Load and render the full graph
+    fetch('/assets/graph-data.json')
+        .then(response => response.json())
+        .then(data => {
+            renderGlobalGraph(data);
+        })
+        .catch(error => {
+            console.error('Failed to load global graph data:', error);
+        });
+}
+
+function closeGlobalGraph() {
+    const modal = document.getElementById('global-graph-modal');
+    modal.classList.remove('active');
     
-    setTimeout(() => {
-        icon.textContent = originalText;
-        icon.style.background = '';
-        icon.style.color = '';
-    }, 1000);
+    // Clear the global graph to free memory
+    const container = d3.select('#global-graph');
+    container.selectAll('*').remove();
+}
+
+// Global variables for zoom control
+let globalSvg = null;
+let globalZoom = null;
+
+function renderGlobalGraph(graphData) {
+    const container = d3.select('#global-graph');
+    const containerRect = container.node().getBoundingClientRect();
     
-    console.log('Full graph exploration - coming soon!');
+    const width = containerRect.width;
+    const height = containerRect.height;
+    
+    // Clear any existing content
+    container.selectAll('*').remove();
+    
+    const svg = container.append('svg')
+        .attr('width', width)
+        .attr('height', height);
+    
+    // Store reference for zoom controls
+    globalSvg = svg;
+    
+    // Add zoom behavior
+    const zoom = d3.zoom()
+        .scaleExtent([0.1, 4])
+        .on('zoom', (event) => {
+            g.attr('transform', event.transform);
+        });
+    
+    globalZoom = zoom;
+    svg.call(zoom);
+    
+    // Create a group for all graph elements
+    const g = svg.append('g');
+    
+    // Define arrow marker
+    svg.append('defs')
+        .append('marker')
+        .attr('id', 'global-arrowhead')
+        .attr('viewBox', '0 -5 10 10')
+        .attr('refX', 15)
+        .attr('refY', 0)
+        .attr('markerWidth', 8)
+        .attr('markerHeight', 8)
+        .attr('orient', 'auto')
+        .append('path')
+        .attr('d', 'M0,-5L10,0L0,5')
+        .style('fill', '#666')
+        .style('stroke', 'none');
+    
+    // Use all nodes and links for the global view
+    const nodes = [...graphData.nodes];
+    const links = [...graphData.links];
+    
+    // Create simulation
+    const simulation = d3.forceSimulation(nodes)
+        .force('link', d3.forceLink(links).id(d => d.id).distance(80))
+        .force('charge', d3.forceManyBody().strength(-300))
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('collision', d3.forceCollide().radius(d => getNodeRadius(d) + 5));
+    
+    // Create links
+    const link = g.selectAll('.global-link')
+        .data(links)
+        .enter().append('line')
+        .attr('class', 'global-link')
+        .style('stroke', d => getLinkColor(d.type))
+        .style('stroke-width', d => d.type === 'hierarchical' ? 3 : 2)
+        .style('opacity', 0.7)
+        .attr('marker-end', 'url(#global-arrowhead)');
+    
+    // Create nodes
+    const node = g.selectAll('.global-node')
+        .data(nodes)
+        .enter().append('circle')
+        .attr('class', 'global-node')
+        .attr('r', d => getNodeRadius(d))
+        .style('fill', d => getNodeColor(d))
+        .style('stroke', '#fff')
+        .style('stroke-width', 2)
+        .style('cursor', 'pointer')
+        .call(d3.drag()
+            .on('start', dragStarted)
+            .on('drag', dragged)
+            .on('end', dragEnded));
+    
+    // Add labels
+    const label = g.selectAll('.global-label')
+        .data(nodes)
+        .enter().append('text')
+        .attr('class', 'global-label')
+        .text(d => d.title)
+        .style('font-size', '12px')
+        .style('font-family', 'sans-serif')
+        .style('fill', '#333')
+        .style('text-anchor', 'middle')
+        .style('pointer-events', 'none')
+        .style('user-select', 'none');
+    
+    // Add tooltips
+    node.append('title')
+        .text(d => `${d.title}\nType: ${d.type}\nCategory: ${d.category}\nConnections: ${links.filter(l => l.source.id === d.id || l.target.id === d.id).length}`);
+    
+    // Add click handler to navigate to notes
+    node.on('click', (event, d) => {
+        window.location.href = d.url;
+    });
+    
+    // Update positions on simulation tick
+    simulation.on('tick', () => {
+        link
+            .attr('x1', d => d.source.x)
+            .attr('y1', d => d.source.y)
+            .attr('x2', d => d.target.x)
+            .attr('y2', d => d.target.y);
+            
+        node
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y);
+            
+        label
+            .attr('x', d => d.x)
+            .attr('y', d => d.y + 4);
+    });
+    
+    // Drag functions
+    function dragStarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+    
+    function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
+    
+    function dragEnded(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+    
+    // Update stats display
+    updateGraphStats(graphData);
+}
+
+// Zoom control functions
+function zoomIn() {
+    if (globalSvg && globalZoom) {
+        globalSvg.transition().duration(300).call(
+            globalZoom.scaleBy, 1.5
+        );
+    }
+}
+
+function zoomOut() {
+    if (globalSvg && globalZoom) {
+        globalSvg.transition().duration(300).call(
+            globalZoom.scaleBy, 0.67
+        );
+    }
+}
+
+function resetZoom() {
+    if (globalSvg && globalZoom) {
+        globalSvg.transition().duration(500).call(
+            globalZoom.transform,
+            d3.zoomIdentity
+        );
+    }
+}
+
+function updateGraphStats(graphData) {
+    const statsContainer = document.getElementById('graph-stats');
+    if (statsContainer) {
+        const stats = graphData.stats;
+        statsContainer.innerHTML = `
+            <strong>Graph Statistics</strong><br>
+            Nodes: ${stats.totalNodes}<br>
+            Links: ${stats.totalLinks}<br>
+            Hubs: ${stats.hubNodes}<br>
+            Categories: ${stats.categoryNodes}
+        `;
+    }
+}
+
+// Helper functions for global graph
+function getNodeRadius(node) {
+    switch(node.type) {
+        case 'hub': return 12;
+        case 'category': return 8;
+        default: return 6;
+    }
+}
+
+function getNodeColor(node) {
+    switch(node.type) {
+        case 'hub': return '#e74c3c';
+        case 'category': return '#f39c12';
+        default: return '#3498db';
+    }
+}
+
+function getLinkColor(type) {
+    switch(type) {
+        case 'hierarchical': return '#e74c3c';
+        case 'reference': return '#4a90e2';
+        case 'related': return '#27ae60';
+        case 'external': return '#999';
+        default: return '#4a90e2';
+    }
 }
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', initializeKnowledgeGraph);
+
+// Add keyboard support for closing modal
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('global-graph-modal');
+        if (modal && modal.classList.contains('active')) {
+            closeGlobalGraph();
+        }
+    }
+});
+
+// Close modal when clicking outside the graph container
+document.addEventListener('click', (event) => {
+    const modal = document.getElementById('global-graph-modal');
+    if (modal && modal.classList.contains('active') && event.target === modal) {
+        closeGlobalGraph();
+    }
+});
