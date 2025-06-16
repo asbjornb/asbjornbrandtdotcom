@@ -62,63 +62,19 @@ function renderMiniGraph(graphData) {
         .attr('width', width)
         .attr('height', height);
     
-    // Define arrow markers for different link types
-    const defs = svg.append('defs');
-    
-    // Reference link arrow (standard)
-    defs.append('marker')
-        .attr('id', 'arrow-reference')
+    // Define a single arrow marker that will work for all link types
+    svg.append('defs')
+        .append('marker')
+        .attr('id', 'arrowhead')
         .attr('viewBox', '0 -5 10 10')
-        .attr('refX', 15)
+        .attr('refX', 12)
         .attr('refY', 0)
         .attr('markerWidth', 6)
         .attr('markerHeight', 6)
         .attr('orient', 'auto')
         .append('path')
         .attr('d', 'M0,-5L10,0L0,5')
-        .style('fill', '#4a90e2')
-        .style('stroke', 'none');
-    
-    // Hierarchical link arrow (stronger)
-    defs.append('marker')
-        .attr('id', 'arrow-hierarchical')
-        .attr('viewBox', '0 -5 10 10')
-        .attr('refX', 15)
-        .attr('refY', 0)
-        .attr('markerWidth', 7)
-        .attr('markerHeight', 7)
-        .attr('orient', 'auto')
-        .append('path')
-        .attr('d', 'M0,-5L10,0L0,5')
-        .style('fill', '#e74c3c')
-        .style('stroke', 'none');
-    
-    // Related link arrow (medium)
-    defs.append('marker')
-        .attr('id', 'arrow-related')
-        .attr('viewBox', '0 -5 10 10')
-        .attr('refX', 15)
-        .attr('refY', 0)
-        .attr('markerWidth', 6)
-        .attr('markerHeight', 6)
-        .attr('orient', 'auto')
-        .append('path')
-        .attr('d', 'M0,-5L10,0L0,5')
-        .style('fill', '#27ae60')
-        .style('stroke', 'none');
-    
-    // Default/external link arrow
-    defs.append('marker')
-        .attr('id', 'arrow-external')
-        .attr('viewBox', '0 -5 10 10')
-        .attr('refX', 15)
-        .attr('refY', 0)
-        .attr('markerWidth', 6)
-        .attr('markerHeight', 6)
-        .attr('orient', 'auto')
-        .append('path')
-        .attr('d', 'M0,-5L10,0L0,5')
-        .style('fill', '#999')
+        .style('fill', '#666')
         .style('stroke', 'none');
         
     const simulation = d3.forceSimulation(nodes)
@@ -131,18 +87,20 @@ function renderMiniGraph(graphData) {
         .data(links)
         .enter().append('line')
         .attr('class', 'mini-link')
-        .attr('marker-end', d => `url(#arrow-${d.type})`)
         .style('stroke', d => {
             switch(d.type) {
                 case 'hierarchical': return '#e74c3c';
                 case 'reference': return '#4a90e2';
                 case 'related': return '#27ae60';
                 case 'external': return '#999';
-                default: return '#999';
+                default: return '#4a90e2'; // Default to blue for reference links
             }
         })
         .style('stroke-width', d => d.type === 'hierarchical' ? 2 : 1.5)
-        .append('title')
+        .attr('marker-end', 'url(#arrowhead)');
+        
+    // Add tooltips to links
+    link.append('title')
         .text(d => {
             const linkTypes = {
                 'reference': 'Reference link (blue)',
