@@ -533,6 +533,23 @@
       "group": 0
     },
     {
+      "id": "nuget",
+      "title": "NuGet",
+      "url": "/notes/nuget/",
+      "category": "General",
+      "size": 76,
+      "headers": [
+        "H2: What is a \u003Ccode\u003E.nupkg\u003C/code\u003E?",
+        "H2: Inspect Cached Packages",
+        "H2: Keep Project References Inside One Package",
+        "H2: Pack Locally",
+        "H2: Push to GitLab NuGet Feed",
+        "H2: Include Source Code"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
       "id": "pc-setup",
       "title": "PC Setup",
       "url": "/notes/pc-setup/",
@@ -1402,7 +1419,7 @@
     }
   ],
   "categories": {
-    "General": 58,
+    "General": 59,
     "Career": 4,
     "Tools": 8,
     "Database": 12,
@@ -1410,7 +1427,7 @@
     "Organization": 2
   },
   "stats": {
-    "totalNodes": 88,
+    "totalNodes": 89,
     "totalLinks": 65,
     "hubNodes": 1,
     "categoryNodes": 9
