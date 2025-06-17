@@ -30,7 +30,44 @@ public class FileProvider : IFileProvider
         {
             Directory.CreateDirectory(directory);
         }
+
+        const int maxRetries = 5;
+        int retryDelayMs = 100; // Start with 100ms delay
+
+        for (int attempt = 0; attempt < maxRetries; attempt++)
+        {
+            try
+            {
+                // Use FileShare.Read to allow other processes to read the file while we're writing
+                using var fileStream = new FileStream(
+                    filePath,
+                    FileMode.Create,
+                    FileAccess.Write,
+                    FileShare.Read
+                );
+
+                using var writer = new StreamWriter(fileStream);
+                await writer.WriteAsync(content);
+                return; // Success - exit the method
+            }
+            catch (IOException ex) when (IsFileLocked(ex) && attempt < maxRetries - 1)
+            {
+                // Wait before retrying with exponential backoff
+                await Task.Delay(retryDelayMs);
+                retryDelayMs *= 2;
+            }
+        }
+
+        // If we've exhausted all retries, try one last time without catching the exception
         await File.WriteAllTextAsync(filePath, content);
+    }
+
+    // Determine if an IOException is related to file locking
+    private static bool IsFileLocked(IOException exception)
+    {
+        return exception.Message.Contains("being used by another process")
+            || exception.Message.Contains("access is denied")
+            || exception.Message.Contains("The process cannot access the file");
     }
 
     public void CopyFolderAsync(string sourceFolder, string destinationFolder)

@@ -98,6 +98,58 @@ public sealed class FileProviderTests : IDisposable
         Assert.Equal(newContent, await File.ReadAllTextAsync(filePath));
     }
 
+    [Fact]
+    public async Task WriteFileAsync_WithFileAccessConflict_ShouldEventuallySucceed()
+    {
+        // Arrange
+        var tempFilePath = Path.Combine(Path.GetTempPath(), $"test_file_{Guid.NewGuid()}.txt");
+        var content = "Test content";
+
+        try
+        {
+            // Create an artificial file access conflict
+            using (
+                var blockingStream = new FileStream(
+                    tempFilePath,
+                    FileMode.Create,
+                    FileAccess.Write,
+                    FileShare.None
+                )
+            )
+            {
+                // Write something to the file
+                using var writer = new StreamWriter(blockingStream);
+                await writer.WriteLineAsync("Blocking content");
+                await writer.FlushAsync();
+
+                // Start an asynchronous task to write to the file which should retry due to conflict
+                var writeTask = Task.Run(
+                    async () => await _fileProvider.WriteFileAsync(tempFilePath, content)
+                );
+
+                // Give it a little time to start and encounter the conflict
+                await Task.Delay(100);
+
+                // Release the file lock - this should allow the retry to succeed
+            }
+
+            // Wait a moment for the retry logic to complete
+            await Task.Delay(500);
+
+            // By this point, the file should have been successfully written after retrying
+            var fileContent = await File.ReadAllTextAsync(tempFilePath);
+            fileContent.Should().Be(content);
+        }
+        finally
+        {
+            // Cleanup
+            if (File.Exists(tempFilePath))
+            {
+                File.Delete(tempFilePath);
+            }
+        }
+    }
+
     public void Dispose()
     {
         if (Directory.Exists(TestFolderPath))
