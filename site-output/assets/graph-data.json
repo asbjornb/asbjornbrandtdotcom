@@ -595,16 +595,6 @@
       "group": 0
     },
     {
-      "id": "posts",
-      "title": "Posts",
-      "url": "/notes/posts/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "programming-languages",
       "title": "Programming languages",
       "url": "/notes/programming-languages/",
@@ -1419,7 +1409,7 @@
     }
   ],
   "categories": {
-    "General": 59,
+    "General": 58,
     "Career": 4,
     "Tools": 8,
     "Database": 12,
@@ -1427,7 +1417,7 @@
     "Organization": 2
   },
   "stats": {
-    "totalNodes": 89,
+    "totalNodes": 88,
     "totalLinks": 65,
     "hubNodes": 1,
     "categoryNodes": 9
