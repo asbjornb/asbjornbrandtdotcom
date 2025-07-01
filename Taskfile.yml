@@ -1,0 +1,73 @@
+version: '3'
+
+vars:
+  CODE_DIR: code
+  SOLUTION: SiteGenerator.sln
+  OUTPUT_DIR: site-output
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list-all
+
+  install:
+    desc: Restore .NET dependencies
+    dir: "{{.CODE_DIR}}"
+    cmds:
+      - dotnet restore {{.SOLUTION}}
+
+  build:
+    desc: Build the solution
+    dir: "{{.CODE_DIR}}"
+    deps: [install]
+    cmds:
+      - dotnet build {{.SOLUTION}} --configuration Release --no-restore
+
+  test:
+    desc: Run all tests
+    dir: "{{.CODE_DIR}}"
+    deps: [build]
+    cmds:
+      - dotnet test {{.SOLUTION}} --configuration Release --no-build --verbosity normal
+
+  generate:
+    desc: Generate the static site
+    dir: "{{.CODE_DIR}}/SiteGenerator"
+    deps: [build]
+    cmds:
+      - dotnet run --configuration Release
+
+  clean:
+    desc: Clean build artifacts and generated site
+    cmds:
+      - rm -rf {{.CODE_DIR}}/SiteGenerator/bin
+      - rm -rf {{.CODE_DIR}}/SiteGenerator/obj
+      - rm -rf {{.CODE_DIR}}/SiteGenerator.Tests/bin
+      - rm -rf {{.CODE_DIR}}/SiteGenerator.Tests/obj
+      - rm -rf {{.OUTPUT_DIR}}
+
+  rebuild:
+    desc: Clean and rebuild everything
+    cmds:
+      - task: clean
+      - task: build
+
+  format:
+    desc: Format code using dotnet format
+    dir: "{{.CODE_DIR}}"
+    cmds:
+      - dotnet format {{.SOLUTION}}
+
+  watch:
+    desc: Watch for file changes and regenerate site
+    dir: "{{.CODE_DIR}}/SiteGenerator"
+    deps: [build]
+    cmds:
+      - |
+        echo "Watching for changes... Press Ctrl+C to stop"
+        while true; do
+          dotnet run --configuration Release
+          echo "Site generated. Waiting for changes..."
+          sleep 5
+        done
