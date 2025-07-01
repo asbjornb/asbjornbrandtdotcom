@@ -18,7 +18,11 @@
       "Bash(git add:*)",
       "Bash(git checkout:*)",
       "Bash(grep:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(task:*)",
+      "WebFetch(domain:csharpier.com)",
+      "WebFetch(domain:learn.microsoft.com)",
+      "WebFetch(domain:www.damirscorner.com)"
     ],
     "deny": []
   }
