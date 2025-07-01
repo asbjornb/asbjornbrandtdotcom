@@ -1,4 +1,4 @@
-namespace SiteGenerator.Tests.Helpers;
+﻿namespace SiteGenerator.Tests.Helpers;
 
 public static class TestConstants
 {

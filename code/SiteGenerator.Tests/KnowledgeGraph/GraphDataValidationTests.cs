@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using FluentAssertions;
 using SiteGenerator.KnowledgeGraph;
 using SiteGenerator.Tests.Helpers;

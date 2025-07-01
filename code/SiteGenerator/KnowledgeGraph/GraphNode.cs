@@ -1,4 +1,4 @@
-namespace SiteGenerator.KnowledgeGraph;
+﻿namespace SiteGenerator.KnowledgeGraph;
 
 public record GraphNode(
     string Id,

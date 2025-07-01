@@ -1,4 +1,4 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
 using SiteGenerator.Configuration;
 using SiteGenerator.Processors;

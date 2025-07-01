@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using SiteGenerator.BacklinksProcessing;
 
 namespace SiteGenerator.KnowledgeGraph;

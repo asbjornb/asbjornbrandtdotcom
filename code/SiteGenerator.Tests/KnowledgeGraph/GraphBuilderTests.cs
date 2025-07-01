@@ -1,4 +1,4 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using SiteGenerator.KnowledgeGraph;
 using SiteGenerator.Tests.Helpers;
 using Xunit;

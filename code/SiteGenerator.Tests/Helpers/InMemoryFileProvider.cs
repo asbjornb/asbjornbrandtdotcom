@@ -1,4 +1,4 @@
-using SiteGenerator.Tests.Helpers;
+﻿using SiteGenerator.Tests.Helpers;
 
 namespace SiteGenerator.Tests.Helpers;
 

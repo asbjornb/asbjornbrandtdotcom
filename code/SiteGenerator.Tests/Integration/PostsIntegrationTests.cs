@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using SiteGenerator.Configuration;

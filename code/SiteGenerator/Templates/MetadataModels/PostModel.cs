@@ -1,4 +1,4 @@
-namespace SiteGenerator.Templates.MetadataModels;
+﻿namespace SiteGenerator.Templates.MetadataModels;
 
 public record PostModel(
     string Title,

@@ -1,4 +1,4 @@
-namespace SiteGenerator.Configuration;
+﻿namespace SiteGenerator.Configuration;
 
 public class PathResolver
 {

@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using SiteGenerator.Configuration;
 using SiteGenerator.KnowledgeGraph;
 using SiteGenerator.Templates;

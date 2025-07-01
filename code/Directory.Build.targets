@@ -4,6 +4,6 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <CSharpierContinueOnError>true</CSharpierContinueOnError>
+    <CSharpier_Check>false</CSharpier_Check>
   </PropertyGroup>
 </Project>

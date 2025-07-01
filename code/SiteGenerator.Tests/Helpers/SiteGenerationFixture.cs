@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using SiteGenerator.Configuration;
 using SiteGenerator.Templates;
 using Xunit;
