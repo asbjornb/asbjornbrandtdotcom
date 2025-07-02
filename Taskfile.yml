@@ -41,11 +41,7 @@ tasks:
   clean:
     desc: Clean build artifacts and generated site
     cmds:
-      - rm -rf {{.CODE_DIR}}/SiteGenerator/bin
-      - rm -rf {{.CODE_DIR}}/SiteGenerator/obj
-      - rm -rf {{.CODE_DIR}}/SiteGenerator.Tests/bin
-      - rm -rf {{.CODE_DIR}}/SiteGenerator.Tests/obj
-      - rm -rf {{.OUTPUT_DIR}}
+      - git clean -Xfd
 
   rebuild:
     desc: Clean and rebuild everything
