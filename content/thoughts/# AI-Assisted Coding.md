@@ -113,7 +113,7 @@ Showcases impressions on AI-assisted coding across the industry (startups, AI ve
 
 ### Building AI products
 
-- **baml** - [baml](https://github.com/BoundaryML/baml) LLM prompts as functions. By the great Samuel Lijin
+- **baml** - [baml](https://github.com/BoundaryML/baml) LLM prompts as functions. By the great Samuel Lijin.
 
 ### Content & Tooling Development
 
@@ -124,3 +124,5 @@ Showcases impressions on AI-assisted coding across the industry (startups, AI ve
 
 - Set up notifications for Manuel Odendahl blogs
 - Set up notifications for Geoffrey Huntley posts
+
+May want to add [Harper Reed](https://harper.blog/posts/) and [Simon Willison](https://simonwillison.net/) to the list of people to follow.
