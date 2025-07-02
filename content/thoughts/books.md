@@ -2,7 +2,7 @@
 
 Should this all go in goodreads or similar service?
 
-## Programming related 
+## Programming related
 
 ### To read
 
@@ -21,7 +21,7 @@ And stories rather than just theory:
 
 * Peopleware
 * The Mythical Man Month
-* The Unicorn Projects
+* The Unicorn Project
 
 ### Have read
 
@@ -32,10 +32,11 @@ And stories rather than just theory:
 * Software engineering at google <https://abseil.io/resources/swe-book>
 * Designing data-intensive applications
 * The Phoenix Project
+* The Software Engieer's Guidebook
 
 ## Other non-fiction
 
-## To read
+### To read
 
 * Deep work
 * The subtle art of not giving a fuck
@@ -44,7 +45,7 @@ And stories rather than just theory:
 * So good they can't ignore you
 * The E-Myth revisited?
 
-## Have read
+### Have read
 
 * Getting things done
 * Digital minimalism
@@ -54,4 +55,6 @@ And stories rather than just theory:
 
 * The emperor of Portugallia
 * Brandon Sanderson Steelheart series
-
+* Brandon Sanderson Mistborn series + Secret History
+* The Will of the Many by James Islington
+* Shadow of the Gods by John Gwynne
