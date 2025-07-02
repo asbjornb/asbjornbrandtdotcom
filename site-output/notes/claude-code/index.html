@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+<title>Claude code &#8226; Asbj&#248;rn Brandt's Notes</title>
+
+<meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<meta property="og:title" content="Claude code &#8226; Asbj&#248;rn Brandt's Notes">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/claude-code/">
+<meta property="og:image" content="/assets/chart.svg">
+<meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<link rel="canonical" href="https://asbjornbrandt.com/notes/claude-code/">
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <a href="/" class="page-header__logo" title="Go home">
+            <img src="/assets/chart.svg" alt="" width="48">
+        </a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/notes">Notes</a>
+            <a href="/posts">Posts</a>
+            <a href="/inspiration">Inspiration</a>
+            <a href="/now">Now</a>
+        </nav>
+    </header>
+    <main>
+        <article>
+    <h1>Claude code</h1>
+<p>CLI agent from Anthropic.</p>
+<h2>Installation</h2>
+<p>Doesn't run on Windows directly, but can be run in WSL. Installation guides on the <a href="https://docs.anthropic.com/en/docs/claude-code/setup">Anthropic website</a>.</p>
+<h2>Usage</h2>
+<p>Go to the directory you want your agent to work in and run: <code>claude</code>. It will guide you on signing in. If you want to continue your last session, run <code>claude -c</code> or <code>claude --resume</code> to be able to pick among earlier sessions.</p>
+<h2>Troubleshooting</h2>
+<p>On Windows+wsl ubuntu I've seen connection issues like:</p>
+<pre><code class="language-text">Unable to connect to Anthropic services
+Failed to connect to api.anthropic.com: ETIMEDOUT
+</code></pre>
+<p>For me the fix was to avoid ipv6 with:</p>
+<pre><code class="language-bash">sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
+</code></pre>
+<h2>Files</h2>
+<p>The agent creates a <code>.claude/settings.local.json</code> in the project directory that holds information on commands you've allowed claude to run without confirmation. Possibly .gitignore this if other developers might not be comfortable with the same commands.</p>
+<p>If you create a <code>CLAUDE.md</code> file in the project directory, it will be used as the initial context for the agent. This is useful for providing specific instructions or context about the project. If the readme in the project is good, this CLAUDE.md can just list commands for how to build, run, test, format, lint the project, etc.</p>
+
+</article>
+
+<hr>
+
+<hr>
+<p class="backlinks-title larger">Backlinks</p>
+<p class="backlinks-default">No backlinks found.</p>
+
+
+    </main>
+    
+    <footer class="page-footer">
+        <small>Copyright Asbjørn Brandt</small>
+    </footer>
+</body>
+</html>

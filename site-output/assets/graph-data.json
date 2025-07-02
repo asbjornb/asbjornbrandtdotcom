@@ -1,6 +1,36 @@
 {
   "nodes": [
     {
+      "id": "# AI-Assisted Coding",
+      "title": "AI-Assisted Coding",
+      "url": "/notes/# AI-Assisted Coding/",
+      "category": "General",
+      "size": 150,
+      "headers": [
+        "H2: Personal Experience: JavaScript Game Development",
+        "H2: My most used workflow",
+        "H2: When AI Gets Stuck",
+        "H3: Example: Game Autosave Feature",
+        "H3: Other Strategies When Stuck",
+        "H2: Tool Comparisons",
+        "H3: Claude Code",
+        "H3: GitHub Copilot (Visual Studio)",
+        "H3: OpenAI Codex/ChatGPT",
+        "H2: Notable Resources \u0026amp; Industry Perspectives",
+        "H3: Blog Posts",
+        "H3: Videos",
+        "H2: Tools \u0026amp; Technologies to Explore",
+        "H3: Code Search \u0026amp; Repository Management",
+        "H3: Editors \u0026amp; Development Environments",
+        "H3: Code Review \u0026amp; Analysis",
+        "H3: Building AI products",
+        "H3: Content \u0026amp; Tooling Development",
+        "H3: Following Key Voices"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
       "id": "11ty-build",
       "title": "11ty-build",
       "url": "/notes/11ty-build/",
@@ -65,14 +95,14 @@
       "title": "Books",
       "url": "/notes/books/",
       "category": "General",
-      "size": 59,
+      "size": 62,
       "headers": [
         "H2: Programming related",
         "H3: To read",
         "H3: Have read",
         "H2: Other non-fiction",
-        "H2: To read",
-        "H2: Have read",
+        "H3: To read",
+        "H3: Have read",
         "H2: Fiction"
       ],
       "type": "note",
@@ -157,6 +187,21 @@
       "headers": [],
       "type": "note",
       "group": 4
+    },
+    {
+      "id": "claude-code",
+      "title": "Claude code",
+      "url": "/notes/claude-code/",
+      "category": "General",
+      "size": 49,
+      "headers": [
+        "H2: Installation",
+        "H2: Usage",
+        "H2: Troubleshooting",
+        "H2: Files"
+      ],
+      "type": "note",
+      "group": 0
     },
     {
       "id": "code-that-fits-in-your-head",
@@ -1409,7 +1454,7 @@
     }
   ],
   "categories": {
-    "General": 58,
+    "General": 60,
     "Career": 4,
     "Tools": 8,
     "Database": 12,
@@ -1417,7 +1462,7 @@
     "Organization": 2
   },
   "stats": {
-    "totalNodes": 88,
+    "totalNodes": 90,
     "totalLinks": 65,
     "hubNodes": 1,
     "categoryNodes": 9
