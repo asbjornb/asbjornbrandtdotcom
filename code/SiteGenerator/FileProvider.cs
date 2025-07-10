@@ -90,7 +90,21 @@ public class FileProvider : IFileProvider
                 destinationFolder,
                 file_name[(sourceFolder.Length + 1)..]
             );
-            File.Copy(file_name, destinationPath, true);
+
+            const int maxRetries = 3;
+            for (int attempt = 0; attempt < maxRetries; attempt++)
+            {
+                try
+                {
+                    File.Copy(file_name, destinationPath, true);
+                    break; // Success, exit retry loop
+                }
+                catch (IOException) when (attempt < maxRetries - 1)
+                {
+                    // Wait before retrying
+                    Thread.Sleep(100 * (attempt + 1));
+                }
+            }
         }
     }
 }

@@ -52,6 +52,9 @@ public sealed class PostsIntegrationTests : IAsyncLifetime, IDisposable
 
     private static void DeleteDirectoryWithRetry(string path, int maxRetries = 3)
     {
+        if (!Directory.Exists(path))
+            return;
+
         for (int i = 0; i < maxRetries; i++)
         {
             try
@@ -66,6 +69,11 @@ public sealed class PostsIntegrationTests : IAsyncLifetime, IDisposable
             catch (UnauthorizedAccessException) when (i < maxRetries - 1)
             {
                 Thread.Sleep(100 * (i + 1));
+            }
+            catch (DirectoryNotFoundException)
+            {
+                // Directory already doesn't exist, consider this success
+                return;
             }
         }
 

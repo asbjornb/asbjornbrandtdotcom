@@ -16,7 +16,7 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
     private readonly Generator _generator;
     private const string InputPath = "TestData/OldSiteInput";
     private const string ExpectedOutputPath = "TestData/OldSiteOutput";
-    private const string ActualOutputPath = "TestOutput";
+    private const string ActualOutputPath = "TestOutput/Integration";
 
     public GeneratorIntegrationTests(ITestOutputHelper output)
     {
@@ -56,6 +56,9 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
 
     private static void DeleteDirectoryWithRetry(string path, int maxRetries = 3)
     {
+        if (!Directory.Exists(path))
+            return;
+
         for (int i = 0; i < maxRetries; i++)
         {
             try
@@ -72,6 +75,11 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
             {
                 // Wait a bit for any file handles to be released
                 Thread.Sleep(100 * (i + 1));
+            }
+            catch (DirectoryNotFoundException)
+            {
+                // Directory already doesn't exist, consider this success
+                return;
             }
         }
 

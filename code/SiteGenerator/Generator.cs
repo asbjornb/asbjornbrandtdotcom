@@ -85,10 +85,11 @@ public class Generator
         // Generate knowledge graph JSON data for frontend
         await graphProcessor.ProcessAsync(Path.Combine(_contentPath, "thoughts"), _outputPath);
 
-        // Copy assets
-        fileProvider.CopyFolderAsync(
-            Path.Combine(_contentPath, "assets"),
-            Path.Combine(_outputPath, "assets")
-        );
+        // Copy assets (if assets folder exists)
+        var assetsPath = Path.Combine(_contentPath, "assets");
+        if (Directory.Exists(assetsPath))
+        {
+            fileProvider.CopyFolderAsync(assetsPath, Path.Combine(_outputPath, "assets"));
+        }
     }
 }
