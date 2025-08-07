@@ -39,6 +39,9 @@ public class PostProcessor : IPageProcessor
             // Remove the H1 from content since we're displaying it in the post header
             var contentWithoutH1 = RemoveFirstH1(htmlContent);
 
+            // Extract excerpt from content
+            var excerpt = ExtractExcerpt(contentWithoutH1);
+
             var postUrl = $"{_siteMetadata.BaseUrl}/posts/{slug}/";
 
             // Create individual post
@@ -60,7 +63,7 @@ public class PostProcessor : IPageProcessor
             );
 
             // Add to posts list for index
-            posts.Add(new PostSummaryModel(title, postUrl, date, slug));
+            posts.Add(new PostSummaryModel(title, postUrl, date, slug, excerpt));
         }
 
         // Create posts index page
@@ -139,5 +142,40 @@ public class PostProcessor : IPageProcessor
                 TimeSpan.FromSeconds(1)
             )
             .Trim();
+    }
+
+    private static string ExtractExcerpt(string htmlContent)
+    {
+        // Remove HTML tags
+        var plainText = Regex.Replace(htmlContent, @"<[^>]*>", " ");
+
+        // Clean up whitespace
+        plainText = Regex.Replace(plainText, @"\s+", " ").Trim();
+
+        // Extract first 2-3 sentences (approximately 150 characters)
+        var sentences = plainText.Split('.', '!', '?');
+        var excerpt = "";
+
+        foreach (var sentence in sentences)
+        {
+            var trimmed = sentence.Trim();
+            if (string.IsNullOrEmpty(trimmed))
+                continue;
+
+            if (excerpt.Length + trimmed.Length + 1 > 150)
+            {
+                break;
+            }
+
+            excerpt += (excerpt.Length > 0 ? ". " : "") + trimmed;
+        }
+
+        // Add ellipsis if we truncated
+        if (excerpt.Length < plainText.Length && !excerpt.EndsWith('.'))
+        {
+            excerpt += "...";
+        }
+
+        return excerpt;
     }
 }
