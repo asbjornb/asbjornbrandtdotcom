@@ -10,4 +10,10 @@ public record PostModel(
 
 public record PostsIndexModel(IReadOnlyList<PostSummaryModel> Posts);
 
-public record PostSummaryModel(string Title, string Url, DateTime PublishedDate, string Slug);
+public record PostSummaryModel(
+    string Title,
+    string Url,
+    DateTime PublishedDate,
+    string Slug,
+    string Excerpt
+);

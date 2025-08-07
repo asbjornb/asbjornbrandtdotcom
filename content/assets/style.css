@@ -168,3 +168,27 @@ blockquote{
     vertical-align: baseline;
     position: relative; 
 }
+
+/* Posts styling */
+.post-summary {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.post-summary:last-child {
+    border-bottom: none;
+}
+
+.post-excerpt {
+    color: var(--grey);
+    margin-top: 0.5rem;
+    font-size: 0.95em;
+}
+
+.post-date {
+    font-size: 0.9em;
+    color: var(--grey);
+    display: block;
+    margin-top: 0.25rem;
+}
