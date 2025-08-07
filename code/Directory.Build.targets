@@ -1,8 +1,12 @@
 <Project>
   <ItemGroup>
-    <PackageReference Include="CSharpier.MsBuild" Version="0.29.2" PrivateAssets="all" Condition="'$(CI)' != 'true'" />
+    <PackageReference
+      Include="CSharpier.MsBuild"
+      Version="0.29.2"
+      PrivateAssets="all"
+      Condition="'$(CI)' != 'true'"
+    />
   </ItemGroup>
-
   <PropertyGroup>
     <CSharpier_Check>false</CSharpier_Check>
   </PropertyGroup>
