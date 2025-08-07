@@ -5,10 +5,14 @@
     {{#if Posts}}
         <div class="posts-list">
             {{#each Posts}}
-                <article class="post-summary">
-                    <h2><a href="{{Url}}">{{Title}}</a></h2>
-                    <time class="post-date">{{formatDate PublishedDate}}</time>
-                    <p class="post-excerpt">{{Excerpt}}</p>
+                <article class="post-item">
+                    <div class="post-meta">
+                        <time class="post-date">{{formatDate PublishedDate}}</time>
+                    </div>
+                    <div class="post-content">
+                        <h3 class="post-title"><a href="{{Url}}">{{Title}}</a></h3>
+                        <p class="post-excerpt">{{Excerpt}}</p>
+                    </div>
                 </article>
             {{/each}}
         </div>
