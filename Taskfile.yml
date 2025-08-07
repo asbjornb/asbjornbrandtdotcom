@@ -50,10 +50,10 @@ tasks:
       - task: build
 
   format:
-    desc: Format code using dotnet format
+    desc: Format code using CSharpier
     dir: "{{.CODE_DIR}}"
     cmds:
-      - dotnet format {{.SOLUTION}}
+      - dotnet csharpier format .
 
   watch:
     desc: Watch for file changes and regenerate site
