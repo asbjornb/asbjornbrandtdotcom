@@ -22,7 +22,13 @@
       "Bash(task:*)",
       "WebFetch(domain:csharpier.com)",
       "WebFetch(domain:learn.microsoft.com)",
-      "WebFetch(domain:www.damirscorner.com)"
+      "WebFetch(domain:www.damirscorner.com)",
+      "Bash(git clean:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet csharpier:*)",
+      "Bash(dotnet format:*)",
+      "Bash(dotnet tool install:*)",
+      "Bash(dotnet new tool-manifest)"
     ],
     "deny": []
   }
