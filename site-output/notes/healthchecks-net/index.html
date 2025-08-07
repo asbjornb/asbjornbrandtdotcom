@@ -46,8 +46,10 @@
         </nav>
     </header>
     <main>
+        <div class="note-layout">
+    <main class="note-content">
         <article>
-    <h1>Healthchecks in .NET</h1>
+            <h1>Healthchecks in .NET</h1>
 <p>Healthchecks are a common way to monitor the health of a service. They are typically implemented as a HTTP endpoint that returns a 200 OK response if the service is healthy, but for non-HTTP services like a worker service healthchecks can be done over TCP or as a file write. Healthchecks are often used in Kubernetes to determine if a pod should be restarted.</p>
 <h2>Implementation in .NET</h2>
 <p>For ASP.NET Core applications (typically web apps or APIs) healthchecks are implemented as a simple HTTP endpoint. It can often look like:</p>
@@ -83,13 +85,16 @@ See the package here: <a href="https://www.nuget.org/packages/AspNetCore.HealthC
 <li><a href="https://encore.dev/blog/horror-stories-k8s">Horror Stories: Kubernetes Deep Health Checks</a></li>
 </ul>
 
-</article>
-
-<hr>
-
+        </article>
+        
+        <hr>
+        
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <p class="backlinks-default">No backlinks found.</p>
+    </main>
+    
+</div>
 
 
     </main>

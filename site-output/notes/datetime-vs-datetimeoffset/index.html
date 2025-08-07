@@ -46,15 +46,17 @@
         </nav>
     </header>
     <main>
+        <div class="note-layout">
+    <main class="note-content">
         <article>
-    <h1>Datetime vs datetimeoffset</h1>
+            <h1>Datetime vs datetimeoffset</h1>
 <p>Quick notes: datetimeoffset is fine since you can query underlying UTC. Still it takes 2 bytes to store the offset on all rows vs in name/meta data so if all rows are written from the same time zone it's a bit of a waste.</p>
 <p>See more at <a href="https://sqlonice.com/the-road-to-utc-datetimeoffset/">sqlonice</a></p>
 
-</article>
-
-<hr>
-
+        </article>
+        
+        <hr>
+        
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <ul class="backlinks-container">
@@ -77,6 +79,9 @@
             </div>
         </li>
 </ul>
+    </main>
+    
+</div>
 
 <link rel="stylesheet" href="/assets/knowledge-graph.css">
 

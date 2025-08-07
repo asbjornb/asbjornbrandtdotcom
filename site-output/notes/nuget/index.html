@@ -46,8 +46,10 @@
         </nav>
     </header>
     <main>
+        <div class="note-layout">
+    <main class="note-content">
         <article>
-    <h1>NuGet</h1>
+            <h1>NuGet</h1>
 <h2>What is a <code>.nupkg</code>?</h2>
 <p>A <strong>NuGet package is just a ZIP archive</strong> with a different extension. To look inside:</p>
 <pre><code class="language-powershell"># Copy or rename first (Expand-Archive only accepts .zip)
@@ -94,13 +96,16 @@ dotnet pack ChronoStream.Client/ChronoStream.Client.csproj -c Release -o ./nupkg
 </code></pre>
 <p>This creates both the regular package and a symbols package (<code>.snupkg</code>) containing source files.</p>
 
-</article>
-
-<hr>
-
+        </article>
+        
+        <hr>
+        
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <p class="backlinks-default">No backlinks found.</p>
+    </main>
+    
+</div>
 
 
     </main>

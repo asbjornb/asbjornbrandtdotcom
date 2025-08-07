@@ -46,8 +46,10 @@
         </nav>
     </header>
     <main>
+        <div class="note-layout">
+    <main class="note-content">
         <article>
-    <h1>Make</h1>
+            <h1>Make</h1>
 <p>Make is a common way to standardize the commands used in a software repository. It can be helpful to have a standard way to build, test, run and deploy software across different repositories with e.g. different languages, package managers, testing frameworks, formatting tools, etc.</p>
 <h2>Makefile</h2>
 <p>A Makefile is a file that contains the commands to build, test, run and deploy software. It is typically named <code>Makefile</code> or <code>makefile</code>.</p>
@@ -74,13 +76,16 @@ build: format clean
 <p>A common limitation of Make is that you can't easily pass arguments to the commands. One way to work around this is to have make call a shell script that prompts the user for the arguments.</p>
 <p>A recent alternative to make is <a href="https://github.com/casey/just">Just</a> which is more of a command runner than a build system and as such has some niceties over Make like build arguments, simple <code>just -l</code> to list all commands, no need for PHONY etc.</p>
 
-</article>
-
-<hr>
-
+        </article>
+        
+        <hr>
+        
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <p class="backlinks-default">No backlinks found.</p>
+    </main>
+    
+</div>
 
 
     </main>

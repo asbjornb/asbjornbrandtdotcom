@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using SiteGenerator.BacklinksProcessing;
 using SiteGenerator.Configuration;
+using SiteGenerator.GitHistory;
 using SiteGenerator.Processors;
 using SiteGenerator.Templates;
 using SiteGenerator.Tests.Helpers;
@@ -15,6 +16,7 @@ public class NoteProcessorTests
     private readonly TemplateRenderer _templateRenderer;
     private readonly Backlinks _backlinks;
     private readonly SiteMetadata _config;
+    private readonly GitHistoryProvider _gitHistoryProvider;
 
     private readonly NoteProcessor _processor;
 
@@ -30,13 +32,15 @@ public class NoteProcessorTests
             Author: "Asbjørn Brandt",
             Description: "A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming"
         );
+        _gitHistoryProvider = Substitute.For<GitHistoryProvider>("test-path");
 
         _processor = new NoteProcessor(
             _backlinks,
             _templateRenderer,
             _fileProvider,
             _markdownParser,
-            _config
+            _config,
+            _gitHistoryProvider
         );
     }
 

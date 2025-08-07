@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using SiteGenerator.BacklinksProcessing;
 using SiteGenerator.Configuration;
+using SiteGenerator.GitHistory;
 using SiteGenerator.Processors;
 using SiteGenerator.Templates;
 
@@ -47,12 +48,14 @@ public class Generator
         );
 
         // Process notes (from thoughts folder to notes folder) with graph data
+        var gitHistoryProvider = new GitHistoryProvider(_contentPath);
         var noteProcessor = new NoteProcessor(
             backlinks,
             _templateRenderer,
             fileProvider,
             markdownParser,
             _siteMetadata,
+            gitHistoryProvider,
             graphData
         );
         await noteProcessor.ProcessAsync(

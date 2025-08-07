@@ -1,10 +1,42 @@
-<article>
-    {{{content}}}
-</article>
-
-<hr>
-
-{{> backlinks }}
+<div class="note-layout">
+    <main class="note-content">
+        <article>
+            {{{content}}}
+        </article>
+        
+        <hr>
+        
+        {{> backlinks }}
+    </main>
+    
+    {{#if RecentFiles}}
+    <aside class="recent-activity">
+        <div class="recent-section">
+            <h3>Recently Added</h3>
+            <ul class="recent-list">
+                {{#each RecentFiles.RecentlyAdded}}
+                <li>
+                    <a href="/notes/{{FileName}}/">{{FileName}}</a>
+                    <span class="recent-date">{{FormattedDate}}</span>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        
+        <div class="recent-section">
+            <h3>Recently Modified</h3>
+            <ul class="recent-list">
+                {{#each RecentFiles.RecentlyModified}}
+                <li>
+                    <a href="/notes/{{FileName}}/">{{FileName}}</a>
+                    <span class="recent-date">{{FormattedDate}}</span>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </aside>
+    {{/if}}
+</div>
 
 {{#if GraphData.ConnectedNodes}}
 <link rel="stylesheet" href="/assets/knowledge-graph.css">

@@ -1,11 +1,13 @@
-﻿using SiteGenerator.KnowledgeGraph;
+﻿using SiteGenerator.GitHistory;
+using SiteGenerator.KnowledgeGraph;
 
 namespace SiteGenerator.Templates.MetadataModels;
 
 public record NoteModel(
     string Content,
     IReadOnlyList<BacklinkModel> Backlinks,
-    NoteGraphData? GraphData = null
+    NoteGraphData? GraphData = null,
+    RecentFiles? RecentFiles = null
 );
 
 public record NoteGraphData(

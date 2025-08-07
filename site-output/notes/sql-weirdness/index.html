@@ -46,8 +46,10 @@
         </nav>
     </header>
     <main>
+        <div class="note-layout">
+    <main class="note-content">
         <article>
-    <h1>Sql weirdness</h1>
+            <h1>Sql weirdness</h1>
 <h2>Can use space with zero width and other gimmicks for unreadable code</h2>
 <pre><code class="language-Sql">DECLARE​@​int=5;
 WITH​a​AS(SELECT​x​FROM(VALUES(1),(1),(1),(1),(1))x(x))
@@ -66,13 +68,16 @@ FROM(SELECT​r=ROW_NUMBER()OVER(ORDER​BY​1/0)FROM​a,a​b,a​c,a​d)b
 <p>Also see this link for postgres weirdness which might largely be replicateable in sql:
 <a href="https://scattered-thoughts.net/writing/select-wat-from-sql/">Select wat from sql</a></p>
 
-</article>
-
-<hr>
-
+        </article>
+        
+        <hr>
+        
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <p class="backlinks-default">No backlinks found.</p>
+    </main>
+    
+</div>
 
 
     </main>
