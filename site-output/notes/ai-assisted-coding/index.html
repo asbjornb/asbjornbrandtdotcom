@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+<title>AI-Assisted Coding &#8226; Asbj&#248;rn Brandt's Notes</title>
+
+<meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<meta property="og:title" content="AI-Assisted Coding &#8226; Asbj&#248;rn Brandt's Notes">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/ai-assisted-coding/">
+<meta property="og:image" content="/assets/chart.svg">
+<meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<link rel="canonical" href="https://asbjornbrandt.com/notes/ai-assisted-coding/">
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <a href="/" class="page-header__logo" title="Go home">
+            <img src="/assets/chart.svg" alt="" width="48">
+        </a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/notes">Notes</a>
+            <a href="/posts">Posts</a>
+            <a href="/inspiration">Inspiration</a>
+            <a href="/now">Now</a>
+        </nav>
+    </header>
+    <main>
+        <article>
+    <h1>AI-Assisted Coding</h1>
+<p>Personal experiences and observations on using AI tools for software development.</p>
+<h2>Personal Experience: JavaScript Game Development</h2>
+<p>Made a small JavaScript game in 2 nights while watching TV with my wife, with no prior JavaScript game development experience. In general it was a great experience to be able to churn ideas into code and see the results immediately. 2 things blew my mind:</p>
+<ul>
+<li>Claude Code generated great textures in pure code. I didn't have to fiddle with using tile sheets or image files, not even for buildings.</li>
+<li>I got some typescript errors in github actions that I hadn't seen locally (due to not running the check). Claude helped me fix the errors and add a precommit hook in under 5 minutes to prevent recurrence. This in tools I didn't know well at all.</li>
+</ul>
+<h2>My most used workflow</h2>
+<ol>
+<li>Ask Claude Code to do something fairly small</li>
+<li>Review the code manually</li>
+<li>Commit it</li>
+</ol>
+<p>This approach often lets me complete features in 30 minutes that would have taken 8 hours before.</p>
+<p>Sometimes it is fun to go full yolo and not review the code - like when experimenting with new ideas in unfamiliar languages, but there is a higher risk of getting into unresolvable situations that way.</p>
+<h2>When AI Gets Stuck</h2>
+<p>It is often better to completely restart and approach differently</p>
+<h3>Example: Game Autosave Feature</h3>
+<p><strong>First attempt (failed):</strong> Asked Claude Code to build autosaves directly</p>
+<p>It built the feature, but it was buggy. Chasing one bug led to another and even trying to enforce with tests had it stuck.
+I discarded all changes (threw away my branch) and took a different approach.</p>
+<p><strong>Second attempt (successful):</strong></p>
+<ol>
+<li>First asked it to make save games easier without building save functionality yet</li>
+<li>It created a central gamestate interface for managing gamestate</li>
+<li>Integrated the gamestate management</li>
+<li>Then when I asked for autosaves, it worked right away</li>
+</ol>
+<h3>Other Strategies When Stuck</h3>
+<ul>
+<li><strong>Generate tests first</strong> - Can provide better structure</li>
+<li><strong>Try a different AI model</strong> with the same task</li>
+<li><strong>Break down the problem</strong> into smaller pieces</li>
+</ul>
+<h2>Tool Comparisons</h2>
+<h3>Claude Code</h3>
+<p>See also [Claude code](/notes/Claude code/).</p>
+<ul>
+<li>Great for small, focused tasks</li>
+<li>Excellent at code generation and debugging</li>
+<li>Works well with manual review workflow</li>
+</ul>
+<h3>GitHub Copilot (Visual Studio)</h3>
+<ul>
+<li><strong>Still too many errors</strong> to be fully worthwhile</li>
+<li>Crashes or stalls when running terminal commands</li>
+<li>Hopefully this will improve quickly</li>
+</ul>
+<h3>OpenAI Codex/ChatGPT</h3>
+<ul>
+<li>Nice in principle with container isolation and allowing for parallel tasks</li>
+<li><strong>Downsides:</strong>
+<ul>
+<li>Difficult to add proper tools in current iteration (no custom containers yet)</li>
+<li>Slow back-and-forth through web interface</li>
+</ul>
+</li>
+</ul>
+<h2>Notable Resources &amp; Industry Perspectives</h2>
+<h3>Blog Posts</h3>
+<p><strong><a href="https://fly.io">My AI Skeptic Friends Are All Nuts</a></strong> - Thomas Ptacek · 16 min<br />
+Spicy rebuttal to &quot;LLMs are a fad&quot;: agents already handle yak-shaving, hallucinations are mostly solved by tooling, and mediocre generated code still beats hours of tedium.</p>
+<p><strong><a href="https://ben-evans.com">AI Eats the World</a></strong> - Benedict Evans slide deck · ~110 slides / 20 min skim<br />
+Annual big-picture deck mapping how generative AI ripples through every sector, from compute supply chains to creative work. Addresses why &quot;everyone's building but hardly anyone's using&quot; is the real paradox.</p>
+<p><strong><a href="https://ghuntley.com">The Six-Month Recap</a></strong> - Geoffrey Huntley · ~30 min<br />
+Blog-ified keynote chronicling experiments with headless agents, emoji COBOL, and why companies that drag their feet on AI will hemorrhage talent.</p>
+<p><strong><a href="https://the.scapegoat.dev">LLMs Are Kryptonite for Legacy Code (But Don't Let Them Touch It)</a></strong> - scapegoat.dev · 8 min<br />
+Six-step playbook for using models as &quot;software archaeologists&quot; to map, instrument and gradually replace spaghetti systems—without letting them refactor live code.</p>
+<p><strong><a href="https://martinfowler.com">LLMs Bring New Nature of Abstraction</a></strong> - Martin Fowler · 24 Jun 2025 · ~8 min<br />
+Argues Gen-AI represents the biggest leap since assembler to high-level languages: prompt-driven work lifts us up an abstraction level and pushes us sideways into non-determinism. Expect knock-on effects for version control, testing, and what &quot;source of truth&quot; even means.</p>
+<p><strong><a href="https://tidyfirst.substack.com">Augmented Coding: Beyond the Vibes</a></strong> - Kent Beck · 25 Jun 2025 · ~10 min<br />
+Hands-on notes from a real production project pairing with an LLM &quot;genie.&quot; Concrete stories about design docs, domain nuance challenges, and evolving &quot;tidy-as-you-code&quot; techniques.</p>
+<h3>Videos</h3>
+<p><strong><a href="https://youtube.com">Software Is Changing (Again)</a></strong> - Andrej Karpathy · 46 min<br />
+Steps through Software 1.0→2.0→3.0, arguing that natural-language prompts are the new programming language and tracing implications for tooling, infrastructure and organizational charts.</p>
+<p><strong><a href="https://www.youtube.com/watch?v=EO3_qN_Ynsk">Industry Perspectives on AI-Assisted Coding</a></strong>  - Gergely Orosz 25 min
+Showcases impressions on AI-assisted coding across the industry (startups, AI vendors, big tech and independent developers).</p>
+<h2>Tools &amp; Technologies to Explore</h2>
+<h3>Code Search &amp; Repository Management</h3>
+<ul>
+<li><strong>Multi-repo search tool</strong> - Build or find an MCP server that enables searching across large multi-repositories. Should index efficiently (merkle trees?) to avoid pure text search. Could generate documentation over time, submit merge requests for missing README files, or maintain internal docs for faster codebase understanding. Essentially a code search tool designed for agent use (potentially human use too).</li>
+</ul>
+<h3>Editors &amp; Development Environments</h3>
+<ul>
+<li><strong>Void Editor</strong> - Open source Cursor clone with bring-your-own API key. Check periodically for updates.</li>
+<li><strong>Amp Code</strong> - Agentic coding tool. Alternative to Claude Code heavily used by Manuel Odendahl (expert at utilizing coding agents, blogs at <a href="https://the.scapegoat.dev/">the.scapegoat.dev</a> and go-go-golems on <a href="https://typeshare.co/go-go-golems">typeshare.co</a>)</li>
+</ul>
+<h3>Code Review &amp; Analysis</h3>
+<ul>
+<li><strong>Greptile</strong> - Code review tool worth investigating</li>
+</ul>
+<h3>Building AI products</h3>
+<ul>
+<li><strong>baml</strong> - <a href="https://github.com/BoundaryML/baml">baml</a> LLM prompts as functions. By the great Samuel Lijin.</li>
+</ul>
+<h3>Content &amp; Tooling Development</h3>
+<ul>
+<li><strong>Blog development</strong> - Use AI tools to experiment with new blog designs</li>
+<li><strong>Note-taking tooling</strong> - Build tools for faster note management: quick note opening, LLM-powered search and improvement suggestions, publishing capabilities. Could be web-based, command line, or VS Code extensions. Add simple inbox that is accessible from phone and desktop.</li>
+</ul>
+<h3>Following Key Voices</h3>
+<ul>
+<li>Set up notifications for Manuel Odendahl blogs</li>
+<li>Set up notifications for Geoffrey Huntley posts</li>
+</ul>
+<p>May want to add <a href="https://harper.blog/posts/">Harper Reed</a> and <a href="https://simonwillison.net/">Simon Willison</a> to the list of people to follow.</p>
+
+</article>
+
+<hr>
+
+<hr>
+<p class="backlinks-title larger">Backlinks</p>
+<p class="backlinks-default">No backlinks found.</p>
+
+
+    </main>
+    
+    <footer class="page-footer">
+        <small>Copyright Asbjørn Brandt</small>
+    </footer>
+</body>
+</html>

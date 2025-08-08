@@ -1,9 +1,31 @@
 {
   "nodes": [
     {
-      "id": "# AI-Assisted Coding",
+      "id": "11ty-build",
+      "title": "11ty-build",
+      "url": "/notes/11ty-build/",
+      "category": "General",
+      "size": 10,
+      "headers": [],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "11ty",
+      "title": "11ty",
+      "url": "/notes/11ty/",
+      "category": "General",
+      "size": 17,
+      "headers": [
+        "H2: package.json"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "ai-assisted-coding",
       "title": "AI-Assisted Coding",
-      "url": "/notes/# AI-Assisted Coding/",
+      "url": "/notes/ai-assisted-coding/",
       "category": "General",
       "size": 150,
       "headers": [
@@ -26,28 +48,6 @@
         "H3: Building AI products",
         "H3: Content \u0026amp; Tooling Development",
         "H3: Following Key Voices"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "11ty-build",
-      "title": "11ty-build",
-      "url": "/notes/11ty-build/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "11ty",
-      "title": "11ty",
-      "url": "/notes/11ty/",
-      "category": "General",
-      "size": 17,
-      "headers": [
-        "H2: package.json"
       ],
       "type": "note",
       "group": 0
