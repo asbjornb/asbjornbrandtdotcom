@@ -32,11 +32,10 @@ tasks:
       - dotnet test {{.SOLUTION}} --configuration Release --no-build --verbosity normal
 
   generate:
-    desc: Generate the static site
+    desc: Generate the static site (fast debug build)
     dir: "{{.CODE_DIR}}/SiteGenerator"
-    deps: [build]
     cmds:
-      - dotnet run --configuration Release
+      - dotnet run --configuration Debug
 
   clean:
     desc: Clean build artifacts and generated site
