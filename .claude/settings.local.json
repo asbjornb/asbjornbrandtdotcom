@@ -28,7 +28,11 @@
       "Bash(dotnet csharpier:*)",
       "Bash(dotnet format:*)",
       "Bash(dotnet tool install:*)",
-      "Bash(dotnet new tool-manifest)"
+      "Bash(dotnet new tool-manifest)",
+      "Bash(wsl:*)",
+      "Bash(time ls:*)",
+      "Bash(echo $NUMBER_OF_PROCESSORS)",
+      "Bash(time dotnet build:*)"
     ],
     "deny": []
   }
