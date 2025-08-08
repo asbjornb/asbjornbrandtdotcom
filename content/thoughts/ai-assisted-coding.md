@@ -19,6 +19,10 @@ This approach often lets me complete features in 30 minutes that would have take
 
 Sometimes it is fun to go full yolo and not review the code - like when experimenting with new ideas in unfamiliar languages, but there is a higher risk of getting into unresolvable situations that way.
 
+## Small tips
+
+When asking LLMs to review code, it works better if referring like "My developer created this code" instead of "I created this code". It seems to help it out of the sycophant role.
+
 ## When AI Gets Stuck
 
 It is often better to completely restart and approach differently
