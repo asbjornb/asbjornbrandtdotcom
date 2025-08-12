@@ -15,7 +15,7 @@ public class GitHistoryService
     {
         var thoughtsPath = Path.Combine(_contentPath, "thoughts");
         var gitCommand =
-            $"log --name-only --pretty=format: --diff-filter=A -- \"{thoughtsPath}/*.md\"";
+            $"log --name-only --pretty=format: --diff-filter=A -50 -- \"{thoughtsPath}/*.md\"";
         var output = await RunGitCommandAsync(gitCommand);
 
         return ParseFileNames(output, count);
@@ -24,7 +24,9 @@ public class GitHistoryService
     public async Task<List<string>> GetRecentlyChangedNotesAsync(int count = 5)
     {
         var thoughtsPath = Path.Combine(_contentPath, "thoughts");
-        var gitCommand = $"log --name-only --pretty=format: -- \"{thoughtsPath}/*.md\"";
+        // Exclude newly added files to avoid duplicates with newest notes
+        var gitCommand =
+            $"log --name-only --pretty=format: --diff-filter=M -30 -- \"{thoughtsPath}/*.md\"";
         var output = await RunGitCommandAsync(gitCommand);
 
         return ParseFileNames(output, count);
@@ -69,11 +71,12 @@ public class GitHistoryService
         {
             if (line.EndsWith(".md") && line.Contains("thoughts/"))
             {
-                var fileName = Path.GetFileNameWithoutExtension(Path.GetFileName(line));
+                var fileName = Path.GetFileNameWithoutExtension(Path.GetFileName(line.Trim()));
 
-                // Skip index.md and ensure uniqueness
+                // Skip index.md, empty names, and ensure uniqueness
                 if (
-                    !fileName.Equals("index", StringComparison.OrdinalIgnoreCase)
+                    !string.IsNullOrEmpty(fileName)
+                    && !fileName.Equals("index", StringComparison.OrdinalIgnoreCase)
                     && seen.Add(fileName)
                 )
                 {
