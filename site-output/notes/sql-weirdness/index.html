@@ -46,8 +46,10 @@
         </nav>
     </header>
     <main>
+        <div class="note-layout">
+    <div class="note-content">
         <article>
-    <h1>Sql weirdness</h1>
+            <h1>Sql weirdness</h1>
 <h2>Can use space with zero width and other gimmicks for unreadable code</h2>
 <pre><code class="language-Sql">DECLARE​@​int=5;
 WITH​a​AS(SELECT​x​FROM(VALUES(1),(1),(1),(1),(1))x(x))
@@ -66,13 +68,36 @@ FROM(SELECT​r=ROW_NUMBER()OVER(ORDER​BY​1/0)FROM​a,a​b,a​c,a​d)b
 <p>Also see this link for postgres weirdness which might largely be replicateable in sql:
 <a href="https://scattered-thoughts.net/writing/select-wat-from-sql/">Select wat from sql</a></p>
 
-</article>
+        </article>
 
-<hr>
+        <hr>
 
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <p class="backlinks-default">No backlinks found.</p>
+    </div>
+
+<aside class="recent-notes-sidebar">
+    <div class="recent-section">
+        <h3>🆕 Newest Notes</h3>
+        <ul class="recent-notes-list">
+            <li><a href="/notes/claude-code/" class="recent-note-link">Claude code</a></li>
+            <li><a href="/notes/nuget/" class="recent-note-link">NuGet</a></li>
+            <li><a href="/notes/wsl/" class="recent-note-link">Wsl</a></li>
+            <li><a href="/notes/hackerrank/" class="recent-note-link">Hackerrank</a></li>
+        </ul>
+    </div>
+
+    <div class="recent-section">
+        <h3>📝 Recently Updated</h3>
+        <ul class="recent-notes-list">
+            <li><a href="/notes/ai-assisted-coding/" class="recent-note-link">AI-Assisted Coding</a></li>
+            <li><a href="/notes/books/" class="recent-note-link">Books</a></li>
+            <li><a href="/notes/claude-code/" class="recent-note-link">Claude code</a></li>
+        </ul>
+    </div>
+</aside>
+</div>
 
 
     </main>

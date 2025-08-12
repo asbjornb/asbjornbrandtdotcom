@@ -1,0 +1,25 @@
+{{#if RecentNotes}}
+<aside class="recent-notes-sidebar">
+    {{#if RecentNotes.NewestNotes}}
+    <div class="recent-section">
+        <h3>🆕 Newest Notes</h3>
+        <ul class="recent-notes-list">
+            {{#each RecentNotes.NewestNotes}}
+            <li><a href="/notes/{{FileName}}/" class="recent-note-link">{{Title}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+
+    {{#if RecentNotes.RecentlyChangedNotes}}
+    <div class="recent-section">
+        <h3>📝 Recently Updated</h3>
+        <ul class="recent-notes-list">
+            {{#each RecentNotes.RecentlyChangedNotes}}
+            <li><a href="/notes/{{FileName}}/" class="recent-note-link">{{Title}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+</aside>
+{{/if}}

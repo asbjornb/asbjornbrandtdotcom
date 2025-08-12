@@ -46,8 +46,10 @@
         </nav>
     </header>
     <main>
+        <div class="note-layout">
+    <div class="note-content">
         <article>
-    <h1>Healthchecks in .NET</h1>
+            <h1>Healthchecks in .NET</h1>
 <p>Healthchecks are a common way to monitor the health of a service. They are typically implemented as a HTTP endpoint that returns a 200 OK response if the service is healthy, but for non-HTTP services like a worker service healthchecks can be done over TCP or as a file write. Healthchecks are often used in Kubernetes to determine if a pod should be restarted.</p>
 <h2>Implementation in .NET</h2>
 <p>For ASP.NET Core applications (typically web apps or APIs) healthchecks are implemented as a simple HTTP endpoint. It can often look like:</p>
@@ -83,13 +85,36 @@ See the package here: <a href="https://www.nuget.org/packages/AspNetCore.HealthC
 <li><a href="https://encore.dev/blog/horror-stories-k8s">Horror Stories: Kubernetes Deep Health Checks</a></li>
 </ul>
 
-</article>
+        </article>
 
-<hr>
+        <hr>
 
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <p class="backlinks-default">No backlinks found.</p>
+    </div>
+
+<aside class="recent-notes-sidebar">
+    <div class="recent-section">
+        <h3>🆕 Newest Notes</h3>
+        <ul class="recent-notes-list">
+            <li><a href="/notes/claude-code/" class="recent-note-link">Claude code</a></li>
+            <li><a href="/notes/nuget/" class="recent-note-link">NuGet</a></li>
+            <li><a href="/notes/wsl/" class="recent-note-link">Wsl</a></li>
+            <li><a href="/notes/hackerrank/" class="recent-note-link">Hackerrank</a></li>
+        </ul>
+    </div>
+
+    <div class="recent-section">
+        <h3>📝 Recently Updated</h3>
+        <ul class="recent-notes-list">
+            <li><a href="/notes/ai-assisted-coding/" class="recent-note-link">AI-Assisted Coding</a></li>
+            <li><a href="/notes/books/" class="recent-note-link">Books</a></li>
+            <li><a href="/notes/claude-code/" class="recent-note-link">Claude code</a></li>
+        </ul>
+    </div>
+</aside>
+</div>
 
 
     </main>

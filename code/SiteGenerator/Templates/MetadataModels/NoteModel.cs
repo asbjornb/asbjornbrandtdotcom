@@ -5,7 +5,8 @@ namespace SiteGenerator.Templates.MetadataModels;
 public record NoteModel(
     string Content,
     IReadOnlyList<BacklinkModel> Backlinks,
-    NoteGraphData? GraphData = null
+    NoteGraphData? GraphData = null,
+    RecentNotesModel? RecentNotes = null
 );
 
 public record NoteGraphData(

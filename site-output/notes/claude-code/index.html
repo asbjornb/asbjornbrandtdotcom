@@ -46,8 +46,10 @@
         </nav>
     </header>
     <main>
+        <div class="note-layout">
+    <div class="note-content">
         <article>
-    <h1>Claude code</h1>
+            <h1>Claude code</h1>
 <p>CLI agent from Anthropic.</p>
 <h2>Installation</h2>
 <p>Doesn't run on Windows directly, but can be run in WSL. Installation guides on the <a href="https://docs.anthropic.com/en/docs/claude-code/setup">Anthropic website</a>.</p>
@@ -67,13 +69,36 @@ sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
 <p>The agent creates a <code>.claude/settings.local.json</code> in the project directory that holds information on commands you've allowed claude to run without confirmation. Possibly .gitignore this if other developers might not be comfortable with the same commands.</p>
 <p>If you create a <code>CLAUDE.md</code> file in the project directory, it will be used as the initial context for the agent. This is useful for providing specific instructions or context about the project. If the readme in the project is good, this CLAUDE.md can just list commands for how to build, run, test, format, lint the project, etc.</p>
 
-</article>
+        </article>
 
-<hr>
+        <hr>
 
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <p class="backlinks-default">No backlinks found.</p>
+    </div>
+
+<aside class="recent-notes-sidebar">
+    <div class="recent-section">
+        <h3>🆕 Newest Notes</h3>
+        <ul class="recent-notes-list">
+            <li><a href="/notes/claude-code/" class="recent-note-link">Claude code</a></li>
+            <li><a href="/notes/nuget/" class="recent-note-link">NuGet</a></li>
+            <li><a href="/notes/wsl/" class="recent-note-link">Wsl</a></li>
+            <li><a href="/notes/hackerrank/" class="recent-note-link">Hackerrank</a></li>
+        </ul>
+    </div>
+
+    <div class="recent-section">
+        <h3>📝 Recently Updated</h3>
+        <ul class="recent-notes-list">
+            <li><a href="/notes/ai-assisted-coding/" class="recent-note-link">AI-Assisted Coding</a></li>
+            <li><a href="/notes/books/" class="recent-note-link">Books</a></li>
+            <li><a href="/notes/claude-code/" class="recent-note-link">Claude code</a></li>
+        </ul>
+    </div>
+</aside>
+</div>
 
 
     </main>

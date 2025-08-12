@@ -1,10 +1,16 @@
-<article>
-    {{{content}}}
-</article>
+<div class="note-layout">
+    <div class="note-content">
+        <article>
+            {{{content}}}
+        </article>
 
-<hr>
+        <hr>
 
-{{> backlinks }}
+        {{> backlinks }}
+    </div>
+
+    {{> recent-notes-sidebar }}
+</div>
 
 {{#if GraphData.ConnectedNodes}}
 <link rel="stylesheet" href="/assets/knowledge-graph.css">

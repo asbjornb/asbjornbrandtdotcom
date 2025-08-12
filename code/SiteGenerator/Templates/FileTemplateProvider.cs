@@ -18,6 +18,12 @@ public class FileTemplateProvider : ITemplateProvider
     public string GetPartialContent(string partialName)
     {
         var partialPath = Path.Combine(_templatePath, "partials", $"{partialName}.html");
+        if (!File.Exists(partialPath))
+        {
+            throw new FileNotFoundException(
+                $"Partial '{partialName}' not found at path: {partialPath}. Template path: {_templatePath}"
+            );
+        }
         return File.ReadAllText(partialPath);
     }
 }

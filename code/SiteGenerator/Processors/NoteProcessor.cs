@@ -16,6 +16,7 @@ public class NoteProcessor : IPageProcessor
     private readonly MarkdownParser _markdownParser;
     private readonly SiteMetadata _config;
     private readonly GraphData? _graphData;
+    private readonly GitHistoryService _gitHistoryService;
 
     public NoteProcessor(
         Backlinks backlinks,
@@ -23,7 +24,8 @@ public class NoteProcessor : IPageProcessor
         IFileProvider folderReader,
         MarkdownParser markdownParser,
         SiteMetadata config,
-        GraphData? graphData = null
+        GraphData? graphData = null,
+        GitHistoryService? gitHistoryService = null
     )
     {
         _backlinks = backlinks;
@@ -32,6 +34,7 @@ public class NoteProcessor : IPageProcessor
         _markdownParser = markdownParser;
         _config = config;
         _graphData = graphData;
+        _gitHistoryService = gitHistoryService ?? new GitHistoryService(".");
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -42,14 +45,22 @@ public class NoteProcessor : IPageProcessor
         // Generate previews for all notes
         var notePreviews = GenerateNotePreviews(allNotesContent);
 
-        // Process each note using the in-memory content and previews
+        // Generate recent notes data once for all notes
+        var recentNotesModel = await GenerateRecentNotesAsync(allNotesContent);
+
+        // Process each note using the in-memory content, previews, and shared recent notes data
         foreach (var kvp in allNotesContent)
         {
             var fileName = kvp.Key;
             var markdownContent = kvp.Value;
 
             var htmlContent = _markdownParser.ParseToHtml(markdownContent);
-            var renderedContent = RenderNoteWithTemplate(htmlContent, fileName, notePreviews);
+            var renderedContent = RenderNoteWithTemplate(
+                htmlContent,
+                fileName,
+                notePreviews,
+                recentNotesModel
+            );
 
             if (fileName.Equals("index", StringComparison.OrdinalIgnoreCase))
             {
@@ -100,10 +111,49 @@ public class NoteProcessor : IPageProcessor
         return previews;
     }
 
+    private async Task<RecentNotesModel> GenerateRecentNotesAsync(
+        Dictionary<string, string> allNotesContent
+    )
+    {
+        try
+        {
+            // Get recent notes from git history
+            var newestNotesFileNames = await _gitHistoryService.GetRecentNotesAsync(5);
+            var recentlyChangedFileNames = await _gitHistoryService.GetRecentlyChangedNotesAsync(5);
+
+            // Convert to RecentNoteItem objects
+            var newestNotes = newestNotesFileNames
+                .Where(fileName => allNotesContent.ContainsKey(fileName))
+                .Select(fileName => new RecentNoteItem(
+                    fileName,
+                    ExtractTitle(_markdownParser.ParseToHtml(allNotesContent[fileName]))
+                        ?? FormatFileName(fileName)
+                ))
+                .ToList();
+
+            var recentlyChangedNotes = recentlyChangedFileNames
+                .Where(fileName => allNotesContent.ContainsKey(fileName))
+                .Select(fileName => new RecentNoteItem(
+                    fileName,
+                    ExtractTitle(_markdownParser.ParseToHtml(allNotesContent[fileName]))
+                        ?? FormatFileName(fileName)
+                ))
+                .ToList();
+
+            return new RecentNotesModel(newestNotes, recentlyChangedNotes);
+        }
+        catch
+        {
+            // If git history fails, return empty model
+            return new RecentNotesModel();
+        }
+    }
+
     private string RenderNoteWithTemplate(
         string htmlContent,
         string fileName,
-        Dictionary<string, string> notePreviews
+        Dictionary<string, string> notePreviews,
+        RecentNotesModel recentNotesModel
     )
     {
         var backlinksList = _backlinks.GetBacklinksForNote(fileName);
@@ -133,7 +183,7 @@ public class NoteProcessor : IPageProcessor
         // Extract graph data for the current note
         var noteGraphData = ExtractNoteGraphData(fileName);
 
-        var noteModel = new NoteModel(htmlContent, backlinks, noteGraphData);
+        var noteModel = new NoteModel(htmlContent, backlinks, noteGraphData, recentNotesModel);
         var pageUrl = $"{_config.BaseUrl}/notes/{fileName}/";
 
         // Extract title from first header in the content

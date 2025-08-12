@@ -47,13 +47,15 @@ public class Generator
         );
 
         // Process notes (from thoughts folder to notes folder) with graph data
+        var gitHistoryService = new GitHistoryService(_contentPath);
         var noteProcessor = new NoteProcessor(
             backlinks,
             _templateRenderer,
             fileProvider,
             markdownParser,
             _siteMetadata,
-            graphData
+            graphData,
+            gitHistoryService
         );
         await noteProcessor.ProcessAsync(
             Path.Combine(_contentPath, "thoughts"),

@@ -38,6 +38,9 @@ public class TemplateRenderer
         var backlinksPartialContent = _templateProvider.GetPartialContent("backlinks");
         _handlebarsContext.RegisterTemplate("backlinks", backlinksPartialContent);
 
+        var recentNotesSidebarContent = _templateProvider.GetPartialContent("recent-notes-sidebar");
+        _handlebarsContext.RegisterTemplate("recent-notes-sidebar", recentNotesSidebarContent);
+
         // Compile templates once and cache them
         _layoutTemplate = _handlebarsContext.Compile(
             _templateProvider.GetTemplateContent("layout")
