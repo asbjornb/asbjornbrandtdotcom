@@ -12,6 +12,7 @@ public class PageProcessor : IPageProcessor
     private readonly MarkdownParser _markdownParser;
     private readonly SiteMetadata _config;
     private readonly MarkdownPageWriter _pageWriter;
+    private readonly SiteUrlResolver _urlResolver;
 
     public PageProcessor(
         TemplateRenderer templateRenderer,
@@ -25,6 +26,7 @@ public class PageProcessor : IPageProcessor
         _markdownParser = markdownParser;
         _config = config;
         _pageWriter = new MarkdownPageWriter(folderReader);
+        _urlResolver = new SiteUrlResolver(config);
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -34,9 +36,7 @@ public class PageProcessor : IPageProcessor
             var htmlContent = _markdownParser.ParseToHtml(contentFile.Content);
 
             var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
-            var pageUrl = fileName.Equals("index", StringComparison.OrdinalIgnoreCase)
-                ? _config.BaseUrl
-                : $"{_config.BaseUrl}/{fileName}/";
+            var pageUrl = _urlResolver.Page(fileName);
 
             var renderedContent = _templateRenderer.RenderPage(
                 new LayoutModel(

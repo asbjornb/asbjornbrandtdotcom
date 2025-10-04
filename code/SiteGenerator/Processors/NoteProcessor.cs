@@ -17,6 +17,7 @@ public class NoteProcessor : IPageProcessor
     private readonly SiteMetadata _config;
     private readonly GraphData? _graphData;
     private readonly MarkdownPageWriter _pageWriter;
+    private readonly SiteUrlResolver _urlResolver;
 
     public NoteProcessor(
         Backlinks backlinks,
@@ -34,6 +35,7 @@ public class NoteProcessor : IPageProcessor
         _config = config;
         _graphData = graphData;
         _pageWriter = new MarkdownPageWriter(folderReader);
+        _urlResolver = new SiteUrlResolver(config);
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -129,7 +131,7 @@ public class NoteProcessor : IPageProcessor
         var noteGraphData = ExtractNoteGraphData(fileName);
 
         var noteModel = new NoteModel(htmlContent, backlinks, noteGraphData);
-        var pageUrl = $"{_config.BaseUrl}/notes/{fileName}/";
+        var pageUrl = _urlResolver.Note(fileName);
 
         // Extract title from first header in the content
         var extractedTitle = ExtractTitle(htmlContent);
