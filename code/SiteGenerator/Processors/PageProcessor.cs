@@ -8,9 +8,10 @@ namespace SiteGenerator.Processors;
 public class PageProcessor : IPageProcessor
 {
     private readonly TemplateRenderer _templateRenderer;
-    private readonly IFileProvider _folderReader;
+    private readonly IFileProvider _fileProvider;
     private readonly MarkdownParser _markdownParser;
     private readonly SiteMetadata _config;
+    private readonly MarkdownPageWriter _pageWriter;
 
     public PageProcessor(
         TemplateRenderer templateRenderer,
@@ -20,14 +21,15 @@ public class PageProcessor : IPageProcessor
     )
     {
         _templateRenderer = templateRenderer;
-        _folderReader = folderReader;
+        _fileProvider = folderReader;
         _markdownParser = markdownParser;
         _config = config;
+        _pageWriter = new MarkdownPageWriter(folderReader);
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
     {
-        await foreach (var contentFile in _folderReader.GetFileContents(inputPath, "*.md"))
+        await foreach (var contentFile in _fileProvider.GetFileContents(inputPath, "*.md"))
         {
             var htmlContent = _markdownParser.ParseToHtml(contentFile.Content);
 
@@ -46,21 +48,7 @@ public class PageProcessor : IPageProcessor
                 )
             );
 
-            if (fileName.Equals("index", StringComparison.OrdinalIgnoreCase))
-            {
-                await _folderReader.WriteFileAsync(
-                    Path.Combine(outputPath, "index.html"),
-                    renderedContent
-                );
-            }
-            else
-            {
-                var pageFolder = Path.Combine(outputPath, fileName);
-                await _folderReader.WriteFileAsync(
-                    Path.Combine(pageFolder, "index.html"),
-                    renderedContent
-                );
-            }
+            await _pageWriter.WriteAsync(outputPath, fileName, renderedContent);
         }
     }
 }
