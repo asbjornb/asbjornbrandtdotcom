@@ -14,10 +14,10 @@ public class NoteProcessor : IPageProcessor
     private readonly TemplateRenderer _templateRenderer;
     private readonly IFileProvider _fileProvider;
     private readonly MarkdownParser _markdownParser;
-    private readonly SiteMetadata _config;
     private readonly GraphData? _graphData;
     private readonly MarkdownPageWriter _pageWriter;
     private readonly SiteUrlResolver _urlResolver;
+    private readonly LayoutModelFactory _layoutFactory;
 
     public NoteProcessor(
         Backlinks backlinks,
@@ -32,10 +32,10 @@ public class NoteProcessor : IPageProcessor
         _templateRenderer = templateRenderer;
         _fileProvider = folderReader;
         _markdownParser = markdownParser;
-        _config = config;
         _graphData = graphData;
         _pageWriter = new MarkdownPageWriter(folderReader);
         _urlResolver = new SiteUrlResolver(config);
+        _layoutFactory = new LayoutModelFactory(config);
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -141,9 +141,8 @@ public class NoteProcessor : IPageProcessor
         }
 
         var titleName = extractedTitle ?? FormatFileName(fileName);
-        var pageTitle = $"{titleName} • {_config.Author}'s Notes";
 
-        var layoutModel = new LayoutModel(pageTitle, _config.Description, "article", pageUrl, null);
+        var layoutModel = _layoutFactory.CreateNote(titleName, pageUrl);
 
         return _templateRenderer.RenderNote(noteModel, layoutModel);
     }
