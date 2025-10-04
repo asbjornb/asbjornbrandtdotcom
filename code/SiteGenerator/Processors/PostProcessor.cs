@@ -13,6 +13,7 @@ public class PostProcessor : IPageProcessor
     private readonly MarkdownParser _markdownParser;
     private readonly SiteMetadata _siteMetadata;
     private readonly MarkdownPageWriter _pageWriter;
+    private readonly SiteUrlResolver _urlResolver;
 
     public PostProcessor(
         TemplateRenderer templateRenderer,
@@ -26,6 +27,7 @@ public class PostProcessor : IPageProcessor
         _markdownParser = markdownParser;
         _siteMetadata = siteMetadata;
         _pageWriter = new MarkdownPageWriter(fileProvider);
+        _urlResolver = new SiteUrlResolver(siteMetadata);
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -44,7 +46,7 @@ public class PostProcessor : IPageProcessor
             // Extract excerpt from content
             var excerpt = ExtractExcerpt(contentWithoutH1);
 
-            var postUrl = $"{_siteMetadata.BaseUrl}/posts/{slug}/";
+            var postUrl = _urlResolver.Post(slug);
 
             // Create individual post
             var postModel = new PostModel(title, contentWithoutH1, date, slug, postUrl);
@@ -78,7 +80,7 @@ public class PostProcessor : IPageProcessor
             $"Posts • {_siteMetadata.SiteTitle}",
             _siteMetadata.Description,
             "website",
-            $"{_siteMetadata.BaseUrl}/posts/",
+            _urlResolver.PostsIndex(),
             null // Will be set by template renderer
         );
 
