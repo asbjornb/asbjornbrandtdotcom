@@ -70,6 +70,7 @@ public class NoteProcessor : IPageProcessor
         await foreach (var contentFile in _folderReader.GetFileContents(inputPath, "*.md"))
         {
             var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
+            WarnIfSlugHasConsecutiveSeparators(fileName);
             files[fileName] = contentFile.Content;
         }
 
@@ -137,7 +138,13 @@ public class NoteProcessor : IPageProcessor
         var pageUrl = $"{_config.BaseUrl}/notes/{fileName}/";
 
         // Extract title from first header in the content
-        var titleName = ExtractTitle(htmlContent) ?? FormatFileName(fileName);
+        var extractedTitle = ExtractTitle(htmlContent);
+        if (string.IsNullOrEmpty(extractedTitle))
+        {
+            GenerationWarnings.NoteMissingTitle(fileName);
+        }
+
+        var titleName = extractedTitle ?? FormatFileName(fileName);
         var pageTitle = $"{titleName} • {_config.Author}'s Notes";
 
         var layoutModel = new LayoutModel(pageTitle, _config.Description, "article", pageUrl, null);
@@ -181,21 +188,51 @@ public class NoteProcessor : IPageProcessor
     {
         // Look for first h1 tag
         var h1Match = Regex.Match(htmlContent, @"<h1>(.*?)</h1>");
-        return h1Match.Success ? h1Match.Groups[1].Value : null;
+        if (!h1Match.Success)
+            return null;
+
+        var value = h1Match.Groups[1].Value.Trim();
+        return string.IsNullOrEmpty(value) ? null : value;
     }
 
     private static string FormatFileName(string fileName, char join = ' ')
     {
-        // Fallback if no h1 is found - more sophisticated filename formatting
-        return string.Join(
-            join,
-            fileName.Split('-', '_').Select(word => char.ToUpper(word[0]) + word[1..])
-        );
+        var segments = fileName
+            .Split(['-', '_'], StringSplitOptions.RemoveEmptyEntries)
+            .Select(segment => segment.Trim())
+            .Where(segment => segment.Length > 0)
+            .Select(Capitalise);
+
+        var formatted = string.Join(join, segments);
+
+        return string.IsNullOrEmpty(formatted) ? fileName : formatted;
     }
 
     private async Task SaveNoteToFile(string content, string fileName, string outputPath)
     {
         var outputFile = Path.Combine(outputPath, $"{fileName}.html");
         await _folderReader.WriteFileAsync(outputFile, content);
+    }
+
+    private static void WarnIfSlugHasConsecutiveSeparators(string fileName)
+    {
+        if (
+            fileName.Contains("--", StringComparison.Ordinal)
+            || fileName.Contains("__", StringComparison.Ordinal)
+        )
+        {
+            GenerationWarnings.NoteSlugHasDoubleSeparator(fileName);
+        }
+    }
+
+    private static string Capitalise(string segment)
+    {
+        if (segment.Length == 0)
+            return segment;
+
+        if (segment.Length == 1)
+            return char.ToUpperInvariant(segment[0]).ToString();
+
+        return char.ToUpperInvariant(segment[0]) + segment[1..];
     }
 }

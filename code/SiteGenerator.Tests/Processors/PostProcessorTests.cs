@@ -131,8 +131,8 @@ public class PostProcessorTests
             .Returns(contentFiles.ToAsyncEnumerable());
 
         // Act & Assert
-        var exception = await Assert.ThrowsAsync<ArgumentException>(() =>
-            _postProcessor.ProcessAsync("input", "output")
+        var exception = await Assert.ThrowsAsync<ArgumentException>(
+            () => _postProcessor.ProcessAsync("input", "output")
         );
 
         exception.Message.Should().Contain(invalidFileName);

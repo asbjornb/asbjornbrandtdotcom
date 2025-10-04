@@ -55,10 +55,17 @@ public class GraphBuilder
     private GraphNode CreateNodeFromContent(ContentFile contentFile, string contentPath)
     {
         var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
+        WarnIfSlugHasConsecutiveSeparators(fileName);
         var htmlContent = _markdownParser.ParseToHtml(contentFile.Content);
 
         // Extract title from first H1 or use filename
-        var title = ExtractTitle(htmlContent) ?? FormatTitle(fileName);
+        var extractedTitle = ExtractTitle(htmlContent);
+        if (string.IsNullOrEmpty(extractedTitle))
+        {
+            GenerationWarnings.NoteMissingTitle(fileName);
+        }
+
+        var title = extractedTitle ?? FormatTitle(fileName);
 
         // Extract all headers
         var headers = ExtractHeaders(htmlContent);
@@ -145,10 +152,16 @@ public class GraphBuilder
         }
     }
 
-    private static string ExtractTitle(string htmlContent)
+    private static string? ExtractTitle(string htmlContent)
     {
         var match = Regex.Match(htmlContent, @"<h1[^>]*>(.*?)</h1>", RegexOptions.IgnoreCase);
-        return match.Success ? match.Groups[1].Value.Trim() : string.Empty;
+        if (!match.Success)
+        {
+            return null;
+        }
+
+        var value = match.Groups[1].Value.Trim();
+        return string.IsNullOrEmpty(value) ? null : value;
     }
 
     private static List<string> ExtractHeaders(string htmlContent)
@@ -172,12 +185,15 @@ public class GraphBuilder
 
     private static string FormatTitle(string fileName)
     {
-        return fileName
-            .Replace("-", " ")
-            .Replace("_", " ")
-            .Split(' ')
-            .Select(word => char.ToUpper(word[0]) + word[1..].ToLower())
-            .Aggregate((a, b) => $"{a} {b}");
+        var segments = fileName
+            .Split(['-', '_'], StringSplitOptions.RemoveEmptyEntries)
+            .Select(segment => segment.Trim())
+            .Where(segment => segment.Length > 0)
+            .Select(Capitalise);
+
+        var formatted = string.Join(' ', segments);
+
+        return string.IsNullOrEmpty(formatted) ? fileName : formatted;
     }
 
     private static string DetermineCategory(string fileName, string content)
@@ -217,5 +233,27 @@ public class GraphBuilder
         return hub.Category == category.Category
             || hub.Id.Contains(category.Id)
             || category.Id.Contains(hub.Id);
+    }
+
+    private static void WarnIfSlugHasConsecutiveSeparators(string fileName)
+    {
+        if (
+            fileName.Contains("--", StringComparison.Ordinal)
+            || fileName.Contains("__", StringComparison.Ordinal)
+        )
+        {
+            GenerationWarnings.NoteSlugHasDoubleSeparator(fileName);
+        }
+    }
+
+    private static string Capitalise(string segment)
+    {
+        if (segment.Length == 0)
+            return segment;
+
+        if (segment.Length == 1)
+            return char.ToUpperInvariant(segment[0]).ToString();
+
+        return char.ToUpperInvariant(segment[0]) + segment[1..].ToLowerInvariant();
     }
 }

@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System.Net;
+using NSubstitute;
 using SiteGenerator.BacklinksProcessing;
 using SiteGenerator.Configuration;
 using SiteGenerator.Processors;
@@ -130,6 +131,58 @@ public class NoteProcessorTests
             .WriteFileAsync(
                 Arg.Is<string>(s => s == Path.Combine(outputPath, "note2", "index.html")),
                 Arg.Any<string>()
+            );
+    }
+
+    [Fact]
+    public async Task ProcessAsync_AllowsConsecutiveSeparators()
+    {
+        // Arrange
+        var inputPath = "input";
+        var outputPath = "output";
+        var markdown = "# Note Title";
+
+        _fileProvider
+            .GetFileContents(inputPath, "*.md")
+            .Returns(new[] { new ContentFile("my--note.md", markdown) }.ToAsyncEnumerable());
+
+        // Act
+        await _processor.ProcessAsync(inputPath, outputPath);
+
+        // Assert
+        await _fileProvider
+            .Received(1)
+            .WriteFileAsync(
+                Arg.Is<string>(s => s == Path.Combine(outputPath, "my--note", "index.html")),
+                Arg.Any<string>()
+            );
+    }
+
+    [Fact]
+    public async Task ProcessAsync_UsesSlugWhenHeadingMissing()
+    {
+        // Arrange
+        var inputPath = "input";
+        var outputPath = "output";
+        var markdown = "This note has no heading";
+
+        _fileProvider
+            .GetFileContents(inputPath, "*.md")
+            .Returns(new[] { new ContentFile("untitled-note.md", markdown) }.ToAsyncEnumerable());
+
+        // Act
+        await _processor.ProcessAsync(inputPath, outputPath);
+
+        // Assert
+        await _fileProvider
+            .Received(1)
+            .WriteFileAsync(
+                Arg.Is<string>(s => s == Path.Combine(outputPath, "untitled-note", "index.html")),
+                Arg.Is<string>(content =>
+                    WebUtility
+                        .HtmlDecode(content)
+                        .Contains("<title>Untitled Note • Asbjørn Brandt's Notes</title>")
+                )
             );
     }
 }
