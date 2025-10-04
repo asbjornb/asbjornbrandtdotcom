@@ -11,9 +11,9 @@ public class PostProcessor : IPageProcessor
     private readonly TemplateRenderer _templateRenderer;
     private readonly IFileProvider _fileProvider;
     private readonly MarkdownParser _markdownParser;
-    private readonly SiteMetadata _siteMetadata;
     private readonly MarkdownPageWriter _pageWriter;
     private readonly SiteUrlResolver _urlResolver;
+    private readonly LayoutModelFactory _layoutFactory;
 
     public PostProcessor(
         TemplateRenderer templateRenderer,
@@ -25,9 +25,9 @@ public class PostProcessor : IPageProcessor
         _templateRenderer = templateRenderer;
         _fileProvider = fileProvider;
         _markdownParser = markdownParser;
-        _siteMetadata = siteMetadata;
         _pageWriter = new MarkdownPageWriter(fileProvider);
         _urlResolver = new SiteUrlResolver(siteMetadata);
+        _layoutFactory = new LayoutModelFactory(siteMetadata);
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -50,13 +50,7 @@ public class PostProcessor : IPageProcessor
 
             // Create individual post
             var postModel = new PostModel(title, contentWithoutH1, date, slug, postUrl);
-            var layoutModel = new LayoutModel(
-                $"{title} • {_siteMetadata.SiteTitle}",
-                _siteMetadata.Description,
-                "article",
-                postUrl,
-                null // Will be set by template renderer
-            );
+            var layoutModel = _layoutFactory.CreatePost(title, postUrl);
 
             var renderedPost = _templateRenderer.RenderPost(postModel, layoutModel);
 
@@ -76,13 +70,7 @@ public class PostProcessor : IPageProcessor
         var sortedPosts = posts.OrderByDescending(p => p.PublishedDate).ToList();
 
         var postsIndexModel = new PostsIndexModel(sortedPosts);
-        var layoutModel = new LayoutModel(
-            $"Posts • {_siteMetadata.SiteTitle}",
-            _siteMetadata.Description,
-            "website",
-            _urlResolver.PostsIndex(),
-            null // Will be set by template renderer
-        );
+        var layoutModel = _layoutFactory.CreatePostsIndex(_urlResolver.PostsIndex());
 
         var renderedIndex = _templateRenderer.RenderPostsIndex(postsIndexModel, layoutModel);
 
