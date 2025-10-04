@@ -16,7 +16,7 @@ public sealed class GeneratorIntegrationTests : IAsyncLifetime, IDisposable
     private readonly Generator _generator;
     private const string InputPath = "TestData/OldSiteInput";
     private const string ExpectedOutputPath = "TestData/OldSiteOutput";
-    private const string ActualOutputPath = "TestOutput/Integration";
+    private const string ActualOutputPath = "TestOutput_GeneratorIntegration";
 
     public GeneratorIntegrationTests(ITestOutputHelper output)
     {

@@ -123,8 +123,8 @@ public sealed class FileProviderTests : IDisposable
                 await writer.FlushAsync();
 
                 // Start an asynchronous task to write to the file which should retry due to conflict
-                var writeTask = Task.Run(async () =>
-                    await _fileProvider.WriteFileAsync(tempFilePath, content)
+                var writeTask = Task.Run(
+                    async () => await _fileProvider.WriteFileAsync(tempFilePath, content)
                 );
 
                 // Give it a little time to start and encounter the conflict

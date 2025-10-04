@@ -152,4 +152,43 @@ public class GraphBuilderTests
         result.Nodes.Should().ContainSingle(n => n.Id == "career-advice" && n.Category == "Career");
         result.Nodes.Should().ContainSingle(n => n.Id == "random-note" && n.Category == "General");
     }
+
+    [Fact]
+    public async Task BuildGraphAsync_UsesSlugWhenHeadingIsMissing()
+    {
+        // Arrange
+        var fileProvider = new InMemoryFileProvider();
+        var markdownParser = new MarkdownParser();
+        var graphBuilder = new GraphBuilder(fileProvider, markdownParser);
+
+        fileProvider.AddFile("untitled-note.md", "This note has no heading");
+
+        // Act
+        var result = await graphBuilder.BuildGraphAsync("/test");
+
+        // Assert
+        result.Nodes.Should().ContainSingle(n => n.Id == "untitled-note");
+        result
+            .Nodes.Should()
+            .ContainSingle(n => n.Id == "untitled-note" && n.Title == "Untitled Note");
+    }
+
+    [Fact]
+    public async Task BuildGraphAsync_AllowsConsecutiveSeparators()
+    {
+        // Arrange
+        var fileProvider = new InMemoryFileProvider();
+        var markdownParser = new MarkdownParser();
+        var graphBuilder = new GraphBuilder(fileProvider, markdownParser);
+
+        fileProvider.AddFile("my--note.md", "Content without heading");
+        fileProvider.AddFile("my__other.md", "More content without heading");
+
+        // Act
+        var result = await graphBuilder.BuildGraphAsync("/test");
+
+        // Assert
+        result.Nodes.Should().ContainSingle(n => n.Id == "my--note" && n.Title == "My Note");
+        result.Nodes.Should().ContainSingle(n => n.Id == "my__other" && n.Title == "My Other");
+    }
 }
