@@ -29,6 +29,6 @@ sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
 
 ## Files
 
-The agent creates a `.claude/settings.local.json` in the project directory that holds information on commands you've allowed claude to run without confirmation. Possibly .gitignore this if other developers might not be comfortable with the same commands.
+The agent creates a `.claude/settings.local.json` in the project directory that holds information on commands you've allowed claude to run without confirmation. Possibly .gitignore this if other developers might not be comfortable with the same commands. Also it seems to break and reset some times (with updates?).
 
 If you create a `CLAUDE.md` file in the project directory, it will be used as the initial context for the agent. This is useful for providing specific instructions or context about the project. If the readme in the project is good, this CLAUDE.md can just list commands for how to build, run, test, format, lint the project, etc.

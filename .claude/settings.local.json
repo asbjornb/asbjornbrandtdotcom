@@ -32,7 +32,8 @@
       "Bash(wsl:*)",
       "Bash(time ls:*)",
       "Bash(echo $NUMBER_OF_PROCESSORS)",
-      "Bash(time dotnet build:*)"
+      "Bash(time dotnet build:*)",
+      "Bash(GITHUB_ACTIONS=true dotnet test --filter \"GitLog_ExploreCommitLimitsForOptimalSettings\" --logger:\"console;verbosity=detailed\")"
     ],
     "deny": []
   }

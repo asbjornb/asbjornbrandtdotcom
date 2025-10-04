@@ -15,7 +15,7 @@ public class GitHistoryService
     {
         var thoughtsPath = Path.Combine(_contentPath, "thoughts");
         var gitCommand =
-            $"log --name-only --pretty=format: --diff-filter=A -50 -- \"{thoughtsPath}/*.md\"";
+            $"log --name-only --pretty=format: --diff-filter=A -100 -- \"{thoughtsPath}/*.md\"";
         var output = await RunGitCommandAsync(gitCommand);
 
         return ParseFileNames(output, count);
@@ -24,9 +24,8 @@ public class GitHistoryService
     public async Task<List<string>> GetRecentlyChangedNotesAsync(int count = 5)
     {
         var thoughtsPath = Path.Combine(_contentPath, "thoughts");
-        // Exclude newly added files to avoid duplicates with newest notes
         var gitCommand =
-            $"log --name-only --pretty=format: --diff-filter=M -30 -- \"{thoughtsPath}/*.md\"";
+            $"log --name-only --pretty=format: --diff-filter=M -100 -- \"{thoughtsPath}/*.md\"";
         var output = await RunGitCommandAsync(gitCommand);
 
         return ParseFileNames(output, count);

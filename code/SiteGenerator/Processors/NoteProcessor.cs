@@ -119,9 +119,11 @@ public class NoteProcessor : IPageProcessor
         {
             // Get recent notes from git history
             var newestNotesFileNames = await _gitHistoryService.GetRecentNotesAsync(5);
-            var recentlyChangedFileNames = await _gitHistoryService.GetRecentlyChangedNotesAsync(5);
+            var recentlyChangedFileNames = await _gitHistoryService.GetRecentlyChangedNotesAsync(
+                10
+            ); // Get more to account for filtering
 
-            // Convert to RecentNoteItem objects
+            // Convert newest notes to RecentNoteItem objects
             var newestNotes = newestNotesFileNames
                 .Where(fileName => allNotesContent.ContainsKey(fileName))
                 .Select(fileName => new RecentNoteItem(
@@ -131,13 +133,20 @@ public class NoteProcessor : IPageProcessor
                 ))
                 .ToList();
 
+            // Create set of newest note file names for exclusion
+            var newestNotesSet = newestNotesFileNames.ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            // Filter recently changed to exclude newest notes and convert to RecentNoteItem objects
             var recentlyChangedNotes = recentlyChangedFileNames
-                .Where(fileName => allNotesContent.ContainsKey(fileName))
+                .Where(fileName =>
+                    allNotesContent.ContainsKey(fileName) && !newestNotesSet.Contains(fileName)
+                ) // Exclude files that are in newest notes
                 .Select(fileName => new RecentNoteItem(
                     fileName,
                     ExtractTitle(_markdownParser.ParseToHtml(allNotesContent[fileName]))
                         ?? FormatFileName(fileName)
                 ))
+                .Take(5) // Take only 5 after filtering
                 .ToList();
 
             return new RecentNotesModel(newestNotes, recentlyChangedNotes);
