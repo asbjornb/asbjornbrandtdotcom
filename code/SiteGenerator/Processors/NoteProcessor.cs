@@ -12,10 +12,11 @@ public class NoteProcessor : IPageProcessor
 {
     private readonly Backlinks _backlinks;
     private readonly TemplateRenderer _templateRenderer;
-    private readonly IFileProvider _folderReader;
+    private readonly IFileProvider _fileProvider;
     private readonly MarkdownParser _markdownParser;
     private readonly SiteMetadata _config;
     private readonly GraphData? _graphData;
+    private readonly MarkdownPageWriter _pageWriter;
 
     public NoteProcessor(
         Backlinks backlinks,
@@ -28,10 +29,11 @@ public class NoteProcessor : IPageProcessor
     {
         _backlinks = backlinks;
         _templateRenderer = templateRenderer;
-        _folderReader = folderReader;
+        _fileProvider = folderReader;
         _markdownParser = markdownParser;
         _config = config;
         _graphData = graphData;
+        _pageWriter = new MarkdownPageWriter(folderReader);
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -51,15 +53,7 @@ public class NoteProcessor : IPageProcessor
             var htmlContent = _markdownParser.ParseToHtml(markdownContent);
             var renderedContent = RenderNoteWithTemplate(htmlContent, fileName, notePreviews);
 
-            if (fileName.Equals("index", StringComparison.OrdinalIgnoreCase))
-            {
-                await SaveNoteToFile(renderedContent, fileName, outputPath);
-            }
-            else
-            {
-                var noteFolder = Path.Combine(outputPath, fileName);
-                await SaveNoteToFile(renderedContent, "index", noteFolder);
-            }
+            await _pageWriter.WriteAsync(outputPath, fileName, renderedContent);
         }
     }
 
@@ -67,7 +61,7 @@ public class NoteProcessor : IPageProcessor
     {
         var files = new Dictionary<string, string>();
 
-        await foreach (var contentFile in _folderReader.GetFileContents(inputPath, "*.md"))
+        await foreach (var contentFile in _fileProvider.GetFileContents(inputPath, "*.md"))
         {
             var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
             WarnIfSlugHasConsecutiveSeparators(fileName);
@@ -206,12 +200,6 @@ public class NoteProcessor : IPageProcessor
         var formatted = string.Join(join, segments);
 
         return string.IsNullOrEmpty(formatted) ? fileName : formatted;
-    }
-
-    private async Task SaveNoteToFile(string content, string fileName, string outputPath)
-    {
-        var outputFile = Path.Combine(outputPath, $"{fileName}.html");
-        await _folderReader.WriteFileAsync(outputFile, content);
     }
 
     private static void WarnIfSlugHasConsecutiveSeparators(string fileName)

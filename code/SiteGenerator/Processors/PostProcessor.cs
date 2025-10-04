@@ -12,6 +12,7 @@ public class PostProcessor : IPageProcessor
     private readonly IFileProvider _fileProvider;
     private readonly MarkdownParser _markdownParser;
     private readonly SiteMetadata _siteMetadata;
+    private readonly MarkdownPageWriter _pageWriter;
 
     public PostProcessor(
         TemplateRenderer templateRenderer,
@@ -24,6 +25,7 @@ public class PostProcessor : IPageProcessor
         _fileProvider = fileProvider;
         _markdownParser = markdownParser;
         _siteMetadata = siteMetadata;
+        _pageWriter = new MarkdownPageWriter(fileProvider);
     }
 
     public async Task ProcessAsync(string inputPath, string outputPath)
@@ -56,11 +58,7 @@ public class PostProcessor : IPageProcessor
 
             var renderedPost = _templateRenderer.RenderPost(postModel, layoutModel);
 
-            var postFolder = Path.Combine(outputPath, "posts", slug);
-            await _fileProvider.WriteFileAsync(
-                Path.Combine(postFolder, "index.html"),
-                renderedPost
-            );
+            await _pageWriter.WriteInSectionAsync(outputPath, "posts", slug, renderedPost);
 
             // Add to posts list for index
             posts.Add(new PostSummaryModel(title, postUrl, date, slug, excerpt));
@@ -86,8 +84,7 @@ public class PostProcessor : IPageProcessor
 
         var renderedIndex = _templateRenderer.RenderPostsIndex(postsIndexModel, layoutModel);
 
-        var postsFolder = Path.Combine(outputPath, "posts");
-        await _fileProvider.WriteFileAsync(Path.Combine(postsFolder, "index.html"), renderedIndex);
+        await _pageWriter.WriteInSectionAsync(outputPath, "posts", "index", renderedIndex);
     }
 
     private static (DateTime date, string slug) ExtractDateAndSlugFromFileName(string fileName)
