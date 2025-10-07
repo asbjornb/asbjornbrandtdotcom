@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace SiteGenerator.Processors;
 
 public class MarkdownPageWriter
@@ -26,6 +28,7 @@ public class MarkdownPageWriter
     )
     {
         var sectionPath = Path.Combine(outputBasePath, sectionName);
+        Directory.CreateDirectory(sectionPath);
         return WriteAsync(sectionPath, slug, htmlContent);
     }
 }
