@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Markdig;
+using SiteGenerator.MarkdownSupport;
 
 namespace SiteGenerator;
 
@@ -8,13 +9,11 @@ public class MarkdownParser
     private readonly MarkdownPipeline _pipeline;
 
     public MarkdownParser()
+        : this(null) { }
+
+    public MarkdownParser(MarkdownPipeline? pipeline)
     {
-        _pipeline = new MarkdownPipelineBuilder()
-            .UseAutoLinks()
-            .UseEmphasisExtras()
-            .UseTaskLists()
-            .UseEmojiAndSmiley()
-            .Build();
+        _pipeline = pipeline ?? MarkdownPipelineFactory.GetPipeline();
     }
 
     public string ParseToHtml(string markdown)
