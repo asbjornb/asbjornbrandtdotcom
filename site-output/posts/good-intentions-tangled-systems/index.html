@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+
+<title>Good intentions, tangled systems &#8226; Asbj&#248;rn Brandt</title>
+
+<meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<meta property="og:title" content="Good intentions, tangled systems &#8226; Asbj&#248;rn Brandt">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://asbjornbrandt.com/posts/good-intentions-tangled-systems/">
+<meta property="og:image" content="/assets/chart.svg">
+<meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
+
+<link rel="canonical" href="https://asbjornbrandt.com/posts/good-intentions-tangled-systems/">
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com/" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <a href="/" class="page-header__logo" title="Go home">
+            <img src="/assets/chart.svg" alt="" width="48">
+        </a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/notes">Notes</a>
+            <a href="/posts">Posts</a>
+            <a href="/inspiration">Inspiration</a>
+            <a href="/now">Now</a>
+        </nav>
+    </header>
+    <main>
+        <article>
+    <header class="post-header">
+        <h1>Good intentions, tangled systems</h1>
+        <time class="post-date">December 10, 2025</time>
+    </header>
+    <p>I've been reading Team Topologies and The Unicorn Project.
+Both explore how interactions between teams can create complexity and friction — even when every local decision is well-intentioned.</p>
+<p>In engineering, we all learn not to couple systems at the database level. When it happens, changes require coordination, scheduling, and backwards compatibility. Everything slows down. But we often build organizations that same way.</p>
+<p>Want to ship a feature? Wait for:</p>
+<ul>
+<li>data changes owned by one team</li>
+<li>platform support from another</li>
+<li>frontend work from a third</li>
+<li>sometimes additional shared components, security reviews, or compliance sign-offs.</li>
+</ul>
+<p>Each step introduces prioritization and coordination in teams with different incentives and timelines.</p>
+<p>All of this typically emerges for good reasons:</p>
+<ul>
+<li>to build things once and reuse them</li>
+<li>to concentrate deep expertise</li>
+</ul>
+<p>Over time, though, managing these dependencies leads to more process. And seeking predictability leads to planning cycles. And slowly, without deliberate intent, the system becomes tangled.</p>
+<p>Team Topologies and The Unicorn Project both remind us:
+Progress doesn't come from optimizing each subsystem in isolation. It comes from simplifying the flow of value — reducing handoffs and designing teams around that flow.</p>
+</article>
+    </main>
+    
+    <footer class="page-footer">
+        <small>Copyright Asbjørn Brandt</small>
+    </footer>
+</body>
+</html>
