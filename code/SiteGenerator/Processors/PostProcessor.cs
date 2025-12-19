@@ -133,6 +133,8 @@ public class PostProcessor : IPageProcessor
 
     private static string ExtractExcerpt(string htmlContent)
     {
+        const int maxLength = 150;
+
         // Remove HTML tags
         var plainText = Regex.Replace(htmlContent, @"<[^>]*>", " ");
 
@@ -149,8 +151,23 @@ public class PostProcessor : IPageProcessor
             if (string.IsNullOrEmpty(trimmed))
                 continue;
 
-            if (excerpt.Length + trimmed.Length + 1 > 150)
+            if (excerpt.Length + trimmed.Length + 1 > maxLength)
             {
+                // If excerpt is still empty, truncate the first sentence at a word boundary
+                if (excerpt.Length == 0)
+                {
+                    var truncated =
+                        trimmed.Length > maxLength ? trimmed[..maxLength].TrimEnd() : trimmed;
+
+                    // Try to break at the last space to avoid cutting words
+                    var lastSpace = truncated.LastIndexOf(' ');
+                    if (lastSpace > maxLength / 2)
+                    {
+                        truncated = truncated[..lastSpace];
+                    }
+
+                    excerpt = truncated;
+                }
                 break;
             }
 
