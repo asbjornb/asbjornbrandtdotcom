@@ -48,6 +48,28 @@
     <main>
         <article>
     <h1>Home lab</h1>
+<h2>Current setup</h2>
+<ul>
+<li>NUC running Linux Mint Cinnamon</li>
+</ul>
+<h2>Services</h2>
+<ul>
+<li>Navidrome - music streaming</li>
+<li>Plex - TV shows (planned, if Navidrome works well)</li>
+</ul>
+<h2>Navidrome + Tailscale setup</h2>
+<p>Running Navidrome on the NUC with Tailscale for secure remote access.</p>
+<h3>Mobile access with Symfonium (Android)</h3>
+<ol>
+<li>Install Tailscale on phone and connect to tailnet</li>
+<li>In Symfonium, add a new server:
+<ul>
+<li>Server type: Open</li>
+<li>Address: <code>http://{tailscale-ip}:{navidrome-port}</code></li>
+<li>Username and password from Navidrome</li>
+</ul>
+</li>
+</ol>
 <h2>Purposes</h2>
 <ul>
 <li><a href="/notes/backup/">backup</a> of photos and documents</li>
@@ -65,14 +87,6 @@ Also check saved comments on reddit - saved some great security posts for homela
 <hr>
 <p class="backlinks-title larger">Backlinks</p>
 <ul class="backlinks-container">
-        <li class="backlink">
-            <a href="/notes/backup/" class="backlink__link">Backup</a>
-            <div class="backlink__preview" role="none">
-                <h1>Backup</h1>
-<p><a href="https://github.com/gilbertchen/duplicacy">https://github.com/gilbertchen/duplicacy</a> Duplicacy is free for personal CLI tool usage. Recommended tool by many. See also their page: <a href="https://duplicacy.com/download.html">https://duplicacy.com/download.html</a>
-<a href="https://www.youtube.com/watch?v=8aK7YduP0VY&amp;t=46s">https://www.youtube.co...</a></p>
-            </div>
-        </li>
         <li class="backlink">
             <a href="/notes/index/" class="backlink__link">Index</a>
             <div class="backlink__preview" role="none">
@@ -104,6 +118,14 @@ Also check saved comments on reddit - saved some great security posts for homela
 ...
             </div>
         </li>
+        <li class="backlink">
+            <a href="/notes/backup/" class="backlink__link">Backup</a>
+            <div class="backlink__preview" role="none">
+                <h1>Backup</h1>
+<p><a href="https://github.com/gilbertchen/duplicacy">https://github.com/gilbertchen/duplicacy</a> Duplicacy is free for personal CLI tool usage. Recommended tool by many. See also their page: <a href="https://duplicacy.com/download.html">https://duplicacy.com/download.html</a>
+<a href="https://www.youtube.com/watch?v=8aK7YduP0VY&amp;t=46s">https://www.youtube.co...</a></p>
+            </div>
+        </li>
 </ul>
 
 <link rel="stylesheet" href="/assets/knowledge-graph.css">
@@ -112,10 +134,10 @@ Also check saved comments on reddit - saved some great security posts for homela
     <div class="connected-notes">
         <h3>Connected Notes</h3>
         <div class="connection-links">
-            <a href="/notes/backup/" class="connection-link">Backup</a>
             <a href="/notes/index/" class="connection-link">Index</a>
             <a href="/notes/pc-setup/" class="connection-link">PC Setup</a>
             <a href="/notes/retropie/" class="connection-link">Retropie</a>
+            <a href="/notes/backup/" class="connection-link">Backup</a>
         </div>
     </div>
     
