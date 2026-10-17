@@ -14,11 +14,11 @@ I haven’t been one to jump on the LinkedIn CEO/Founder/AI Salesman hype, but s
 * It shifts the effort: less time typing, more time designing, testing, documenting.
 
 One interesting side effect is that it probably makes small internal tools worth building like:
- – A tool to verify that critical data landed in the data platform for specific time slices
- – A quick dashboard to debug a rare heisenbug
- – A one-off HTTP proxy to rewrite legacy API responses
- – A CLI to inspect Redis cache usage across workloads
- – A GitHub Action tailored to one quirky project
+* A tool to verify that critical data landed in the data platform for specific time slices
+* A quick dashboard to debug a rare heisenbug
+* A one-off HTTP proxy to rewrite legacy API responses
+* A CLI to inspect Redis cache usage across workloads
+* A GitHub Action tailored to one quirky project
 
 You haven’t missed the train if you're not using these yet. Whether you adopt it now or in a month won’t decide who wins. But it does feel inevitable.
 
