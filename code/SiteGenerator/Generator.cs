@@ -91,5 +91,12 @@ public class Generator
         {
             fileProvider.CopyFolderAsync(assetsPath, Path.Combine(_outputPath, "assets"));
         }
+
+        // Copy root-level static files such as _redirects (if static folder exists)
+        var staticPath = Path.Combine(_contentPath, "static");
+        if (Directory.Exists(staticPath))
+        {
+            fileProvider.CopyFolderAsync(staticPath, _outputPath);
+        }
     }
 }
