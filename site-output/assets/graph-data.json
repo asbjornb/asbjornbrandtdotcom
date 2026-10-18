@@ -615,7 +615,7 @@
       "title": "Sql weirdness",
       "url": "/notes/sql-weirdness/",
       "category": "Database",
-      "size": 26,
+      "size": 27,
       "headers": [
         "H2: Can use space with zero width and other gimmicks for unreadable code",
         "H2: Zalgo script is also allowed"
