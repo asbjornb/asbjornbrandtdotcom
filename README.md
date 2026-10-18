@@ -50,7 +50,7 @@ The site follows a "digital garden" philosophy, focusing on evergreen content an
 
 ## Technology Stack
 
-- **Language**: C# (.NET 9.0)
+- **Language**: C# (.NET 10)
 - **Markdown Parser**: [Markdig](https://github.com/xoofx/markdig)
 - **Template Engine**: [Handlebars.NET](https://github.com/Handlebars-Net/Handlebars.Net)
 - **Front Matter**: [YamlDotNet](https://github.com/aaubry/YamlDotNet)
@@ -63,7 +63,7 @@ The site follows a "digital garden" philosophy, focusing on evergreen content an
 
 ### Prerequisites
 
-- .NET 9.0 SDK
+- .NET 10 SDK
 - Git
 
 ### Running Locally
