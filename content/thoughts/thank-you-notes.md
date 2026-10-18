@@ -10,4 +10,4 @@ Buy a card and matching envelope and follow this script:
 
 Manager tools' has a podcast on this under career tools - "How to write a thank you note" - 2007-03-26.
 
-Do one a week for a while? Check [[private/people.md]]
+Do one a week for a while?

@@ -11,17 +11,17 @@
 <link rel="manifest" href="/assets/site.webmanifest">
 <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 
-<title>Rancher &#8226; Asbj&#248;rn Brandt's Notes</title>
+<title>Sql Server &#8226; Asbj&#248;rn Brandt's Notes</title>
 
 <meta name="description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<meta property="og:title" content="Rancher &#8226; Asbj&#248;rn Brandt's Notes">
+<meta property="og:title" content="Sql Server &#8226; Asbj&#248;rn Brandt's Notes">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://asbjornbrandt.com/notes/rancher/">
+<meta property="og:url" content="https://asbjornbrandt.com/notes/sql-server/">
 <meta property="og:image" content="/assets/chart.svg">
 <meta property="og:description" content="A small site mostly to play with static sites and share some thoughts and rough writing on tech, data and programming.">
 
-<link rel="canonical" href="https://asbjornbrandt.com/notes/rancher/">
+<link rel="canonical" href="https://asbjornbrandt.com/notes/sql-server/">
 <link rel="alternate" type="application/rss+xml" title="Asbjørn Brandt: Posts" href="/posts/feed.xml">
 
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -49,18 +49,22 @@
     </header>
     <main>
         <article>
-    <h1>Rancher</h1>
-<p>To use rancher cli from powershell or command prompt one must first set environment variable: <code>RANCHER_CONFIG_DIR</code> to a location where configurations can be saved. Ex.: <code>C:\Users\asb\AppData\Local\Temp</code></p>
-<p>Common usage is:</p>
+    <h1>Sql Server</h1>
 <ul>
-<li>Check connection script in password manager.
-<ul>
-<li>The context key specifies which cluster to deploy to (staging, production local etc)</li>
+<li><a href="/notes/fragmentation/">fragmentation</a></li>
+<li><a href="/notes/statebased-vs-migrationsbased/">statebased vs migrationsbased</a></li>
+<li><a href="/notes/database-mail/">database mail</a></li>
+<li>row version</li>
+<li><a href="/notes/exists-vs-in/">exists vs in</a></li>
+<li><a href="/notes/configuration-tables/">configuration tables</a></li>
+<li><a href="/notes/datetime-vs-datetimeoffset/">datetime vs datetimeoffset</a></li>
+<li><a href="/notes/random-sql-best-practices/">random sql best practices</a></li>
+<li>sql utility scripts</li>
+<li><a href="/notes/ssdt/">ssdt</a></li>
+<li>tsql codesmells</li>
+<li><a href="/notes/ssms-shortcuts/">ssms shortcuts</a></li>
+<li><a href="/notes/sql-quick-tips/">sql quick tips</a></li>
 </ul>
-</li>
-<li>Deploy with <code>rancher kubectl apply -f ${yamlPath}</code></li>
-</ul>
-<p>See bitwarden for up to date contexts and tokens.</p>
 
 </article>
 
@@ -70,13 +74,17 @@
 <p class="backlinks-title larger">Backlinks</p>
 <ul class="backlinks-container">
         <li class="backlink">
-            <a href="/notes/docker/" class="backlink__link">Docker</a>
+            <a href="/notes/tech/" class="backlink__link">Tech</a>
             <div class="backlink__preview" role="none">
-                <h1>Docker</h1>
-<h2>Dockerfile</h2>
-<p>File named <em>dockerfile</em> with no file extension that contains instructions for building the image.</p>
-<h2>Help</h2>
-<p>run <code>docker</code> to see a list of commands. Then <code>docker &lt;command&gt; --help</code> to get help on...</p>
+                <h1>Tech</h1>
+<ul>
+<li><a href="/notes/sql-server/">sql server</a></li>
+<li><a href="/notes/web/">web</a></li>
+<li><a href="/notes/csharp/">csharp</a></li>
+<li><a href="/notes/docker/">docker</a></li>
+<li><a href="/notes/python/">python</a></li>
+</ul>
+
             </div>
         </li>
 </ul>
@@ -87,7 +95,17 @@
     <div class="connected-notes">
         <h3>Connected Notes</h3>
         <div class="connection-links">
-            <a href="/notes/docker/" class="connection-link">Docker</a>
+            <a href="/notes/tech/" class="connection-link">Tech</a>
+            <a href="/notes/statebased-vs-migrationsbased/" class="connection-link">State based Vs Migrations based</a>
+            <a href="/notes/ssms-shortcuts/" class="connection-link">SSMS Shortcuts</a>
+            <a href="/notes/ssdt/" class="connection-link">SSDT</a>
+            <a href="/notes/sql-quick-tips/" class="connection-link">sql-quick-tips</a>
+            <a href="/notes/random-sql-best-practices/" class="connection-link">Random sql best practices</a>
+            <a href="/notes/fragmentation/" class="connection-link">Fragmentation</a>
+            <a href="/notes/exists-vs-in/" class="connection-link">Exists vs in</a>
+            <a href="/notes/datetime-vs-datetimeoffset/" class="connection-link">Datetime vs datetimeoffset</a>
+            <a href="/notes/database-mail/" class="connection-link">Database Mail</a>
+            <a href="/notes/configuration-tables/" class="connection-link">Configuration Tables</a>
         </div>
     </div>
     
@@ -95,7 +113,7 @@
         <div class="graph-header">
             <span class="graph-icon" onclick="openGlobalGraph()" title="Explore full knowledge graph">⚡</span>
         </div>
-        <div id="mini-graph" class="mini-graph" data-current-note="rancher"></div>
+        <div id="mini-graph" class="mini-graph" data-current-note="sql-server"></div>
     </div>
 </div>
 
