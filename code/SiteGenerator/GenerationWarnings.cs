@@ -25,6 +25,23 @@ public static class GenerationWarnings
         );
     }
 
+    public static void LinksToUnpublishedNotes(
+        IReadOnlyDictionary<string, SortedSet<string>> linkedFrom
+    )
+    {
+        if (linkedFrom.Count == 0)
+        {
+            return;
+        }
+
+        var lines = linkedFrom.Select(kvp => $"  {kvp.Key} <- {string.Join(", ", kvp.Value)}");
+        Emit(
+            key: "unpublished-links:" + string.Join(";", linkedFrom.Keys),
+            message: $"Warning: {linkedFrom.Count} unpublished note(s) are linked from published pages (rendered as plain text):{Environment.NewLine}"
+                + string.Join(Environment.NewLine, lines)
+        );
+    }
+
     public static void NoteSlugHasDoubleSeparator(string noteSlug)
     {
         Emit(

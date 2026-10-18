@@ -6,14 +6,21 @@ public class BacklinkCollector
 {
     public static async Task<Backlinks> CollectBacklinksAsync(
         IFileProvider folderReader,
-        string contentPath
+        string contentPath,
+        PublishedNotes? publishedNotes = null
     )
     {
+        publishedNotes ??= PublishedNotes.All;
         var backlinks = new Backlinks();
         var noteFiles = folderReader.GetFileContents(contentPath, "*.md");
 
         await foreach (var file in noteFiles)
         {
+            if (!publishedNotes.IsPublishedFile(file.Name))
+            {
+                continue;
+            }
+
             var matches = Regex.Matches(file.Content, @"\[\[(.*?)\]\]");
             var currentNote = Path.GetFileNameWithoutExtension(file.Name);
             foreach (Match match in matches)

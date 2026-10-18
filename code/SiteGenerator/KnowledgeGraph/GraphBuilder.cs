@@ -7,11 +7,17 @@ public class GraphBuilder
 {
     private readonly IFileProvider _fileProvider;
     private readonly MarkdownParser _markdownParser;
+    private readonly PublishedNotes _publishedNotes;
 
-    public GraphBuilder(IFileProvider fileProvider, MarkdownParser markdownParser)
+    public GraphBuilder(
+        IFileProvider fileProvider,
+        MarkdownParser markdownParser,
+        PublishedNotes? publishedNotes = null
+    )
     {
         _fileProvider = fileProvider;
         _markdownParser = markdownParser;
+        _publishedNotes = publishedNotes ?? PublishedNotes.All;
     }
 
     public async Task<GraphData> BuildGraphAsync(string contentPath)
@@ -23,6 +29,11 @@ public class GraphBuilder
         // Collect all notes and analyze their content
         await foreach (var contentFile in _fileProvider.GetFileContents(contentPath, "*.md"))
         {
+            if (!_publishedNotes.IsPublishedFile(contentFile.Name))
+            {
+                continue;
+            }
+
             var node = CreateNodeFromContent(contentFile, contentPath);
             nodes.Add(node);
 

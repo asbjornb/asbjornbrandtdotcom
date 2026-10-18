@@ -13,7 +13,7 @@ public sealed class PostsIntegrationTests : IAsyncLifetime, IDisposable
     private readonly ITestOutputHelper _output;
     private readonly Generator _generator;
     private const string InputPath = "TestData/PostsTestInput";
-    private const string ActualOutputPath = "TestOutput/Posts";
+    private const string ActualOutputPath = "TestOutput_Posts";
 
     public PostsIntegrationTests(ITestOutputHelper output)
     {
