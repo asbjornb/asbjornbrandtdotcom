@@ -109,14 +109,11 @@ Each note gets updated and added to `published.txt`, merged into another note, o
 
 ## 7. Site fixes
 
-Next up: the RSS / `sitemap.xml` / `robots.txt` / `404.html` item. Generator-side, so it carries over to
-the split.
-
 - [ ] Remaining LinkedIn-style posts merge single line breaks (on-jira, why-i-dont-want-to-manage,
       a-thought-on-pay, voluntary-code-reviews, good-intentions-tangled-systems): add blank lines, or enable
       Markdig `UseSoftlineBreakAsHardlineBreak` for posts only
-- [ ] RSS feed, `sitemap.xml`, plain-text `robots.txt` (via `content/static/`), real `404.html`
-      (today every unknown URL returns the homepage with 200)
+- [x] RSS feed (`/posts/feed.xml`), `sitemap.xml`, `robots.txt`, real `404.html` (PR #31, verified live
+      2026-10-18: unknown URLs return 404)
 - [ ] PNG `og:image` with absolute URL (SVG doesn't show in LinkedIn/Slack previews)
 - [ ] One template: Posts/Now/Inspiration use a different font and column width than Home/post pages
 - [ ] Posts list: dates wrap onto two lines
