@@ -1,6 +1,20 @@
 {
   "nodes": [
     {
+      "id": "11ty",
+      "title": "11ty",
+      "url": "/notes/11ty/",
+      "category": "General",
+      "size": 37,
+      "headers": [
+        "H2: package.json",
+        "H2: Debugging",
+        "H2: Filtering content"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
       "id": "Investments",
       "title": "Investments",
       "url": "/notes/Investments/",
@@ -100,6 +114,18 @@
       "group": 0
     },
     {
+      "id": "boyds-law-of-iteration",
+      "title": "Boyds Law of Iteration",
+      "url": "/notes/boyds-law-of-iteration/",
+      "category": "General",
+      "size": 21,
+      "headers": [
+        "H2: How"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
       "id": "career",
       "title": "Career",
       "url": "/notes/career/",
@@ -111,6 +137,16 @@
         "H2: Negotiations for new jobs"
       ],
       "type": "note",
+      "group": 3
+    },
+    {
+      "id": "career-tools",
+      "title": "Career tools",
+      "url": "/notes/career-tools/",
+      "category": "Career",
+      "size": 10,
+      "headers": [],
+      "type": "category",
       "group": 3
     },
     {
@@ -148,6 +184,19 @@
         "H2: Usage",
         "H2: Troubleshooting",
         "H2: Files"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "code-that-fits-in-your-head",
+      "title": "Code that fits in your head",
+      "url": "/notes/code-that-fits-in-your-head/",
+      "category": "General",
+      "size": 43,
+      "headers": [
+        "H2: Takeaways",
+        "H2: Appendix"
       ],
       "type": "note",
       "group": 0
@@ -196,6 +245,35 @@
       "category": "General",
       "size": 10,
       "headers": [],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "docker",
+      "title": "Docker",
+      "url": "/notes/docker/",
+      "category": "General",
+      "size": 58,
+      "headers": [
+        "H2: Dockerfile",
+        "H2: Help",
+        "H2: Pull to pull an image or build to build from a dockerfile",
+        "H2: Run to create and start or start to just start an existing container",
+        "H2: Common issues"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "exercise",
+      "title": "Exercise",
+      "url": "/notes/exercise/",
+      "category": "General",
+      "size": 13,
+      "headers": [
+        "H2: Of note",
+        "H2: Static holds of note"
+      ],
       "type": "note",
       "group": 0
     },
@@ -284,6 +362,18 @@
       "group": 0
     },
     {
+      "id": "index",
+      "title": "Index",
+      "url": "/notes/index/",
+      "category": "Organization",
+      "size": 10,
+      "headers": [
+        "H2: Categories"
+      ],
+      "type": "note",
+      "group": 5
+    },
+    {
       "id": "interface-uses",
       "title": "Interface Uses",
       "url": "/notes/interface-uses/",
@@ -370,6 +460,21 @@
       "group": 0
     },
     {
+      "id": "personal-blog",
+      "title": "Personal blog",
+      "url": "/notes/personal-blog/",
+      "category": "General",
+      "size": 62,
+      "headers": [
+        "H2: Blog vs. medium/linkedin articles",
+        "H2: Inspiration for writing/blogging - digital gardens/wikis",
+        "H2: Tech stack",
+        "H2: Blog post ideas"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
       "id": "petapoco-tips",
       "title": "Petapoco tips",
       "url": "/notes/petapoco-tips/",
@@ -408,6 +513,22 @@
       "headers": [],
       "type": "note",
       "group": 0
+    },
+    {
+      "id": "python",
+      "title": "Python",
+      "url": "/notes/python/",
+      "category": "Programming",
+      "size": 71,
+      "headers": [
+        "H2: Virtual environments",
+        "H2: Taking arguments",
+        "H2: Stopping execution",
+        "H2: Project templates",
+        "H2: Notes on useful language elements, functions etc."
+      ],
+      "type": "note",
+      "group": 2
     },
     {
       "id": "random-sql-best-practices",
@@ -490,6 +611,19 @@
       "group": 1
     },
     {
+      "id": "sql-weirdness",
+      "title": "Sql weirdness",
+      "url": "/notes/sql-weirdness/",
+      "category": "Database",
+      "size": 26,
+      "headers": [
+        "H2: Can use space with zero width and other gimmicks for unreadable code",
+        "H2: Zalgo script is also allowed"
+      ],
+      "type": "note",
+      "group": 1
+    },
+    {
       "id": "ssdt",
       "title": "SSDT",
       "url": "/notes/ssdt/",
@@ -520,6 +654,28 @@
       "headers": [],
       "type": "note",
       "group": 3
+    },
+    {
+      "id": "statebased-vs-migrationsbased",
+      "title": "State based Vs Migrations based",
+      "url": "/notes/statebased-vs-migrationsbased/",
+      "category": "General",
+      "size": 28,
+      "headers": [],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "static-sites",
+      "title": "Static sites",
+      "url": "/notes/static-sites/",
+      "category": "General",
+      "size": 26,
+      "headers": [
+        "H2: Options"
+      ],
+      "type": "category",
+      "group": 0
     },
     {
       "id": "stoic-principles",
@@ -558,6 +714,16 @@
       "id": "tech",
       "title": "Tech",
       "url": "/notes/tech/",
+      "category": "General",
+      "size": 10,
+      "headers": [],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "thank-you-notes",
+      "title": "Thank you notes",
+      "url": "/notes/thank-you-notes/",
       "category": "General",
       "size": 10,
       "headers": [],
@@ -625,175 +791,15 @@
       "headers": [],
       "type": "note",
       "group": 0
-    },
-    {
-      "id": "index",
-      "title": "Index",
-      "url": "/notes/index/",
-      "category": "Organization",
-      "size": 10,
-      "headers": [
-        "H2: Categories"
-      ],
-      "type": "note",
-      "group": 5
-    },
-    {
-      "id": "thank-you-notes",
-      "title": "Thank you notes",
-      "url": "/notes/thank-you-notes/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "11ty",
-      "title": "11ty",
-      "url": "/notes/11ty/",
-      "category": "General",
-      "size": 37,
-      "headers": [
-        "H2: package.json",
-        "H2: Debugging",
-        "H2: Filtering content"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "personal-blog",
-      "title": "Personal blog",
-      "url": "/notes/personal-blog/",
-      "category": "General",
-      "size": 62,
-      "headers": [
-        "H2: Blog vs. medium/linkedin articles",
-        "H2: Inspiration for writing/blogging - digital gardens/wikis",
-        "H2: Tech stack",
-        "H2: Blog post ideas"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "static-sites",
-      "title": "Static sites",
-      "url": "/notes/static-sites/",
-      "category": "General",
-      "size": 26,
-      "headers": [
-        "H2: Options"
-      ],
-      "type": "category",
-      "group": 0
-    },
-    {
-      "id": "boyds-law-of-iteration",
-      "title": "Boyds Law of Iteration",
-      "url": "/notes/boyds-law-of-iteration/",
-      "category": "General",
-      "size": 21,
-      "headers": [
-        "H2: How"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "code-that-fits-in-your-head",
-      "title": "Code that fits in your head",
-      "url": "/notes/code-that-fits-in-your-head/",
-      "category": "General",
-      "size": 43,
-      "headers": [
-        "H2: Takeaways",
-        "H2: Appendix"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "docker",
-      "title": "Docker",
-      "url": "/notes/docker/",
-      "category": "General",
-      "size": 58,
-      "headers": [
-        "H2: Dockerfile",
-        "H2: Help",
-        "H2: Pull to pull an image or build to build from a dockerfile",
-        "H2: Run to create and start or start to just start an existing container",
-        "H2: Common issues"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "exercise",
-      "title": "Exercise",
-      "url": "/notes/exercise/",
-      "category": "General",
-      "size": 13,
-      "headers": [
-        "H2: Of note",
-        "H2: Static holds of note"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "python",
-      "title": "Python",
-      "url": "/notes/python/",
-      "category": "Programming",
-      "size": 71,
-      "headers": [
-        "H2: Virtual environments",
-        "H2: Taking arguments",
-        "H2: Stopping execution",
-        "H2: Project templates",
-        "H2: Notes on useful language elements, functions etc."
-      ],
-      "type": "note",
-      "group": 2
-    },
-    {
-      "id": "career-tools",
-      "title": "Career tools",
-      "url": "/notes/career-tools/",
-      "category": "Career",
-      "size": 10,
-      "headers": [],
-      "type": "category",
-      "group": 3
-    },
-    {
-      "id": "sql-weirdness",
-      "title": "Sql weirdness",
-      "url": "/notes/sql-weirdness/",
-      "category": "Database",
-      "size": 26,
-      "headers": [
-        "H2: Can use space with zero width and other gimmicks for unreadable code",
-        "H2: Zalgo script is also allowed"
-      ],
-      "type": "note",
-      "group": 1
-    },
-    {
-      "id": "statebased-vs-migrationsbased",
-      "title": "State based Vs Migrations based",
-      "url": "/notes/statebased-vs-migrationsbased/",
-      "category": "General",
-      "size": 28,
-      "headers": [],
-      "type": "note",
-      "group": 0
     }
   ],
   "links": [
+    {
+      "source": "11ty",
+      "target": "static-sites",
+      "type": "reference",
+      "strength": 2
+    },
     {
       "source": "backup",
       "target": "home-lab",
@@ -802,13 +808,13 @@
     },
     {
       "source": "career",
-      "target": "personal-blog",
+      "target": "career-tools",
       "type": "reference",
       "strength": 2
     },
     {
       "source": "career",
-      "target": "career-tools",
+      "target": "personal-blog",
       "type": "reference",
       "strength": 2
     },
@@ -831,8 +837,38 @@
       "strength": 2
     },
     {
-      "source": "keyboard-shortcuts",
-      "target": "ssms-shortcuts",
+      "source": "index",
+      "target": "career",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "index",
+      "target": "home-lab",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "index",
+      "target": "podcasts",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "index",
+      "target": "recipes",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "index",
+      "target": "taking-notes",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "index",
+      "target": "tech",
       "type": "reference",
       "strength": 2
     },
@@ -844,7 +880,7 @@
     },
     {
       "source": "keyboard-shortcuts",
-      "target": "windows-shortcuts",
+      "target": "ssms-shortcuts",
       "type": "reference",
       "strength": 2
     },
@@ -855,14 +891,26 @@
       "strength": 2
     },
     {
-      "source": "podcasts",
-      "target": "staff-eng",
+      "source": "keyboard-shortcuts",
+      "target": "windows-shortcuts",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "personal-blog",
+      "target": "static-sites",
       "type": "reference",
       "strength": 2
     },
     {
       "source": "podcasts",
       "target": "career-tools",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "podcasts",
+      "target": "staff-eng",
       "type": "reference",
       "strength": 2
     },
@@ -874,13 +922,7 @@
     },
     {
       "source": "sql-server",
-      "target": "fragmentation",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "statebased-vs-migrationsbased",
+      "target": "configuration-tables",
       "type": "reference",
       "strength": 2
     },
@@ -892,25 +934,31 @@
     },
     {
       "source": "sql-server",
-      "target": "exists-vs-in",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "configuration-tables",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
       "target": "datetime-vs-datetimeoffset",
       "type": "reference",
       "strength": 2
     },
     {
       "source": "sql-server",
+      "target": "exists-vs-in",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "sql-server",
+      "target": "fragmentation",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "sql-server",
       "target": "random-sql-best-practices",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "sql-server",
+      "target": "sql-quick-tips",
       "type": "reference",
       "strength": 2
     },
@@ -928,25 +976,19 @@
     },
     {
       "source": "sql-server",
-      "target": "sql-quick-tips",
+      "target": "statebased-vs-migrationsbased",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "static-sites",
+      "target": "11ty",
       "type": "reference",
       "strength": 2
     },
     {
       "source": "taking-meeting-notes",
       "target": "career-tools",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "tech",
-      "target": "sql-server",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "tech",
-      "target": "web",
       "type": "reference",
       "strength": 2
     },
@@ -969,67 +1011,25 @@
       "strength": 2
     },
     {
-      "source": "index",
-      "target": "podcasts",
+      "source": "tech",
+      "target": "sql-server",
       "type": "reference",
       "strength": 2
     },
     {
-      "source": "index",
-      "target": "career",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "tech",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "home-lab",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "recipes",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "taking-notes",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "11ty",
-      "target": "static-sites",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "personal-blog",
-      "target": "static-sites",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "static-sites",
-      "target": "11ty",
+      "source": "tech",
+      "target": "web",
       "type": "reference",
       "strength": 2
     }
   ],
   "categories": {
-    "General": 45,
     "Career": 3,
     "Database": 8,
+    "General": 45,
+    "Organization": 1,
     "Programming": 3,
-    "Tools": 5,
-    "Organization": 1
+    "Tools": 5
   },
   "stats": {
     "totalNodes": 65,

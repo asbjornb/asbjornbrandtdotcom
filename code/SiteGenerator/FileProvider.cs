@@ -4,7 +4,7 @@ public class FileProvider : IFileProvider
 {
     public async IAsyncEnumerable<ContentFile> GetFileContents(string folderPath)
     {
-        foreach (var filePath in Directory.EnumerateFiles(folderPath))
+        foreach (var filePath in SortedFiles(Directory.EnumerateFiles(folderPath)))
         {
             string content = await File.ReadAllTextAsync(filePath);
             yield return new ContentFile(Path.GetFileName(filePath), content);
@@ -16,12 +16,16 @@ public class FileProvider : IFileProvider
         string searchPattern
     )
     {
-        foreach (var filePath in Directory.EnumerateFiles(folderPath, searchPattern))
+        foreach (var filePath in SortedFiles(Directory.EnumerateFiles(folderPath, searchPattern)))
         {
             string content = await File.ReadAllTextAsync(filePath);
             yield return new ContentFile(Path.GetFileName(filePath), content);
         }
     }
+
+    // Directory order differs between filesystems, so sort to make output reproducible
+    private static IEnumerable<string> SortedFiles(IEnumerable<string> filePaths) =>
+        filePaths.Order(StringComparer.Ordinal);
 
     public async Task WriteFileAsync(string filePath, string content)
     {
