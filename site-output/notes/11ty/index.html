@@ -50,6 +50,7 @@
     <main>
         <article>
     <h1>11ty</h1>
+<p><a href="https://www.11ty.dev/">Eleventy (11ty)</a> is a simple static site generator in JavaScript. I used it for an earlier version of this site before moving to a custom generator - see <a href="/notes/static-sites/">static sites</a>.</p>
 <h2>package.json</h2>
 <p>This file holds metadata for the project.</p>
 <p>The &quot;scripts&quot;-section sets npm commands. E.g.:</p>
@@ -57,9 +58,12 @@
     &quot;start&quot;: &quot;eleventy --serve&quot;,
     &quot;compile&quot;: &quot;eleventy&quot;}
 </code></pre>
-<p>lets you use <code>npm start</code> to serve eleventy or <code>npm compile</code> to build the static site content from templates.</p>
-<p>Filtering with 11ty ignore seems difficult to do based on content. Perhaps an easier way is to create a small python/bat/.exe file that copies the thoughts repository to a content folder but excludes files. That process can then also do other preprocessing like generate front matter etc 😃</p>
-<p>See also <a href="/notes/11ty-build/">11ty build</a></p>
+<p>lets you use <code>npm start</code> to serve eleventy or <code>npm run compile</code> to build the static site content from templates.</p>
+<h2>Debugging</h2>
+<p>To see what eleventy is doing run it with debug output: <code>DEBUG=Eleventy* npx @11ty/eleventy</code> (on Windows cmd: <code>set DEBUG=Eleventy* &amp; npx @11ty/eleventy</code>). See more at <a href="https://www.11ty.dev/docs/debugging/">https://www.11ty.dev/docs/debugging/</a>.</p>
+<p>Eleventy uses .eleventyignore and .gitignore from the generator's root (same folder as .eleventy.js).</p>
+<h2>Filtering content</h2>
+<p>Filtering with 11ty ignore seems difficult to do based on content. My idea back then was a small preprocessing step that copies notes to a content folder but excludes some. When I built my own generator this ended up as a <code>published.txt</code> file listing the notes that go on the site.</p>
 
 </article>
 
@@ -84,7 +88,6 @@
     <div class="connected-notes">
         <h3>Connected Notes</h3>
         <div class="connection-links">
-            <a href="/notes/11ty-build/" class="connection-link">11ty-build</a>
             <a href="/notes/static-sites/" class="connection-link">Static sites</a>
         </div>
     </div>
