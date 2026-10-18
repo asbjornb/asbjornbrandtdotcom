@@ -2,7 +2,7 @@
 
 ## Of note
 
-* A quick 10 min fast walk gives a ton of energy and enthusiam!
+* A quick 10 min fast walk gives a ton of energy and enthusiasm!
 
 ## Static holds of note
 

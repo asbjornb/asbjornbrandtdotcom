@@ -17,6 +17,6 @@ Listening:
 
 Networking:
 
-* Network with anyone indiscriminantly
+* Network with anyone indiscriminately
 * Set up reminders to keep in contact
 * Give, give, give

@@ -16,7 +16,7 @@ cd c:\someproject
 // create a new directory 'project-36'  
 mkdir project-36  
   
-// change currenct directory to 'project-36'  
+// change current directory to 'project-36'  
 cd .\project-36  
   
 // create a virtual environment named 'venv', feel free to name it anything you like. -p Location is optional but makes sure to use a specific python version.
