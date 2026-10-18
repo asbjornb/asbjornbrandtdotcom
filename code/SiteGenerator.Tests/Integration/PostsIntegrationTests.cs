@@ -234,4 +234,20 @@ public sealed class PostsIntegrationTests : IAsyncLifetime, IDisposable
         // 2025-01-20-second-post.md -> second-post
         indexContent.Should().Contain("/posts/second-post/");
     }
+
+    [Fact]
+    public async Task Homepage_ListsLatestThreePostsNewestFirst()
+    {
+        var homepage = await File.ReadAllTextAsync(Path.Combine(ActualOutputPath, "index.html"));
+
+        homepage.Should().Contain("Latest posts");
+        homepage.Should().NotContain("<!-- latest-posts -->");
+        homepage.Should().Contain("href=\"https://asbjornbrandt.com/posts/second-post/\"");
+        homepage.Should().Contain("href=\"https://asbjornbrandt.com/posts/test-post/\"");
+        homepage.Should().Contain("href=\"https://asbjornbrandt.com/posts/first-post/\"");
+        homepage.Should().NotContain("Oldest Post", "only the three newest posts are listed");
+
+        homepage.IndexOf("Second Post").Should().BeLessThan(homepage.IndexOf("Test Post Title"));
+        homepage.IndexOf("Test Post Title").Should().BeLessThan(homepage.IndexOf("First Post"));
+    }
 }

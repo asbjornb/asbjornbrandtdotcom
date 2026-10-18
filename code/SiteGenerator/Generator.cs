@@ -3,6 +3,7 @@ using SiteGenerator.BacklinksProcessing;
 using SiteGenerator.Configuration;
 using SiteGenerator.Processors;
 using SiteGenerator.Templates;
+using SiteGenerator.Templates.MetadataModels;
 
 namespace SiteGenerator;
 
@@ -74,16 +75,9 @@ public class Generator
             Path.Combine(_outputPath, "notes")
         );
 
-        // Process pages (from pages folder to root)
-        var pageProcessor = new PageProcessor(
-            _templateRenderer,
-            fileProvider,
-            markdownParser,
-            _siteMetadata
-        );
-        await pageProcessor.ProcessAsync(Path.Combine(_contentPath, "pages"), _outputPath);
-
-        // Process posts (from posts folder to posts folder) - only if posts folder exists
+        // Process posts (from posts folder to posts folder) - only if posts folder exists.
+        // Runs before pages so the homepage can list the latest posts.
+        IReadOnlyList<PostSummaryModel> posts = [];
         var postsPath = Path.Combine(_contentPath, "posts");
         if (Directory.Exists(postsPath))
         {
@@ -94,7 +88,18 @@ public class Generator
                 _siteMetadata
             );
             await postProcessor.ProcessAsync(postsPath, _outputPath);
+            posts = postProcessor.Posts;
         }
+
+        // Process pages (from pages folder to root)
+        var pageProcessor = new PageProcessor(
+            _templateRenderer,
+            fileProvider,
+            markdownParser,
+            _siteMetadata,
+            posts
+        );
+        await pageProcessor.ProcessAsync(Path.Combine(_contentPath, "pages"), _outputPath);
 
         // Generate knowledge graph JSON data for frontend
         await graphProcessor.ProcessAsync(Path.Combine(_contentPath, "thoughts"), _outputPath);

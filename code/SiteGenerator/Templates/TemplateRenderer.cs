@@ -13,6 +13,7 @@ public class TemplateRenderer
     private readonly HandlebarsTemplate<object, object> _noteTemplate;
     private readonly HandlebarsTemplate<object, object> _postTemplate;
     private readonly HandlebarsTemplate<object, object> _postsIndexTemplate;
+    private readonly HandlebarsTemplate<object, object> _latestPostsTemplate;
 
     public TemplateRenderer(ITemplateProvider templateProvider)
     {
@@ -47,6 +48,9 @@ public class TemplateRenderer
         _postsIndexTemplate = _handlebarsContext.Compile(
             _templateProvider.GetTemplateContent("posts-index")
         );
+        _latestPostsTemplate = _handlebarsContext.Compile(
+            _templateProvider.GetPartialContent("latest-posts")
+        );
     }
 
     public string RenderNote(NoteModel noteData, LayoutModel layoutData)
@@ -77,5 +81,10 @@ public class TemplateRenderer
         var postsContent = _postsIndexTemplate(postsData);
         var layout = layoutData with { Body = postsContent };
         return _layoutTemplate(layout);
+    }
+
+    public string RenderLatestPosts(PostsIndexModel postsData)
+    {
+        return _latestPostsTemplate(postsData);
     }
 }

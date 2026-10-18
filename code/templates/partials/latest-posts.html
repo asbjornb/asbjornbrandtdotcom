@@ -1,0 +1,17 @@
+<section class="latest-posts">
+    <h2>Latest posts</h2>
+    <div class="posts-list">
+        {{#each Posts}}
+            <article class="post-item">
+                <div class="post-meta">
+                    <time class="post-date">{{formatDate PublishedDate}}</time>
+                </div>
+                <div class="post-content">
+                    <h3 class="post-title"><a href="{{Url}}">{{Title}}</a></h3>
+                    <p class="post-excerpt">{{Excerpt}}</p>
+                </div>
+            </article>
+        {{/each}}
+    </div>
+    <p><a href="/posts">All posts</a></p>
+</section>

@@ -15,6 +15,11 @@ public class PostProcessor : IPageProcessor
     private readonly SiteUrlResolver _urlResolver;
     private readonly LayoutModelFactory _layoutFactory;
 
+    /// <summary>
+    /// After processing: all posts, newest first.
+    /// </summary>
+    public IReadOnlyList<PostSummaryModel> Posts { get; private set; } = [];
+
     public PostProcessor(
         TemplateRenderer templateRenderer,
         IFileProvider fileProvider,
@@ -60,16 +65,15 @@ public class PostProcessor : IPageProcessor
             posts.Add(new PostSummaryModel(title, postUrl, date, slug, excerpt));
         }
 
+        Posts = posts.OrderByDescending(p => p.PublishedDate).ToList();
+
         // Create posts index page
-        await CreatePostsIndexPage(posts, outputPath);
+        await CreatePostsIndexPage(outputPath);
     }
 
-    private async Task CreatePostsIndexPage(List<PostSummaryModel> posts, string outputPath)
+    private async Task CreatePostsIndexPage(string outputPath)
     {
-        // Sort posts by date (newest first)
-        var sortedPosts = posts.OrderByDescending(p => p.PublishedDate).ToList();
-
-        var postsIndexModel = new PostsIndexModel(sortedPosts);
+        var postsIndexModel = new PostsIndexModel(Posts);
         var layoutModel = _layoutFactory.CreatePostsIndex(_urlResolver.PostsIndex());
 
         var renderedIndex = _templateRenderer.RenderPostsIndex(postsIndexModel, layoutModel);

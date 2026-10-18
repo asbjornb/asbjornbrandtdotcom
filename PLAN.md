@@ -13,8 +13,7 @@ Last updated 2026-10-18.
   builds and deploys the site.
 - **No front matter on notes.** `published.txt` in the notes repo lists the notes that go on the site, one
   path per line. Posts and pages always publish.
-- **No CV on the site.** Recruiters arrive with the CV already. Add a LinkedIn link and a one-line
-  "who I am" for peers arriving from posts or GitHub.
+- **No CV on the site.** It's a personal page: a collection of thoughts and things I've built, not a resume.
 - **Notes: hide now, tend, promote back.** Start `published.txt` with only notes that read as finished.
 - **Posts: fewer LinkedIn re-posts, more deep engineering posts** with real numbers from recent work.
 - **Capture via Telegram, triage via the Claude Android app.** No home lab.
@@ -26,13 +25,14 @@ Last updated 2026-10-18.
 - [x] Check that `https://asbjornbrandt.com/posts/something-feels-different-now%20copy/` redirects (301, verified 2026-10-18)
 - [x] Step 2: `published.txt` support + first list (branch `published-notes`)
 
-## 1. Homepage and LinkedIn (quick)
+## 1. Homepage (quick)
 
-- [ ] One identity line: role, domain, stack, place
-- [ ] Links to LinkedIn and GitHub (LinkedIn URL: TODO)
-- [ ] Show the latest 3 posts on the homepage
-- [ ] Typos: "life long learner" -> "lifelong", "Sql" -> "SQL"
-- [ ] Refresh Now page (last updated 2025-12-19)
+A personal page, not a resume: thoughts and things I've built.
+
+- [x] Show the latest 3 posts on the homepage (`<!-- latest-posts -->` marker in `pages/index.md`)
+- [x] Typo: "life long learner" -> "lifelong"
+- [ ] Rewrite the Now page (last updated 2025-12-19; also "Sql" -> "SQL"). Doing it myself soon
+- [ ] Later: homepage intro/profile makeover (LinkedIn link, intro line). Parked for now
 
 ## 2. `published.txt` support in the generator
 
