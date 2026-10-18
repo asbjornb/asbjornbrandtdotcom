@@ -1,6 +1,5 @@
 # Notes published on the site, one path per line. Unlisted notes are not rendered,
 # and wikilinks to them render as plain text. The notes index is always published.
-thoughts/11ty-build.md
 thoughts/11ty.md
 thoughts/ai-assisted-coding.md
 thoughts/backup.md
