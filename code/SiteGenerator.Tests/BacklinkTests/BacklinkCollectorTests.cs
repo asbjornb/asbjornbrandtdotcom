@@ -35,4 +35,26 @@ public class BacklinkCollectorTests
         Assert.Single(backlinksForNote2);
         Assert.Contains("Note1", backlinksForNote2);
     }
+
+    [Fact]
+    public async Task CollectBacklinksAsync_IgnoresUnpublishedNotes()
+    {
+        var folderReader = Substitute.For<IFileProvider>();
+        var testFiles = new List<ContentFile>
+        {
+            new ContentFile("published.md", "[[target]]"),
+            new ContentFile("draft.md", "[[target]]"),
+        };
+        folderReader
+            .GetFileContents(Arg.Any<string>(), "*.md")
+            .Returns(testFiles.ToAsyncEnumerable());
+
+        var backlinks = await BacklinkCollector.CollectBacklinksAsync(
+            folderReader,
+            "testPath",
+            PublishedNotes.Parse("published\ntarget")
+        );
+
+        Assert.Equal(["published"], backlinks.GetBacklinksForNote("target"));
+    }
 }

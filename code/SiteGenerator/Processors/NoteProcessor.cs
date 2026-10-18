@@ -18,6 +18,7 @@ public class NoteProcessor : IPageProcessor
     private readonly MarkdownPageWriter _pageWriter;
     private readonly SiteUrlResolver _urlResolver;
     private readonly LayoutModelFactory _layoutFactory;
+    private readonly PublishedNotes _publishedNotes;
 
     public NoteProcessor(
         Backlinks backlinks,
@@ -25,9 +26,11 @@ public class NoteProcessor : IPageProcessor
         IFileProvider folderReader,
         MarkdownParser markdownParser,
         SiteMetadata config,
-        GraphData? graphData = null
+        GraphData? graphData = null,
+        PublishedNotes? publishedNotes = null
     )
     {
+        _publishedNotes = publishedNotes ?? PublishedNotes.All;
         _backlinks = backlinks;
         _templateRenderer = templateRenderer;
         _fileProvider = folderReader;
@@ -65,6 +68,11 @@ public class NoteProcessor : IPageProcessor
 
         await foreach (var contentFile in _fileProvider.GetFileContents(inputPath, "*.md"))
         {
+            if (!_publishedNotes.IsPublishedFile(contentFile.Name))
+            {
+                continue;
+            }
+
             var fileName = Path.GetFileNameWithoutExtension(contentFile.Name);
             WarnIfSlugHasConsecutiveSeparators(fileName);
             files[fileName] = contentFile.Content;

@@ -12,14 +12,17 @@ public class GraphProcessor : IPageProcessor
     private readonly IFileProvider _fileProvider;
     private readonly MarkdownParser _markdownParser;
     private readonly SiteMetadata _siteMetadata;
+    private readonly PublishedNotes _publishedNotes;
 
     public GraphProcessor(
         TemplateRenderer templateRenderer,
         IFileProvider fileProvider,
         MarkdownParser markdownParser,
-        SiteMetadata siteMetadata
+        SiteMetadata siteMetadata,
+        PublishedNotes? publishedNotes = null
     )
     {
+        _publishedNotes = publishedNotes ?? PublishedNotes.All;
         _templateRenderer = templateRenderer;
         _fileProvider = fileProvider;
         _markdownParser = markdownParser;
@@ -28,7 +31,7 @@ public class GraphProcessor : IPageProcessor
 
     public async Task ProcessAsync(string inputPath, string outputPath)
     {
-        var graphBuilder = new GraphBuilder(_fileProvider, _markdownParser);
+        var graphBuilder = new GraphBuilder(_fileProvider, _markdownParser, _publishedNotes);
         var graphData = await graphBuilder.BuildGraphAsync(inputPath);
 
         // Generate the graph data as JSON for the frontend
@@ -37,7 +40,7 @@ public class GraphProcessor : IPageProcessor
 
     public async Task<GraphData> GetGraphDataAsync(string inputPath)
     {
-        var graphBuilder = new GraphBuilder(_fileProvider, _markdownParser);
+        var graphBuilder = new GraphBuilder(_fileProvider, _markdownParser, _publishedNotes);
         return await graphBuilder.BuildGraphAsync(inputPath);
     }
 

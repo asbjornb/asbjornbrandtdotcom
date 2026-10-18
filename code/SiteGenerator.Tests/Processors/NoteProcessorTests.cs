@@ -185,4 +185,41 @@ public class NoteProcessorTests
                 )
             );
     }
+
+    [Fact]
+    public async Task ProcessAsync_SkipsUnpublishedNotes()
+    {
+        // Arrange
+        var inputPath = "input";
+        var outputPath = "output";
+        var processor = new NoteProcessor(
+            _backlinks,
+            _templateRenderer,
+            _fileProvider,
+            _markdownParser,
+            _config,
+            publishedNotes: PublishedNotes.Parse("published")
+        );
+
+        _fileProvider
+            .GetFileContents(inputPath, "*.md")
+            .Returns(
+                new[]
+                {
+                    new ContentFile("published.md", "# Published"),
+                    new ContentFile("draft.md", "# Draft"),
+                }.ToAsyncEnumerable()
+            );
+
+        // Act
+        await processor.ProcessAsync(inputPath, outputPath);
+
+        // Assert
+        await _fileProvider
+            .Received(1)
+            .WriteFileAsync(Path.Combine(outputPath, "published", "index.html"), Arg.Any<string>());
+        await _fileProvider
+            .DidNotReceive()
+            .WriteFileAsync(Path.Combine(outputPath, "draft", "index.html"), Arg.Any<string>());
+    }
 }

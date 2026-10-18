@@ -1,0 +1,4 @@
+# Notes that go on the site
+thoughts/alpha.md
+beta
+

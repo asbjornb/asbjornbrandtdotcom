@@ -13,6 +13,16 @@ public class Generator
     private readonly SiteMetadata _siteMetadata;
     private readonly TemplateRenderer _templateRenderer;
 
+    /// <summary>
+    /// After generation: unpublished notes that published content links to, mapped to the
+    /// linking pages. Empty when every note is published.
+    /// </summary>
+    public IReadOnlyDictionary<string, SortedSet<string>> LinksToUnpublishedNotes
+    {
+        get;
+        private set;
+    } = new Dictionary<string, SortedSet<string>>();
+
     public Generator(
         string contentPath,
         string outputPath,
@@ -29,10 +39,12 @@ public class Generator
     public async Task GenerateSiteAsync()
     {
         var fileProvider = new FileProvider();
-        var markdownParser = new MarkdownParser();
+        var publishedNotes = await PublishedNotes.LoadAsync(_contentPath);
+        var markdownParser = new MarkdownParser(publishedNotes);
         var backlinks = await BacklinkCollector.CollectBacklinksAsync(
             fileProvider,
-            Path.Combine(_contentPath, "thoughts")
+            Path.Combine(_contentPath, "thoughts"),
+            publishedNotes
         );
 
         // Generate knowledge graph data first
@@ -40,7 +52,8 @@ public class Generator
             _templateRenderer,
             fileProvider,
             markdownParser,
-            _siteMetadata
+            _siteMetadata,
+            publishedNotes
         );
         var graphData = await graphProcessor.GetGraphDataAsync(
             Path.Combine(_contentPath, "thoughts")
@@ -53,7 +66,8 @@ public class Generator
             fileProvider,
             markdownParser,
             _siteMetadata,
-            graphData
+            graphData,
+            publishedNotes
         );
         await noteProcessor.ProcessAsync(
             Path.Combine(_contentPath, "thoughts"),
@@ -98,5 +112,64 @@ public class Generator
         {
             fileProvider.CopyFolderAsync(staticPath, _outputPath);
         }
+
+        if (!publishedNotes.PublishesEverything)
+        {
+            LinksToUnpublishedNotes = await FindLinksToUnpublishedNotesAsync(
+                fileProvider,
+                publishedNotes
+            );
+            GenerationWarnings.LinksToUnpublishedNotes(LinksToUnpublishedNotes);
+        }
+    }
+
+    private async Task<
+        IReadOnlyDictionary<string, SortedSet<string>>
+    > FindLinksToUnpublishedNotesAsync(IFileProvider fileProvider, PublishedNotes publishedNotes)
+    {
+        // Unpublished note -> published pages linking to it
+        var linkedFrom = new SortedDictionary<string, SortedSet<string>>(StringComparer.Ordinal);
+
+        foreach (
+            var (folder, urlPrefix) in new[]
+            {
+                ("thoughts", "notes/"),
+                ("pages", ""),
+                ("posts", "posts/"),
+            }
+        )
+        {
+            var folderPath = Path.Combine(_contentPath, folder);
+            if (!Directory.Exists(folderPath))
+            {
+                continue;
+            }
+
+            await foreach (var file in fileProvider.GetFileContents(folderPath, "*.md"))
+            {
+                if (folder == "thoughts" && !publishedNotes.IsPublishedFile(file.Name))
+                {
+                    continue;
+                }
+
+                var source = urlPrefix + Path.GetFileNameWithoutExtension(file.Name);
+                foreach (var target in WikiLinks.Targets(file.Content))
+                {
+                    if (publishedNotes.IsPublished(target))
+                    {
+                        continue;
+                    }
+
+                    if (!linkedFrom.TryGetValue(target, out var sources))
+                    {
+                        sources = new SortedSet<string>(StringComparer.Ordinal);
+                        linkedFrom[target] = sources;
+                    }
+                    sources.Add(source);
+                }
+            }
+        }
+
+        return linkedFrom;
     }
 }

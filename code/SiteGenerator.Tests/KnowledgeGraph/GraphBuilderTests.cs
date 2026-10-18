@@ -191,4 +191,24 @@ public class GraphBuilderTests
         result.Nodes.Should().ContainSingle(n => n.Id == "my--note" && n.Title == "My Note");
         result.Nodes.Should().ContainSingle(n => n.Id == "my__other" && n.Title == "My Other");
     }
+
+    [Fact]
+    public async Task BuildGraphAsync_ExcludesUnpublishedNotes()
+    {
+        var fileProvider = new InMemoryFileProvider();
+        var graphBuilder = new GraphBuilder(
+            fileProvider,
+            new MarkdownParser(),
+            PublishedNotes.Parse("note1\nnote2")
+        );
+
+        fileProvider.AddFile("note1.md", "# Note 1\nLinks to [[note2]] and [[draft]]");
+        fileProvider.AddFile("note2.md", "# Note 2\nLinks to [[note1]]");
+        fileProvider.AddFile("draft.md", "# Draft\nLinks to [[note1]]");
+
+        var result = await graphBuilder.BuildGraphAsync("/test");
+
+        result.Nodes.Select(n => n.Id).Should().BeEquivalentTo(["note1", "note2"]);
+        result.Links.Should().NotContain(l => l.Source == "draft" || l.Target == "draft");
+    }
 }

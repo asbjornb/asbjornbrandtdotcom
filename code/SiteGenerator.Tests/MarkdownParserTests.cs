@@ -265,4 +265,16 @@ public class MarkdownParserTests
         // Assert
         result.Should().Be(expectedHtml);
     }
+
+    [Fact]
+    public void ParseToHtml_RendersWikilinksToUnpublishedNotesAsPlainText()
+    {
+        var parser = new MarkdownParser(PublishedNotes.Parse("git"));
+
+        var result = parser.ParseToHtml("See [[git]] and [[work-todo]].");
+
+        result.Should().Contain("<a href=\"/notes/git/\">git</a>");
+        result.Should().Contain("and work todo.");
+        result.Should().NotContain("/notes/work-todo/");
+    }
 }
