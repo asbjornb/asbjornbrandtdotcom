@@ -1,3 +1,5 @@
+using SiteGenerator.Processors;
+
 namespace SiteGenerator.Configuration;
 
 public class SiteUrlResolver
@@ -11,16 +13,29 @@ public class SiteUrlResolver
 
     private string BaseUrl => _siteMetadata.BaseUrl.TrimEnd('/');
 
-    public string Note(string slug) => $"{BaseUrl}/notes/{slug}/";
+    public string Note(string slug) =>
+        IsIndex(slug) ? $"{BaseUrl}/notes/" : $"{BaseUrl}/notes/{slug}/";
 
     public string Page(string slug)
     {
-        return slug.Equals("index", StringComparison.OrdinalIgnoreCase)
-            ? BaseUrl
+        if (IsIndex(slug))
+        {
+            return BaseUrl;
+        }
+
+        return MarkdownPageWriter.IsNotFoundPage(slug)
+            ? $"{BaseUrl}/{MarkdownPageWriter.NotFoundFileName}"
             : $"{BaseUrl}/{slug}/";
     }
 
     public string Post(string slug) => $"{BaseUrl}/posts/{slug}/";
 
     public string PostsIndex() => $"{BaseUrl}/posts/";
+
+    public string PostsFeed() => $"{BaseUrl}/posts/feed.xml";
+
+    public string Sitemap() => $"{BaseUrl}/sitemap.xml";
+
+    private static bool IsIndex(string slug) =>
+        slug.Equals("index", StringComparison.OrdinalIgnoreCase);
 }

@@ -16,6 +16,10 @@ public class NoteProcessor : IPageProcessor
     private readonly MarkdownParser _markdownParser;
     private readonly GraphData? _graphData;
     private readonly MarkdownPageWriter _pageWriter;
+    private readonly List<string> _sitemapUrls = [];
+
+    /// <summary>URLs of the published notes written, for the sitemap.</summary>
+    public IReadOnlyList<string> SitemapUrls => _sitemapUrls;
     private readonly SiteUrlResolver _urlResolver;
     private readonly LayoutModelFactory _layoutFactory;
     private readonly PublishedNotes _publishedNotes;
@@ -59,6 +63,7 @@ public class NoteProcessor : IPageProcessor
             var renderedContent = RenderNoteWithTemplate(htmlContent, fileName, notePreviews);
 
             await _pageWriter.WriteAsync(outputPath, fileName, renderedContent);
+            _sitemapUrls.Add(_urlResolver.Note(fileName));
         }
     }
 

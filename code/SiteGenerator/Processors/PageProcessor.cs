@@ -13,6 +13,10 @@ public class PageProcessor : IPageProcessor
     private readonly MarkdownPageWriter _pageWriter;
     private readonly SiteUrlResolver _urlResolver;
     private readonly LayoutModelFactory _layoutFactory;
+    private readonly List<string> _sitemapUrls = [];
+
+    /// <summary>URLs of the pages written, for the sitemap. The 404 page is left out.</summary>
+    public IReadOnlyList<string> SitemapUrls => _sitemapUrls;
 
     public PageProcessor(
         TemplateRenderer templateRenderer,
@@ -43,6 +47,11 @@ public class PageProcessor : IPageProcessor
             var renderedContent = _templateRenderer.RenderPage(layout);
 
             await _pageWriter.WriteAsync(outputPath, fileName, renderedContent);
+
+            if (!MarkdownPageWriter.IsNotFoundPage(fileName))
+            {
+                _sitemapUrls.Add(pageUrl);
+            }
         }
     }
 }

@@ -11,10 +11,20 @@ public class MarkdownPageWriter
         _fileProvider = fileProvider;
     }
 
+    /// <summary>
+    /// A page named <c>404</c> is written to <c>404.html</c>, which Cloudflare Pages serves for
+    /// unknown URLs.
+    /// </summary>
+    public const string NotFoundFileName = "404.html";
+
+    public static bool IsNotFoundPage(string slug) => slug == "404";
+
     public Task WriteAsync(string outputBasePath, string slug, string htmlContent)
     {
-        var destination = slug.Equals("index", StringComparison.OrdinalIgnoreCase)
-            ? Path.Combine(outputBasePath, "index.html")
+        var destination =
+            slug.Equals("index", StringComparison.OrdinalIgnoreCase)
+                ? Path.Combine(outputBasePath, "index.html")
+            : IsNotFoundPage(slug) ? Path.Combine(outputBasePath, NotFoundFileName)
             : Path.Combine(outputBasePath, slug, "index.html");
 
         return _fileProvider.WriteFileAsync(destination, htmlContent);

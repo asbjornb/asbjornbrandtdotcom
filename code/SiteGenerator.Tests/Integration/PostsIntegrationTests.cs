@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using SiteGenerator.Configuration;
@@ -233,5 +234,71 @@ public sealed class PostsIntegrationTests : IAsyncLifetime, IDisposable
 
         // 2025-01-20-second-post.md -> second-post
         indexContent.Should().Contain("/posts/second-post/");
+    }
+
+    [Fact]
+    public void Feed_ListsPostsNewestFirstWithFullContent()
+    {
+        var feed = XDocument.Load(Path.Combine(ActualOutputPath, "posts", "feed.xml"));
+        var channel = feed.Root!.Element("channel")!;
+
+        channel.Element("link")!.Value.Should().Be("https://asbjornbrandt.com/posts/");
+
+        var items = channel.Elements("item").ToList();
+        items
+            .Select(i => i.Element("title")!.Value)
+            .Should()
+            .Equal("Second Post", "Test Post Title", "First Post");
+
+        var testPost = items[1];
+        testPost.Element("link")!.Value.Should().Be("https://asbjornbrandt.com/posts/test-post/");
+        testPost.Element("pubDate")!.Value.Should().Be("Wed, 15 Jan 2025 00:00:00 +0000");
+        testPost.Element("description")!.Value.Should().Contain("<h2>A Subheading</h2>");
+    }
+
+    [Fact]
+    public async Task Pages_LinkToTheFeed()
+    {
+        var indexContent = await File.ReadAllTextAsync(
+            Path.Combine(ActualOutputPath, "posts", "index.html")
+        );
+
+        indexContent
+            .Should()
+            .Contain("rel=\"alternate\" type=\"application/rss+xml\"")
+            .And.Contain("href=\"/posts/feed.xml\"");
+    }
+
+    [Fact]
+    public void Sitemap_ListsPagesNotesAndPosts()
+    {
+        var sitemap = XDocument.Load(Path.Combine(ActualOutputPath, "sitemap.xml"));
+        XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+
+        var locs = sitemap.Root!.Elements(ns + "url").Select(u => u.Element(ns + "loc")!.Value);
+
+        locs.Should()
+            .BeEquivalentTo(
+                [
+                    "https://asbjornbrandt.com",
+                    "https://asbjornbrandt.com/notes/test-note/",
+                    "https://asbjornbrandt.com/posts/",
+                    "https://asbjornbrandt.com/posts/first-post/",
+                    "https://asbjornbrandt.com/posts/test-post/",
+                    "https://asbjornbrandt.com/posts/second-post/",
+                ]
+            );
+    }
+
+    [Fact]
+    public async Task NotFoundPage_IsWrittenTo404Html()
+    {
+        Directory.Exists(Path.Combine(ActualOutputPath, "404")).Should().BeFalse();
+
+        var notFound = await File.ReadAllTextAsync(Path.Combine(ActualOutputPath, "404.html"));
+        notFound.Should().Contain("Page not found");
+        notFound
+            .Should()
+            .Contain("<link rel=\"canonical\" href=\"https://asbjornbrandt.com/404.html\">");
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using SiteGenerator.BacklinksProcessing;
 using SiteGenerator.Configuration;
+using SiteGenerator.Feeds;
 using SiteGenerator.Processors;
 using SiteGenerator.Templates;
 
@@ -83,6 +84,10 @@ public class Generator
         );
         await pageProcessor.ProcessAsync(Path.Combine(_contentPath, "pages"), _outputPath);
 
+        var urlResolver = new SiteUrlResolver(_siteMetadata);
+        var sitemapUrls = new List<string>(noteProcessor.SitemapUrls);
+        sitemapUrls.AddRange(pageProcessor.SitemapUrls);
+
         // Process posts (from posts folder to posts folder) - only if posts folder exists
         var postsPath = Path.Combine(_contentPath, "posts");
         if (Directory.Exists(postsPath))
@@ -94,7 +99,25 @@ public class Generator
                 _siteMetadata
             );
             await postProcessor.ProcessAsync(postsPath, _outputPath);
+
+            await fileProvider.WriteFileAsync(
+                Path.Combine(_outputPath, "posts", "feed.xml"),
+                RssFeedWriter.Build(
+                    _siteMetadata,
+                    urlResolver.PostsIndex(),
+                    urlResolver.PostsFeed(),
+                    postProcessor.Posts
+                )
+            );
+
+            sitemapUrls.Add(urlResolver.PostsIndex());
+            sitemapUrls.AddRange(postProcessor.Posts.Select(p => p.Url));
         }
+
+        await fileProvider.WriteFileAsync(
+            Path.Combine(_outputPath, "sitemap.xml"),
+            SitemapWriter.Build(sitemapUrls)
+        );
 
         // Generate knowledge graph JSON data for frontend
         await graphProcessor.ProcessAsync(Path.Combine(_contentPath, "thoughts"), _outputPath);

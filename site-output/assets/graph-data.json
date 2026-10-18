@@ -350,18 +350,6 @@
       "group": 0
     },
     {
-      "id": "index",
-      "title": "Index",
-      "url": "/notes/index/",
-      "category": "Organization",
-      "size": 10,
-      "headers": [
-        "H2: Categories"
-      ],
-      "type": "note",
-      "group": 5
-    },
-    {
       "id": "interface-uses",
       "title": "Interface Uses",
       "url": "/notes/interface-uses/",
@@ -746,6 +734,18 @@
       "headers": [],
       "type": "note",
       "group": 0
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "url": "/notes/index/",
+      "category": "Organization",
+      "size": 10,
+      "headers": [
+        "H2: Categories"
+      ],
+      "type": "note",
+      "group": 5
     }
   ],
   "links": [
@@ -798,30 +798,6 @@
       "strength": 2
     },
     {
-      "source": "index",
-      "target": "career",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "home-lab",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "recipes",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "taking-notes",
-      "type": "reference",
-      "strength": 2
-    },
-    {
       "source": "keyboard-shortcuts",
       "target": "ssms-shortcuts",
       "type": "reference",
@@ -862,6 +838,30 @@
       "target": "11ty",
       "type": "reference",
       "strength": 2
+    },
+    {
+      "source": "index",
+      "target": "career",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "index",
+      "target": "home-lab",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "index",
+      "target": "recipes",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "index",
+      "target": "taking-notes",
+      "type": "reference",
+      "strength": 2
     }
   ],
   "categories": {
@@ -869,8 +869,8 @@
     "Career": 3,
     "Database": 6,
     "Programming": 3,
-    "Organization": 1,
-    "Tools": 5
+    "Tools": 5,
+    "Organization": 1
   },
   "stats": {
     "totalNodes": 60,

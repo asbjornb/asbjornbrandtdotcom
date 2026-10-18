@@ -96,6 +96,16 @@ public sealed class PublishedNotesIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public void SitemapOnlyContainsPublishedNotes()
+    {
+        var sitemap = ReadOutput("sitemap.xml");
+        sitemap.Should().Contain("<loc>https://asbjornbrandt.com/notes/</loc>");
+        sitemap.Should().Contain("<loc>https://asbjornbrandt.com/notes/alpha/</loc>");
+        sitemap.Should().Contain("<loc>https://asbjornbrandt.com/notes/beta/</loc>");
+        sitemap.Should().NotContain("draft");
+    }
+
+    [Fact]
     public void ReportsLinksToUnpublishedNotes()
     {
         _generator.LinksToUnpublishedNotes.Keys.Should().BeEquivalentTo(["draft"]);
