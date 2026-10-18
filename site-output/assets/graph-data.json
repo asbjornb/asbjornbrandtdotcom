@@ -1,16 +1,6 @@
 {
   "nodes": [
     {
-      "id": "11ty-build",
-      "title": "11ty-build",
-      "url": "/notes/11ty-build/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "11ty",
       "title": "11ty",
       "url": "/notes/11ty/",
@@ -19,6 +9,16 @@
       "headers": [
         "H2: package.json"
       ],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "11ty-build",
+      "title": "11ty-build",
+      "url": "/notes/11ty-build/",
+      "category": "General",
+      "size": 10,
+      "headers": [],
       "type": "note",
       "group": 0
     },
@@ -134,16 +134,6 @@
       "group": 0
     },
     {
-      "id": "career-tools",
-      "title": "Career tools",
-      "url": "/notes/career-tools/",
-      "category": "Career",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 3
-    },
-    {
       "id": "career",
       "title": "Career",
       "url": "/notes/career/",
@@ -154,6 +144,16 @@
         "H2: Generic career advice",
         "H2: Negotiations for new jobs"
       ],
+      "type": "note",
+      "group": 3
+    },
+    {
+      "id": "career-tools",
+      "title": "Career tools",
+      "url": "/notes/career-tools/",
+      "category": "Career",
+      "size": 10,
+      "headers": [],
       "type": "note",
       "group": 3
     },
@@ -763,13 +763,13 @@
     },
     {
       "source": "career",
-      "target": "personal-blog",
+      "target": "career-tools",
       "type": "reference",
       "strength": 2
     },
     {
       "source": "career",
-      "target": "career-tools",
+      "target": "personal-blog",
       "type": "reference",
       "strength": 2
     },
@@ -823,25 +823,25 @@
     },
     {
       "source": "keyboard-shortcuts",
-      "target": "ssms-shortcuts",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "keyboard-shortcuts",
       "target": "shortcuts-vscode",
       "type": "reference",
       "strength": 2
     },
     {
       "source": "keyboard-shortcuts",
-      "target": "windows-shortcuts",
+      "target": "ssms-shortcuts",
       "type": "reference",
       "strength": 2
     },
     {
       "source": "keyboard-shortcuts",
       "target": "visual-studio-shortcuts",
+      "type": "reference",
+      "strength": 2
+    },
+    {
+      "source": "keyboard-shortcuts",
+      "target": "windows-shortcuts",
       "type": "reference",
       "strength": 2
     },
@@ -865,11 +865,11 @@
     }
   ],
   "categories": {
-    "General": 42,
     "Career": 3,
     "Database": 6,
-    "Programming": 3,
+    "General": 42,
     "Organization": 1,
+    "Programming": 3,
     "Tools": 5
   },
   "stats": {

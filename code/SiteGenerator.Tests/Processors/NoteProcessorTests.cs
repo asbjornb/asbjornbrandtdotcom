@@ -2,6 +2,7 @@
 using NSubstitute;
 using SiteGenerator.BacklinksProcessing;
 using SiteGenerator.Configuration;
+using SiteGenerator.KnowledgeGraph;
 using SiteGenerator.Processors;
 using SiteGenerator.Templates;
 using SiteGenerator.Tests.Helpers;
@@ -221,5 +222,45 @@ public class NoteProcessorTests
         await _fileProvider
             .DidNotReceive()
             .WriteFileAsync(Path.Combine(outputPath, "draft", "index.html"), Arg.Any<string>());
+    }
+
+    [Fact]
+    public async Task ProcessAsync_SortsConnectedNotesByTitle()
+    {
+        // Arrange
+        var inputPath = "input";
+        var outputPath = "output";
+        GraphNode Node(string id, string title) =>
+            new(id, title, $"/notes/{id}/", "General", 10, []);
+        var graphData = new GraphData(
+            [Node("current", "Current"), Node("x", "Index"), Node("y", "beta"), Node("z", "Alpha")],
+            [new("current", "x"), new("current", "y"), new("z", "current")],
+            []
+        );
+        var processor = new NoteProcessor(
+            _backlinks,
+            _templateRenderer,
+            _fileProvider,
+            _markdownParser,
+            _config,
+            graphData
+        );
+
+        _fileProvider
+            .GetFileContents(inputPath, "*.md")
+            .Returns(new[] { new ContentFile("current.md", "# Current") }.ToAsyncEnumerable());
+
+        string? html = null;
+        await _fileProvider.WriteFileAsync(Arg.Any<string>(), Arg.Do<string>(h => html = h));
+
+        // Act
+        await processor.ProcessAsync(inputPath, outputPath);
+
+        // Assert
+        Assert.NotNull(html);
+        var alpha = html.IndexOf(">Alpha<");
+        var beta = html.IndexOf(">beta<");
+        var index = html.IndexOf(">Index<");
+        Assert.True(alpha >= 0 && alpha < beta && beta < index, html);
     }
 }
