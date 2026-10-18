@@ -14,6 +14,10 @@ public class PostProcessor : IPageProcessor
     private readonly MarkdownPageWriter _pageWriter;
     private readonly SiteUrlResolver _urlResolver;
     private readonly LayoutModelFactory _layoutFactory;
+    private readonly List<PostModel> _posts = [];
+
+    /// <summary>The posts written, for the feed and the sitemap.</summary>
+    public IReadOnlyList<PostModel> Posts => _posts;
 
     public PostProcessor(
         TemplateRenderer templateRenderer,
@@ -55,6 +59,7 @@ public class PostProcessor : IPageProcessor
             var renderedPost = _templateRenderer.RenderPost(postModel, layoutModel);
 
             await _pageWriter.WriteInSectionAsync(outputPath, "posts", slug, renderedPost);
+            _posts.Add(postModel);
 
             // Add to posts list for index
             posts.Add(new PostSummaryModel(title, postUrl, date, slug, excerpt));

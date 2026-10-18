@@ -21,9 +21,18 @@ public class SiteUrlResolverTests
         resolver.Note("my-note").Should().Be("https://example.com/notes/my-note/");
     }
 
+    [Fact]
+    public void Note_IndexIsTheNotesLandingPage()
+    {
+        var resolver = new SiteUrlResolver(_metadata);
+
+        resolver.Note("index").Should().Be("https://example.com/notes/");
+    }
+
     [Theory]
     [InlineData("index", "https://example.com")]
     [InlineData("about", "https://example.com/about/")]
+    [InlineData("404", "https://example.com/404.html")]
     public void Page_ReturnsExpectedUrl(string slug, string expected)
     {
         var resolver = new SiteUrlResolver(_metadata);
@@ -45,5 +54,13 @@ public class SiteUrlResolverTests
         var resolver = new SiteUrlResolver(_metadata);
 
         resolver.PostsIndex().Should().Be("https://example.com/posts/");
+    }
+
+    [Fact]
+    public void PostsFeed_ReturnsFeedUrl()
+    {
+        var resolver = new SiteUrlResolver(_metadata);
+
+        resolver.PostsFeed().Should().Be("https://example.com/posts/feed.xml");
     }
 }
