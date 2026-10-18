@@ -19,8 +19,9 @@
 
 ## :books: Reading
 
-For tech books I finished Managing People, Peopleware, Multipliers, Team Topologies and the Unicorn Project recently. About to start Alex Xu's System Design Interview book.
-
-For fiction my favorite recently was Lonesome Dove - fantastic book that I recommend to everyone that will listen. Also read Shogun (great story, didn't love the writing style), Chronicle of a Death Foretold (didn't enjoy much even if the idea was philosophically interesting), Shantaram (enjoyed a lot) and Dungeon Crawler Carl (best silly book I've read in decades). For the kids I've been reading Vildheks, Skammerens Datter, Kalle Blomkvist and Alle vi børn i Bullerby.
+* Tech books I finished recently: Managing People, Peopleware, Multipliers, Team Topologies and the Unicorn Project. About to start Alex Xu's System Design Interview book.
+* Fiction favorite lately: Lonesome Dove - fantastic book that I recommend to everyone that will listen.
+* Also read Shogun (great story, didn't love the writing style), Chronicle of a Death Foretold (didn't enjoy much even if the idea was philosophically interesting), Shantaram (enjoyed a lot) and Dungeon Crawler Carl (best silly book I've read in decades).
+* For the kids I've been reading Vildheks, Skammerens Datter, Kalle Blomkvist and Alle vi børn i Bullerby.
 
 (This list is inspired by [now](https://nownownow.com/))
