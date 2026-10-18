@@ -76,7 +76,13 @@
     <loc>https://asbjornbrandt.com/notes/exists-vs-in/</loc>
   </url>
   <url>
+    <loc>https://asbjornbrandt.com/notes/fragmentation/</loc>
+  </url>
+  <url>
     <loc>https://asbjornbrandt.com/notes/git/</loc>
+  </url>
+  <url>
+    <loc>https://asbjornbrandt.com/notes/hackerrank/</loc>
   </url>
   <url>
     <loc>https://asbjornbrandt.com/notes/healthchecks-net/</loc>
@@ -100,7 +106,10 @@
     <loc>https://asbjornbrandt.com/notes/make/</loc>
   </url>
   <url>
-    <loc>https://asbjornbrandt.com/notes/nuget/</loc>
+    <loc>https://asbjornbrandt.com/notes/markdown-to-confluence/</loc>
+  </url>
+  <url>
+    <loc>https://asbjornbrandt.com/notes/meme-templates/</loc>
   </url>
   <url>
     <loc>https://asbjornbrandt.com/notes/pc-setup/</loc>
@@ -112,6 +121,9 @@
     <loc>https://asbjornbrandt.com/notes/petapoco-tips/</loc>
   </url>
   <url>
+    <loc>https://asbjornbrandt.com/notes/podcasts/</loc>
+  </url>
+  <url>
     <loc>https://asbjornbrandt.com/notes/programming-languages/</loc>
   </url>
   <url>
@@ -119,9 +131,6 @@
   </url>
   <url>
     <loc>https://asbjornbrandt.com/notes/python/</loc>
-  </url>
-  <url>
-    <loc>https://asbjornbrandt.com/notes/rancher/</loc>
   </url>
   <url>
     <loc>https://asbjornbrandt.com/notes/random-sql-best-practices/</loc>
@@ -140,6 +149,9 @@
   </url>
   <url>
     <loc>https://asbjornbrandt.com/notes/sql-quick-tips/</loc>
+  </url>
+  <url>
+    <loc>https://asbjornbrandt.com/notes/sql-server/</loc>
   </url>
   <url>
     <loc>https://asbjornbrandt.com/notes/sql-weirdness/</loc>
@@ -163,7 +175,13 @@
     <loc>https://asbjornbrandt.com/notes/stoic-principles/</loc>
   </url>
   <url>
+    <loc>https://asbjornbrandt.com/notes/taking-meeting-notes/</loc>
+  </url>
+  <url>
     <loc>https://asbjornbrandt.com/notes/taking-notes/</loc>
+  </url>
+  <url>
+    <loc>https://asbjornbrandt.com/notes/tech/</loc>
   </url>
   <url>
     <loc>https://asbjornbrandt.com/notes/thank-you-notes/</loc>
