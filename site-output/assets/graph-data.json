@@ -100,28 +100,6 @@
       "group": 0
     },
     {
-      "id": "boyds-law-of-iteration",
-      "title": "Boyds Law of Iteration",
-      "url": "/notes/boyds-law-of-iteration/",
-      "category": "General",
-      "size": 21,
-      "headers": [
-        "H2: How"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "career-tools",
-      "title": "Career tools",
-      "url": "/notes/career-tools/",
-      "category": "Career",
-      "size": 10,
-      "headers": [],
-      "type": "category",
-      "group": 3
-    },
-    {
       "id": "career",
       "title": "Career",
       "url": "/notes/career/",
@@ -175,19 +153,6 @@
       "group": 0
     },
     {
-      "id": "code-that-fits-in-your-head",
-      "title": "Code that fits in your head",
-      "url": "/notes/code-that-fits-in-your-head/",
-      "category": "General",
-      "size": 43,
-      "headers": [
-        "H2: Takeaways",
-        "H2: Appendix"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "configuration-tables",
       "title": "Configuration Tables",
       "url": "/notes/configuration-tables/",
@@ -231,35 +196,6 @@
       "category": "General",
       "size": 10,
       "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "docker",
-      "title": "Docker",
-      "url": "/notes/docker/",
-      "category": "General",
-      "size": 58,
-      "headers": [
-        "H2: Dockerfile",
-        "H2: Help",
-        "H2: Pull to pull an image or build to build from a dockerfile",
-        "H2: Run to create and start or start to just start an existing containter",
-        "H2: Common issues"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "exercise",
-      "title": "Exercise",
-      "url": "/notes/exercise/",
-      "category": "General",
-      "size": 13,
-      "headers": [
-        "H2: Of note",
-        "H2: Static holds of note"
-      ],
       "type": "note",
       "group": 0
     },
@@ -474,22 +410,6 @@
       "group": 0
     },
     {
-      "id": "python",
-      "title": "Python",
-      "url": "/notes/python/",
-      "category": "Programming",
-      "size": 71,
-      "headers": [
-        "H2: Virtual environments",
-        "H2: Taking arguments",
-        "H2: Stopping execution",
-        "H2: Project templates",
-        "H2: Notes on useful language elements, functions etc."
-      ],
-      "type": "note",
-      "group": 2
-    },
-    {
       "id": "random-sql-best-practices",
       "title": "Random sql best practices",
       "url": "/notes/random-sql-best-practices/",
@@ -570,19 +490,6 @@
       "group": 1
     },
     {
-      "id": "sql-weirdness",
-      "title": "Sql weirdness",
-      "url": "/notes/sql-weirdness/",
-      "category": "Database",
-      "size": 27,
-      "headers": [
-        "H2: Can use space with zero width and other gimmicks for unreadable code",
-        "H2: Zalgo script is also allowed"
-      ],
-      "type": "note",
-      "group": 1
-    },
-    {
       "id": "ssdt",
       "title": "SSDT",
       "url": "/notes/ssdt/",
@@ -613,16 +520,6 @@
       "headers": [],
       "type": "note",
       "group": 3
-    },
-    {
-      "id": "statebased-vs-migrationsbased",
-      "title": "State based Vs Migrations based",
-      "url": "/notes/statebased-vs-migrationsbased/",
-      "category": "General",
-      "size": 28,
-      "headers": [],
-      "type": "note",
-      "group": 0
     },
     {
       "id": "stoic-principles",
@@ -790,6 +687,109 @@
         "H2: Options"
       ],
       "type": "category",
+      "group": 0
+    },
+    {
+      "id": "boyds-law-of-iteration",
+      "title": "Boyds Law of Iteration",
+      "url": "/notes/boyds-law-of-iteration/",
+      "category": "General",
+      "size": 21,
+      "headers": [
+        "H2: How"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "code-that-fits-in-your-head",
+      "title": "Code that fits in your head",
+      "url": "/notes/code-that-fits-in-your-head/",
+      "category": "General",
+      "size": 43,
+      "headers": [
+        "H2: Takeaways",
+        "H2: Appendix"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "docker",
+      "title": "Docker",
+      "url": "/notes/docker/",
+      "category": "General",
+      "size": 58,
+      "headers": [
+        "H2: Dockerfile",
+        "H2: Help",
+        "H2: Pull to pull an image or build to build from a dockerfile",
+        "H2: Run to create and start or start to just start an existing container",
+        "H2: Common issues"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "exercise",
+      "title": "Exercise",
+      "url": "/notes/exercise/",
+      "category": "General",
+      "size": 13,
+      "headers": [
+        "H2: Of note",
+        "H2: Static holds of note"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
+      "id": "python",
+      "title": "Python",
+      "url": "/notes/python/",
+      "category": "Programming",
+      "size": 71,
+      "headers": [
+        "H2: Virtual environments",
+        "H2: Taking arguments",
+        "H2: Stopping execution",
+        "H2: Project templates",
+        "H2: Notes on useful language elements, functions etc."
+      ],
+      "type": "note",
+      "group": 2
+    },
+    {
+      "id": "career-tools",
+      "title": "Career tools",
+      "url": "/notes/career-tools/",
+      "category": "Career",
+      "size": 10,
+      "headers": [],
+      "type": "category",
+      "group": 3
+    },
+    {
+      "id": "sql-weirdness",
+      "title": "Sql weirdness",
+      "url": "/notes/sql-weirdness/",
+      "category": "Database",
+      "size": 26,
+      "headers": [
+        "H2: Can use space with zero width and other gimmicks for unreadable code",
+        "H2: Zalgo script is also allowed"
+      ],
+      "type": "note",
+      "group": 1
+    },
+    {
+      "id": "statebased-vs-migrationsbased",
+      "title": "State based Vs Migrations based",
+      "url": "/notes/statebased-vs-migrationsbased/",
+      "category": "General",
+      "size": 28,
+      "headers": [],
+      "type": "note",
       "group": 0
     }
   ],

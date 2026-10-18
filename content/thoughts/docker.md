@@ -19,7 +19,7 @@ run `docker` to see a list of commands. Then `docker <command> --help` to get he
 
 This generates an image. Then it needs to be Run or Created to get a container which can then be started.
 
-## Run to create and start or start to just start an existing containter
+## Run to create and start or start to just start an existing container
 
 * docker run -it --name linux-powershell linux-powershell
   * creates and starts a docker container based on given image, names it linux-powershell and sets it to interactive so standard in/out is written from/to console.

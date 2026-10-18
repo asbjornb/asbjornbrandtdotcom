@@ -2,7 +2,7 @@
 
 * Grill huset:
   * Very large kebab
-  * Othervise boring
+  * Otherwise boring
 * Pølsehuset:
   * Fairly good and cheap
 * City pizza:
