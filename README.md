@@ -1,139 +1,62 @@
-# Asbjørn Brandt's Personal Website
+# asbjornbrandtdotcom
 
-A custom static site generator and content management system for [asbjornbrandt.com](https://asbjornbrandt.com) - a digital garden containing thoughts, notes, and writings on technology, data, and programming.
+The home-rolled static site generator behind [asbjornbrandt.com](https://asbjornbrandt.com), a digital garden of
+notes, posts and pages written in Markdown.
 
-## Overview
-
-This project consists of two main components:
-
-1. **Static Site Generator** - A custom C# application that converts Markdown content into HTML
-2. **Content** - A collection of Markdown files organized as a digital garden/wiki
-
-The site follows a "digital garden" philosophy, focusing on evergreen content and interconnected thoughts rather than traditional chronological blog posts.
-
-## Project Structure
-
-```
-├── code/                           # Static site generator source code
-│   ├── SiteGenerator/             # Main application
-│   ├── SiteGenerator.Tests/       # Unit tests
-│   └── templates/                 # HTML templates (Handlebars)
-├── content/                       # Website content
-│   ├── pages/                     # Main pages (index, about, etc.)
-│   ├── thoughts/                  # Notes/thoughts (digital garden)
-│   ├── posts/                     # Blog posts
-│   └── assets/                    # Static assets (CSS, images, etc.)
-└── site-output/                   # Generated static site
-```
+The site's content lives in a separate private repo. Its CI checks out this repo, runs the generator against the
+content and deploys the output to Cloudflare. This repo holds the engine, the HTML templates and a small sample site.
 
 ## Features
 
-### Static Site Generator
+- **Markdown** to HTML with [Markdig](https://github.com/xoofx/markdig), including pipe tables
+- **Templates** with [Handlebars.NET](https://github.com/Handlebars-Net/Handlebars.Net)
+- **Wikilinks**: `[[note-name]]` links between notes, with backlinks generated on each note
+- **Selective publishing**: `published.txt` lists the notes that go on the site. Links to unpublished notes render
+  as plain text, and the generator warns about them
+- **Posts** dated by filename, with an index page and an RSS feed
+- **Site files**: `sitemap.xml`, a 404 page, and anything in `static/` copied to the output root (e.g. `_redirects`)
 
-- **Markdown Processing**: Converts Markdown files to HTML using Markdig
-- **Front Matter Support**: YAML front matter parsing for metadata
-- **Template System**: Handlebars.NET templating engine
-- **Backlink Processing**: Automatic bidirectional linking between notes
-- **Multiple Content Types**: Support for pages, notes, and posts
-- **Asset Management**: Automatic copying of static assets
+## Content layout
 
-### Content Organization
-
-- **Digital Garden**: Interconnected thoughts and notes
-- **Wiki-style Linking**: `[[note-name]]` syntax for internal links
-- **Backlinks**: Automatic discovery and display of pages that link to current page
-- **Content Categories**:
-  - `pages/` - Main site pages
-  - `thoughts/` - Digital garden notes (output to `/notes/`)
-  - `posts/` - Traditional blog posts
-  - `assets/` - Images, CSS, and other static files
-
-## Technology Stack
-
-- **Language**: C# (.NET 10)
-- **Markdown Parser**: [Markdig](https://github.com/xoofx/markdig)
-- **Template Engine**: [Handlebars.NET](https://github.com/Handlebars-Net/Handlebars.Net)
-- **Front Matter**: [YamlDotNet](https://github.com/aaubry/YamlDotNet)
-- **HTML Processing**: HtmlAgilityPack
-- **Testing**: xUnit, FluentAssertions
-- **CI/CD**: GitHub Actions
-- **Deployment**: Cloudflare Pages (commented out in workflow)
-
-## Getting Started
-
-### Prerequisites
-
-- .NET 10 SDK
-- Git
-
-### Running Locally
-
-1. Build the solution:
-
-   ```bash
-   cd code
-   dotnet build SiteGenerator.sln
-   ```
-
-2. Run the site generator:
-
-   ```bash
-   cd SiteGenerator
-   dotnet run
-   ```
-
-3. The generated site will be available in the `site-output/` directory
-
-### Configuration
-
-Site configuration is managed through `code/SiteGenerator/appsettings.json`.
-
-## Development
-
-### Running Tests
-
-```bash
-cd code
-dotnet test SiteGenerator.sln
+```
+pages/          Site pages, rendered at the root (index.md, now.md, 404.md, ...)
+posts/          Posts, named yyyy-MM-dd-slug.md, rendered under /posts/
+thoughts/       Notes (the garden), rendered under /notes/
+assets/         CSS, images and other files, copied to /assets/
+static/         Files copied as-is to the output root
+published.txt   Notes to publish, one path or slug per line. Missing file = publish everything
 ```
 
-### Project Architecture
+[`sample-content/`](sample-content) is a minimal example.
 
-- **Generator.cs**: Main orchestrator that coordinates content processing
-- **Processors/**: Content processors for different content types (pages, notes)
-- **BacklinksProcessing/**: Handles wiki-style linking and backlink generation
-- **Templates/**: Template rendering and metadata models
-- **Configuration/**: Site configuration and path management
+## Running it
 
-### Adding Content
+Requires the .NET 10 SDK. [Task](https://taskfile.dev) wraps the common commands:
 
-1. **Pages**: Add Markdown files to `content/pages/` (rendered to site root)
-2. **Notes**: Add Markdown files to `content/thoughts/` (rendered to `/notes/`)
-3. **Posts**: Add Markdown files to `content/posts/` (traditional blog posts)
-4. **Assets**: Add static files to `content/assets/`
+```sh
+task test       # build and run the tests
+task generate   # build sample-content/ into site-output/
+```
 
-### Wiki-style Linking
+To build other content, pass the paths on the command line (absolute, or relative to the repo root):
 
-Use `[[filename]]` syntax to link between notes. The system automatically:
+```sh
+cd code/SiteGenerator
+dotnet run -- --Paths:ContentDirectory=/path/to/content --Paths:OutputDirectory=/path/to/output
+```
 
-- Converts to proper HTML links
-- Generates backlinks showing which pages reference the current page
-- Handles missing pages gracefully
+Site metadata (title, base URL, author) is in `code/SiteGenerator/appsettings.json`.
 
-## CI/CD
+## Project structure
 
-The project uses GitHub Actions for continuous integration:
-
-- Builds the .NET solution
-- Runs all tests
-- Deployment to Cloudflare Pages (currently commented out)
-
-## License
-
-This project is open source. The static site generator code is available for reuse, while the content in the `content/` directory represents personal writing and thoughts.
-
-## Contact
-
-- Email: asbjoernbrandt@gmail.com
-- Website: [asbjornbrandt.com](https://asbjornbrandt.com)
-- GitHub: [github.com/asbjornb/asbjornbrandtdotcom](https://github.com/asbjornb/asbjornbrandtdotcom)
+```
+code/
+  SiteGenerator/         The generator
+    Processors/          Pages, notes and posts
+    BacklinksProcessing/ Wikilinks and backlinks
+    KnowledgeGraph/      Note graph data
+    Templates/           Template rendering
+  SiteGenerator.Tests/   xUnit tests and test fixtures
+  templates/             Handlebars templates
+sample-content/          Example content
+```

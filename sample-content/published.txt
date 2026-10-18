@@ -1,0 +1,3 @@
+# Notes published on the site, one path or slug per line. Unlisted notes are not rendered.
+thoughts/gardening.md
+thoughts/wikilinks.md

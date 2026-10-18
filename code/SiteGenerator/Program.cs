@@ -34,7 +34,7 @@ public class Program
 
         // Validate paths
         ValidatePath(contentPath, nameof(pathsConfig.ContentDirectory));
-        ValidatePath(outputPath, nameof(pathsConfig.OutputDirectory));
+        Directory.CreateDirectory(outputPath);
         ValidatePath(templatePath, nameof(pathsConfig.TemplateDirectory));
 
         // Run the generator
