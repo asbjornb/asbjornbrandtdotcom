@@ -13,8 +13,7 @@ Last updated 2026-10-18.
   builds and deploys the site.
 - **No front matter on notes.** `published.txt` in the notes repo lists the notes that go on the site, one
   path per line. Posts and pages always publish.
-- **No CV on the site.** Recruiters arrive with the CV already. Add a LinkedIn link and a one-line
-  "who I am" for peers arriving from posts or GitHub.
+- **No CV on the site.** It's a personal page: a collection of thoughts and things I've built, not a resume.
 - **Notes: hide now, tend, promote back.** Start `published.txt` with only notes that read as finished.
 - **Posts: fewer LinkedIn re-posts, more deep engineering posts** with real numbers from recent work.
 - **Capture via Telegram, triage via the Claude Android app.** No home lab.
@@ -24,15 +23,18 @@ Last updated 2026-10-18.
 - [x] PR #23 (merged): hoarding post paragraphs + typo, `... copy` slug renamed with `_redirects` 301,
       generator copies `content/static/` to output root
 - [x] Check that `https://asbjornbrandt.com/posts/something-feels-different-now%20copy/` redirects (301, verified 2026-10-18)
-- [x] Step 2: `published.txt` support + first list (branch `published-notes`)
+- [x] Step 2: `published.txt` support + first list (PR #25)
+- [x] PR #27: CSharpier versions aligned, code formatted with 1.1.1
 
-## 1. Homepage and LinkedIn (quick)
+## 1. Homepage (quick)
 
-- [ ] One identity line: role, domain, stack, place
-- [ ] Links to LinkedIn and GitHub (LinkedIn URL: TODO)
-- [ ] Show the latest 3 posts on the homepage
+A personal page, not a resume: thoughts and things I've built.
+
+- [ ] Maybe: show the latest 3 posts on the homepage. Not decided yet. A working version exists in closed
+      PR #26 (branch `homepage-latest-posts`: `<!-- latest-posts -->` marker in `pages/index.md`, with tests)
 - [ ] Typos: "life long learner" -> "lifelong", "Sql" -> "SQL"
-- [ ] Refresh Now page (last updated 2025-12-19)
+- [ ] Rewrite the Now page (last updated 2025-12-19). Doing it myself
+- [ ] Later: homepage intro/profile makeover (LinkedIn link, intro line). Parked for now
 
 ## 2. `published.txt` support in the generator
 
@@ -106,6 +108,9 @@ Each note gets updated and added to `published.txt`, merged into another note, o
 - [ ] Projects page: site generator, visuals.asbjornbrandt.com, anything showable from work
 
 ## 7. Site fixes
+
+Next up: the RSS / `sitemap.xml` / `robots.txt` / `404.html` item. Generator-side, so it carries over to
+the split.
 
 - [ ] Remaining LinkedIn-style posts merge single line breaks (on-jira, why-i-dont-want-to-manage,
       a-thought-on-pay, voluntary-code-reviews, good-intentions-tangled-systems): add blank lines, or enable
