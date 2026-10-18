@@ -195,13 +195,14 @@ blockquote{
 
 .post-meta {
     flex-shrink: 0;
-    width: 5rem;
+    width: 8rem;
 }
 
 .post-date {
     font-size: 0.8em;
     color: var(--grey);
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
 }
 
 .post-content {
