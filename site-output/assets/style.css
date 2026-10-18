@@ -232,3 +232,24 @@ blockquote{
     font-size: 0.9em;
     line-height: 1.4;
 }
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    margin: 1rem 0;
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 0.4rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: #f5f5f5;
+    font-weight: 600;
+}

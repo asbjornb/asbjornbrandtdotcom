@@ -10,6 +10,7 @@ public static class MarkdownPipelineFactory
             new MarkdownPipelineBuilder()
                 .UseAutoLinks()
                 .UseEmphasisExtras()
+                .UsePipeTables()
                 .UseTaskLists()
                 .UseEmojiAndSmiley()
                 .Build(),
