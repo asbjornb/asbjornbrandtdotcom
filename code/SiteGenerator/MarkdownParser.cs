@@ -9,7 +9,7 @@ public class MarkdownParser
     private readonly PublishedNotes _publishedNotes;
 
     public MarkdownParser()
-        : this(null) { }
+        : this(null, null) { }
 
     public MarkdownParser(PublishedNotes publishedNotes)
         : this(null, publishedNotes) { }

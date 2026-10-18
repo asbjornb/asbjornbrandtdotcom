@@ -4,7 +4,7 @@ Working plan for asbjornbrandt.com. Longer version with the full site review:
 [Note capture & triage plan](https://claude.ai/code/artifact/dd48df15-96f5-457b-86d8-51b041cc6eb5).
 Once the repo split is done, this file moves to the private `notes` repo.
 
-Last updated 2026-10-17.
+Last updated 2026-10-18.
 
 ## Decisions
 
@@ -23,7 +23,8 @@ Last updated 2026-10-17.
 
 - [x] PR #23 (merged): hoarding post paragraphs + typo, `... copy` slug renamed with `_redirects` 301,
       generator copies `content/static/` to output root
-- [ ] Check that `https://asbjornbrandt.com/posts/something-feels-different-now%20copy/` redirects
+- [x] Check that `https://asbjornbrandt.com/posts/something-feels-different-now%20copy/` redirects (301, verified 2026-10-18)
+- [x] Step 2: `published.txt` support + first list (branch `published-notes`)
 
 ## 1. Homepage and LinkedIn (quick)
 
@@ -37,15 +38,24 @@ Last updated 2026-10-17.
 
 Done before the split, so notes can be hidden right away.
 
-- [ ] Read `published.txt` from the content root; only render notes listed there
-- [ ] If the file is missing, publish everything (keeps tests and old behavior working)
-- [ ] `[[wikilinks]]` to unpublished notes render as plain text, not links
-- [ ] Backlinks, notes index and knowledge graph only include published notes
-- [ ] Generator warning listing links that point at unpublished notes (a to-do list for tending)
-- [ ] Tests for all of the above
-- [ ] First `published.txt`: only finished-looking notes. Leave out `inbox`, `work-todo`, `work-tools`,
+- [x] Read `published.txt` from the content root; only render notes listed there
+- [x] If the file is missing, publish everything (keeps tests and old behavior working)
+- [x] `[[wikilinks]]` to unpublished notes render as plain text, not links
+- [x] Backlinks, notes index and knowledge graph only include published notes
+- [x] Generator warning listing links that point at unpublished notes (a to-do list for tending)
+- [x] Tests for all of the above
+- [x] First `published.txt`: only finished-looking notes. Leave out `inbox`, `work-todo`, `work-tools`,
       `work-reading`, and the thin notes listed under step 5
-- [ ] Remove "Top of mind" / "Organizational" sections from the notes index (`thoughts/index.md`)
+- [x] Remove "Top of mind" / "Organizational" sections from the notes index (`thoughts/index.md`)
+
+Notes from doing it:
+- Lines in `published.txt` can be a path or bare slug; `#` comments allowed. The notes index always publishes.
+- The generator never cleans `site-output/`, so stale pages linger until deleted by hand (moot after the split,
+  since CI builds fresh).
+- Current warning list (unpublished/missing link targets): `Claude code` (ai-assisted-coding, wikilink with a
+  space), `chrome-shortcuts` (keyboard-shortcuts), `finance`, `podcasts`, `tech` (notes index; `finance` doesn't
+  exist), `private/people.md` (thank-you-notes), `recipe-for-11ty-multi-repo-site` (personal-blog), `vscode`
+  (remote-development). The notes index "Categories" list now shows podcasts/finance/tech as plain text.
 
 ## 3. Repo split
 

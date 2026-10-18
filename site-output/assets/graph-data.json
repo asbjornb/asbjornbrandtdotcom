@@ -23,6 +23,18 @@
       "group": 0
     },
     {
+      "id": "Investments",
+      "title": "Investments",
+      "url": "/notes/Investments/",
+      "category": "General",
+      "size": 15,
+      "headers": [
+        "H2: Indeks-foreninger"
+      ],
+      "type": "note",
+      "group": 0
+    },
+    {
       "id": "ai-assisted-coding",
       "title": "AI-Assisted Coding",
       "url": "/notes/ai-assisted-coding/",
@@ -68,7 +80,7 @@
       "title": "Being more convincing",
       "url": "/notes/being-more-convincing/",
       "category": "General",
-      "size": 44,
+      "size": 43,
       "headers": [
         "H2: Three forms of appeal",
         "H2: When presenting"
@@ -81,7 +93,7 @@
       "title": "Board games",
       "url": "/notes/board-games/",
       "category": "General",
-      "size": 35,
+      "size": 34,
       "headers": [
         "H2: Some current favorites",
         "H2: Some other good ones",
@@ -96,7 +108,7 @@
       "title": "Books",
       "url": "/notes/books/",
       "category": "General",
-      "size": 62,
+      "size": 61,
       "headers": [
         "H2: Programming related",
         "H3: To read",
@@ -128,7 +140,7 @@
       "category": "Career",
       "size": 10,
       "headers": [],
-      "type": "hub",
+      "type": "note",
       "group": 3
     },
     {
@@ -156,21 +168,11 @@
       "group": 0
     },
     {
-      "id": "cheat-sheets",
-      "title": "Cheat sheets",
-      "url": "/notes/cheat-sheets/",
-      "category": "Tools",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 4
-    },
-    {
       "id": "children",
       "title": "Children",
       "url": "/notes/children/",
       "category": "General",
-      "size": 52,
+      "size": 51,
       "headers": [
         "H2: Brain chemicals",
         "H2: Teachings",
@@ -180,21 +182,11 @@
       "group": 0
     },
     {
-      "id": "chrome-shortcuts",
-      "title": "Chrome Shortcuts",
-      "url": "/notes/chrome-shortcuts/",
-      "category": "Tools",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 4
-    },
-    {
       "id": "claude-code",
       "title": "Claude code",
       "url": "/notes/claude-code/",
       "category": "General",
-      "size": 49,
+      "size": 48,
       "headers": [
         "H2: Installation",
         "H2: Usage",
@@ -209,7 +201,7 @@
       "title": "Code that fits in your head",
       "url": "/notes/code-that-fits-in-your-head/",
       "category": "General",
-      "size": 44,
+      "size": 43,
       "headers": [
         "H2: Takeaways",
         "H2: Appendix"
@@ -222,9 +214,9 @@
       "title": "Configuration Tables",
       "url": "/notes/configuration-tables/",
       "category": "Database",
-      "size": 23,
+      "size": 22,
       "headers": [],
-      "type": "category",
+      "type": "note",
       "group": 1
     },
     {
@@ -249,7 +241,7 @@
       "title": "Database Mail",
       "url": "/notes/database-mail/",
       "category": "Database",
-      "size": 59,
+      "size": 57,
       "headers": [],
       "type": "note",
       "group": 1
@@ -265,21 +257,11 @@
       "group": 0
     },
     {
-      "id": "dbatools",
-      "title": "Dbatools",
-      "url": "/notes/dbatools/",
-      "category": "Tools",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 4
-    },
-    {
       "id": "docker",
       "title": "Docker",
       "url": "/notes/docker/",
       "category": "General",
-      "size": 59,
+      "size": 58,
       "headers": [
         "H2: Dockerfile",
         "H2: Help",
@@ -291,21 +273,11 @@
       "group": 0
     },
     {
-      "id": "etl",
-      "title": "ETL",
-      "url": "/notes/etl/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "exercise",
       "title": "Exercise",
       "url": "/notes/exercise/",
       "category": "General",
-      "size": 14,
+      "size": 13,
       "headers": [
         "H2: Of note",
         "H2: Static holds of note"
@@ -324,61 +296,21 @@
       "group": 0
     },
     {
-      "id": "fastfood-hobro",
-      "title": "Fastfood Hobro",
-      "url": "/notes/fastfood-hobro/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "fragmentation",
-      "title": "Fragmentation",
-      "url": "/notes/fragmentation/",
-      "category": "Database",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 1
-    },
-    {
-      "id": "fuses",
-      "title": "Fuses",
-      "url": "/notes/fuses/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "git",
       "title": "Git",
       "url": "/notes/git/",
       "category": "Programming",
-      "size": 82,
-      "headers": [],
-      "type": "category",
-      "group": 2
-    },
-    {
-      "id": "hackerrank",
-      "title": "Hackerrank",
-      "url": "/notes/hackerrank/",
-      "category": "General",
-      "size": 10,
+      "size": 80,
       "headers": [],
       "type": "note",
-      "group": 0
+      "group": 2
     },
     {
       "id": "healthchecks-net",
       "title": "Healthchecks in .NET",
       "url": "/notes/healthchecks-net/",
       "category": "General",
-      "size": 117,
+      "size": 116,
       "headers": [
         "H2: Implementation in .NET",
         "H2: Common pitfalls",
@@ -418,24 +350,12 @@
       "group": 0
     },
     {
-      "id": "inbox",
-      "title": "Inbox",
-      "url": "/notes/inbox/",
-      "category": "Organization",
-      "size": 20,
-      "headers": [],
-      "type": "note",
-      "group": 5
-    },
-    {
       "id": "index",
       "title": "Index",
       "url": "/notes/index/",
       "category": "Organization",
-      "size": 21,
+      "size": 10,
       "headers": [
-        "H2: Top of mind",
-        "H2: Organizational",
         "H2: Categories"
       ],
       "type": "note",
@@ -446,7 +366,7 @@
       "title": "Interface Uses",
       "url": "/notes/interface-uses/",
       "category": "Database",
-      "size": 45,
+      "size": 44,
       "headers": [
         "H2: One-to-one misuse",
         "H2: Guidelines (just my own dynamic list)",
@@ -456,23 +376,11 @@
       "group": 1
     },
     {
-      "id": "Investments",
-      "title": "Investments",
-      "url": "/notes/Investments/",
-      "category": "General",
-      "size": 15,
-      "headers": [
-        "H2: Indeks-foreninger"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "keyboard-shortcuts",
       "title": "Keyboard shortcuts",
       "url": "/notes/keyboard-shortcuts/",
       "category": "Tools",
-      "size": 13,
+      "size": 12,
       "headers": [
         "H2: List of shortcuts for current workflow"
       ],
@@ -484,7 +392,7 @@
       "title": "kubectl",
       "url": "/notes/kubectl/",
       "category": "General",
-      "size": 51,
+      "size": 50,
       "headers": [
         "H2: Check and Switch Context",
         "H2: Search for Deployments, Pods, or Services",
@@ -497,21 +405,11 @@
       "group": 0
     },
     {
-      "id": "logitech-keyboard-mouse",
-      "title": "Logitech keyboard mouse",
-      "url": "/notes/logitech-keyboard-mouse/",
-      "category": "Programming",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 2
-    },
-    {
       "id": "make",
       "title": "Make",
       "url": "/notes/make/",
       "category": "General",
-      "size": 40,
+      "size": 39,
       "headers": [
         "H2: Makefile",
         "H2: Limitations \u0026amp; Alternatives"
@@ -520,74 +418,11 @@
       "group": 0
     },
     {
-      "id": "markdown-to-confluence",
-      "title": "Markdown to confluence",
-      "url": "/notes/markdown-to-confluence/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "media-notes",
-      "title": "Media notes",
-      "url": "/notes/media-notes/",
-      "category": "General",
-      "size": 13,
-      "headers": [
-        "H2: Podcasts",
-        "H2: Videos"
-      ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "meme-templates",
-      "title": "Meme Templates",
-      "url": "/notes/meme-templates/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "mock",
-      "title": "Mock",
-      "url": "/notes/mock/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "mtg-prices",
-      "title": "Mtg prices",
-      "url": "/notes/mtg-prices/",
-      "category": "General",
-      "size": 13,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "namespaces",
-      "title": "Namespaces",
-      "url": "/notes/namespaces/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "nuget",
       "title": "NuGet",
       "url": "/notes/nuget/",
       "category": "General",
-      "size": 76,
+      "size": 74,
       "headers": [
         "H2: What is a \u003Ccode\u003E.nupkg\u003C/code\u003E?",
         "H2: Inspect Cached Packages",
@@ -604,7 +439,7 @@
       "title": "PC Setup",
       "url": "/notes/pc-setup/",
       "category": "General",
-      "size": 11,
+      "size": 10,
       "headers": [],
       "type": "note",
       "group": 0
@@ -621,7 +456,7 @@
         "H2: Tech stack",
         "H2: Blog post ideas"
       ],
-      "type": "category",
+      "type": "note",
       "group": 0
     },
     {
@@ -630,16 +465,6 @@
       "url": "/notes/petapoco-tips/",
       "category": "General",
       "size": 12,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "podcasts",
-      "title": "Podcasts",
-      "url": "/notes/podcasts/",
-      "category": "General",
-      "size": 10,
       "headers": [],
       "type": "note",
       "group": 0
@@ -665,21 +490,11 @@
       "group": 0
     },
     {
-      "id": "project-euler",
-      "title": "Project Euler",
-      "url": "/notes/project-euler/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "python",
       "title": "Python",
       "url": "/notes/python/",
       "category": "Programming",
-      "size": 72,
+      "size": 71,
       "headers": [
         "H2: Virtual environments",
         "H2: Taking arguments",
@@ -687,7 +502,7 @@
         "H2: Project templates",
         "H2: Notes on useful language elements, functions etc."
       ],
-      "type": "category",
+      "type": "note",
       "group": 2
     },
     {
@@ -711,21 +526,11 @@
       "group": 1
     },
     {
-      "id": "readme",
-      "title": "Thoughts",
-      "url": "/notes/readme/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "recipes",
       "title": "Recipes",
       "url": "/notes/recipes/",
       "category": "General",
-      "size": 45,
+      "size": 44,
       "headers": [
         "H2: Stables",
         "H3: Other stables",
@@ -761,21 +566,11 @@
       "group": 0
     },
     {
-      "id": "row-version",
-      "title": "Row version",
-      "url": "/notes/row-version/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "shortcuts-vscode",
       "title": "Shortcuts VScode",
       "url": "/notes/shortcuts-vscode/",
       "category": "Tools",
-      "size": 17,
+      "size": 16,
       "headers": [],
       "type": "note",
       "group": 4
@@ -784,26 +579,6 @@
       "id": "sql-quick-tips",
       "title": "sql-quick-tips",
       "url": "/notes/sql-quick-tips/",
-      "category": "Database",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 1
-    },
-    {
-      "id": "sql-server",
-      "title": "Sql Server",
-      "url": "/notes/sql-server/",
-      "category": "Database",
-      "size": 10,
-      "headers": [],
-      "type": "category",
-      "group": 1
-    },
-    {
-      "id": "sql-utility-scripts",
-      "title": "Sql utility scripts",
-      "url": "/notes/sql-utility-scripts/",
       "category": "Database",
       "size": 10,
       "headers": [],
@@ -828,17 +603,7 @@
       "title": "SSDT",
       "url": "/notes/ssdt/",
       "category": "General",
-      "size": 18,
-      "headers": [],
-      "type": "category",
-      "group": 0
-    },
-    {
-      "id": "ssms-commandline-usage",
-      "title": "SSMS commandline usage",
-      "url": "/notes/ssms-commandline-usage/",
-      "category": "General",
-      "size": 10,
+      "size": 17,
       "headers": [],
       "type": "note",
       "group": 0
@@ -848,7 +613,7 @@
       "title": "SSMS Shortcuts",
       "url": "/notes/ssms-shortcuts/",
       "category": "Tools",
-      "size": 38,
+      "size": 37,
       "headers": [
         "H2: SSMS query shortcuts"
       ],
@@ -860,9 +625,9 @@
       "title": "Staff eng",
       "url": "/notes/staff-eng/",
       "category": "Career",
-      "size": 13,
+      "size": 12,
       "headers": [],
-      "type": "category",
+      "type": "note",
       "group": 3
     },
     {
@@ -880,7 +645,7 @@
       "title": "Static sites",
       "url": "/notes/static-sites/",
       "category": "General",
-      "size": 27,
+      "size": 26,
       "headers": [
         "H2: Options"
       ],
@@ -898,35 +663,15 @@
       "group": 0
     },
     {
-      "id": "taking-meeting-notes",
-      "title": "Taking meeting notes",
-      "url": "/notes/taking-meeting-notes/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
       "id": "taking-notes",
       "title": "Taking notes",
       "url": "/notes/taking-notes/",
       "category": "General",
-      "size": 30,
+      "size": 29,
       "headers": [
         "H2: Tools to consider (all these are probably worth trying)",
         "H2: Structure"
       ],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "tech",
-      "title": "Tech",
-      "url": "/notes/tech/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
       "type": "note",
       "group": 0
     },
@@ -951,23 +696,11 @@
       "group": 0
     },
     {
-      "id": "tsql-codesmells",
-      "title": "tsql codesmells",
-      "url": "/notes/tsql-codesmells/",
-      "category": "Database",
-      "size": 10,
-      "headers": [
-        "H2: References"
-      ],
-      "type": "note",
-      "group": 1
-    },
-    {
       "id": "visual-studio-shortcuts",
       "title": "Visual studio shortcuts",
       "url": "/notes/visual-studio-shortcuts/",
       "category": "Tools",
-      "size": 11,
+      "size": 10,
       "headers": [],
       "type": "note",
       "group": 4
@@ -993,57 +726,6 @@
       "headers": [],
       "type": "note",
       "group": 4
-    },
-    {
-      "id": "windows-terminal",
-      "title": "Windows terminal",
-      "url": "/notes/windows-terminal/",
-      "category": "General",
-      "size": 10,
-      "headers": [],
-      "type": "note",
-      "group": 0
-    },
-    {
-      "id": "work-reading",
-      "title": "Work Reading",
-      "url": "/notes/work-reading/",
-      "category": "Career",
-      "size": 10,
-      "headers": [
-        "H2: Inbox"
-      ],
-      "type": "note",
-      "group": 3
-    },
-    {
-      "id": "work-todo",
-      "title": "Work Todo",
-      "url": "/notes/work-todo/",
-      "category": "Database",
-      "size": 86,
-      "headers": [
-        "H2: Implement",
-        "H2: Research",
-        "H3: Direct use",
-        "H3: Fun/long term",
-        "H2: Business ideas",
-        "H2: Hackathon"
-      ],
-      "type": "note",
-      "group": 1
-    },
-    {
-      "id": "work-tools",
-      "title": "Work Tools",
-      "url": "/notes/work-tools/",
-      "category": "Database",
-      "size": 42,
-      "headers": [
-        "H2: Inbox tools of note"
-      ],
-      "type": "note",
-      "group": 1
     },
     {
       "id": "writing",
@@ -1092,18 +774,6 @@
       "strength": 2
     },
     {
-      "source": "cheat-sheets",
-      "target": "git",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "cheat-sheets",
-      "target": "python",
-      "type": "reference",
-      "strength": 2
-    },
-    {
       "source": "docker",
       "target": "rancher",
       "type": "reference",
@@ -1129,67 +799,7 @@
     },
     {
       "source": "index",
-      "target": "keyboard-shortcuts",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "cheat-sheets",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "personal-blog",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "ssdt",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "inbox",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "work-todo",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "work-tools",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "work-reading",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "podcasts",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
       "target": "career",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "index",
-      "target": "tech",
       "type": "reference",
       "strength": 2
     },
@@ -1225,12 +835,6 @@
     },
     {
       "source": "keyboard-shortcuts",
-      "target": "chrome-shortcuts",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "keyboard-shortcuts",
       "target": "windows-shortcuts",
       "type": "reference",
       "strength": 2
@@ -1242,50 +846,8 @@
       "strength": 2
     },
     {
-      "source": "media-notes",
-      "target": "books",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "media-notes",
-      "target": "career-tools",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "media-notes",
-      "target": "staff-eng",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "media-notes",
-      "target": "the-art-of-code",
-      "type": "reference",
-      "strength": 2
-    },
-    {
       "source": "personal-blog",
       "target": "static-sites",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "podcasts",
-      "target": "staff-eng",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "podcasts",
-      "target": "career-tools",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "project-euler",
-      "target": "project-euler-tactics",
       "type": "reference",
       "strength": 2
     },
@@ -1296,180 +858,24 @@
       "strength": 2
     },
     {
-      "source": "sql-server",
-      "target": "fragmentation",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "statebased-vs-migrationsbased",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "database-mail",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "row-version",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "exists-vs-in",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "configuration-tables",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "datetime-vs-datetimeoffset",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "random-sql-best-practices",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "sql-utility-scripts",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "ssdt",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "tsql-codesmells",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "ssms-shortcuts",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "sql-server",
-      "target": "sql-quick-tips",
-      "type": "reference",
-      "strength": 2
-    },
-    {
       "source": "static-sites",
       "target": "11ty",
       "type": "reference",
       "strength": 2
-    },
-    {
-      "source": "taking-meeting-notes",
-      "target": "career-tools",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "tech",
-      "target": "sql-server",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "tech",
-      "target": "web",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "tech",
-      "target": "csharp",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "tech",
-      "target": "docker",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "tech",
-      "target": "python",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "work-todo",
-      "target": "ssdt",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "work-todo",
-      "target": "etl",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "work-todo",
-      "target": "configuration-tables",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "work-tools",
-      "target": "sql-server",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "work-tools",
-      "target": "git",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "work-tools",
-      "target": "python",
-      "type": "reference",
-      "strength": 2
-    },
-    {
-      "source": "career-tools",
-      "target": "staff-eng",
-      "type": "hierarchical",
-      "strength": 3
     }
   ],
   "categories": {
-    "General": 60,
-    "Career": 4,
-    "Tools": 8,
-    "Database": 12,
-    "Programming": 4,
-    "Organization": 2
+    "General": 42,
+    "Career": 3,
+    "Database": 6,
+    "Programming": 3,
+    "Organization": 1,
+    "Tools": 5
   },
   "stats": {
-    "totalNodes": 90,
-    "totalLinks": 65,
-    "hubNodes": 1,
-    "categoryNodes": 9
+    "totalNodes": 60,
+    "totalLinks": 19,
+    "hubNodes": 0,
+    "categoryNodes": 2
   }
 }
