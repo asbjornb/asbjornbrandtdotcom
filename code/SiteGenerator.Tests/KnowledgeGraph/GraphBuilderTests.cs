@@ -211,4 +211,23 @@ public class GraphBuilderTests
         result.Nodes.Select(n => n.Id).Should().BeEquivalentTo(["note1", "note2"]);
         result.Links.Should().NotContain(l => l.Source == "draft" || l.Target == "draft");
     }
+
+    [Fact]
+    public async Task BuildGraphAsync_OrdersNodesAndLinksRegardlessOfFileOrder()
+    {
+        var fileProvider = new InMemoryFileProvider();
+        var graphBuilder = new GraphBuilder(fileProvider, new MarkdownParser());
+
+        fileProvider.AddFile("zebra.md", "# Zebra\n[[apple]] [[mango]]");
+        fileProvider.AddFile("mango.md", "# Mango\n[[zebra]]");
+        fileProvider.AddFile("apple.md", "# Apple\n[[zebra]] [[mango]]");
+
+        var result = await graphBuilder.BuildGraphAsync("/test");
+
+        result.Nodes.Select(n => n.Id).Should().Equal("apple", "mango", "zebra");
+        result
+            .Links.Select(l => $"{l.Source}->{l.Target}")
+            .Should()
+            .Equal("apple->mango", "apple->zebra", "mango->zebra", "zebra->apple", "zebra->mango");
+    }
 }

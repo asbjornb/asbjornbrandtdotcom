@@ -176,7 +176,10 @@ public class NoteProcessor : IPageProcessor
             .Distinct()
             .ToList();
 
-        var connectedNodes = _graphData.Nodes.Where(n => connectedNodeIds.Contains(n.Id)).ToList();
+        var connectedNodes = _graphData
+            .Nodes.Where(n => connectedNodeIds.Contains(n.Id))
+            .OrderBy(n => n.Title, StringComparer.InvariantCultureIgnoreCase)
+            .ToList();
 
         return new NoteGraphData(
             fileName,

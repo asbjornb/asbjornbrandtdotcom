@@ -60,7 +60,18 @@ public class GraphBuilder
         // Add hierarchical links based on categories
         AddHierarchicalLinks(nodes, validLinks);
 
-        return new GraphData(nodes, validLinks, categories);
+        // Stable order so graph-data.json only changes when the notes do
+        return new GraphData(
+            nodes.OrderBy(n => n.Id, StringComparer.Ordinal).ToList(),
+            validLinks
+                .OrderBy(l => l.Source, StringComparer.Ordinal)
+                .ThenBy(l => l.Target, StringComparer.Ordinal)
+                .ThenBy(l => l.Type)
+                .ToList(),
+            categories
+                .OrderBy(c => c.Key, StringComparer.Ordinal)
+                .ToDictionary(c => c.Key, c => c.Value)
+        );
     }
 
     private GraphNode CreateNodeFromContent(ContentFile contentFile, string contentPath)
