@@ -277,4 +277,44 @@ public class MarkdownParserTests
         result.Should().Contain("and work todo.");
         result.Should().NotContain("/notes/work-todo/");
     }
+
+    [Fact]
+    public void ParseToHtml_LeavesWikilinksInCodeSpansAlone()
+    {
+        var parser = new MarkdownParser();
+
+        var result = parser.ParseToHtml("Write `[[note-name]]` to link, like [[git]].");
+
+        result.Should().Contain("<code>[[note-name]]</code>");
+        result.Should().Contain("<a href=\"/notes/git/\">git</a>");
+        result.Should().NotContain("/notes/note-name/");
+    }
+
+    [Fact]
+    public void ParseToHtml_LeavesWikilinksInFencedCodeBlocksAlone()
+    {
+        var parser = new MarkdownParser();
+
+        var result = parser.ParseToHtml("```\nSee [[inside]]\n```\n\nSee [[outside]].");
+
+        result.Should().Contain("See [[inside]]");
+        result.Should().NotContain("/notes/inside/");
+        result.Should().Contain("<a href=\"/notes/outside/\">outside</a>");
+    }
+
+    [Fact]
+    public void WikiLinkTargets_IgnoreCode()
+    {
+        var targets = WikiLinks.Targets("[[a]] `[[b]]`\n\n~~~\n[[c]]\n~~~\n\n``x ` [[d]]`` [[e]]");
+
+        targets.Should().Equal("a", "e");
+    }
+
+    [Fact]
+    public void WikiLinkTargets_StrayBacktickDoesNotHideLaterParagraphs()
+    {
+        var targets = WikiLinks.Targets("A stray ` here.\n\nSee [[a]].\n\nAnd `code`.");
+
+        targets.Should().Equal("a");
+    }
 }

@@ -1,25 +1,7 @@
 # Index
 
-## Top of mind
+A trimmed copy of the old notes, used as test input.
 
-* [[keyboard-shortcuts]]
-* [[cheat-sheets]]
-* [[personal-blog]]
-* [[ssdt]]
-
-## Organizational
-
-* [[inbox]]
-* [[work-todo]]
-* [[work-tools]]
-* [[work-reading]]
-
-## Categories
-
-* [[podcasts]]
-* [[career]]
-* [[finance]]
 * [[tech]]
-* [[home-lab]]
-* [[recipes]]
-* [[taking-notes]]
+* [[git]]
+* [[personal-blog]]
