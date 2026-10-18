@@ -27,8 +27,7 @@ public class PathResolverTests
 
         // Assert
         result.Should().NotBeNullOrEmpty();
-        Directory.Exists(Path.Combine(result, "content")).Should().BeTrue();
-        Directory.Exists(Path.Combine(result, "code")).Should().BeTrue();
+        File.Exists(Path.Combine(result, "code", "SiteGenerator.sln")).Should().BeTrue();
     }
 
     [Fact]
@@ -39,8 +38,7 @@ public class PathResolverTests
 
         // Assert
         result.Should().NotBeNullOrEmpty();
-        Directory.Exists(Path.Combine(result, "content")).Should().BeTrue();
-        Directory.Exists(Path.Combine(result, "code")).Should().BeTrue();
+        File.Exists(Path.Combine(result, "code", "SiteGenerator.sln")).Should().BeTrue();
     }
 
     [Fact]
@@ -55,7 +53,6 @@ public class PathResolverTests
         // Assert
         result.Should().NotBeNullOrEmpty();
         result.Should().NotBe(invalidPath);
-        Directory.Exists(Path.Combine(result, "content")).Should().BeTrue();
-        Directory.Exists(Path.Combine(result, "code")).Should().BeTrue();
+        File.Exists(Path.Combine(result, "code", "SiteGenerator.sln")).Should().BeTrue();
     }
 }
