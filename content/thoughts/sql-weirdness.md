@@ -17,9 +17,9 @@ FROM(SELECT​r=ROW_NUMBER()OVER(ORDER​BY​1/0)FROM​a,a​b,a​c,a​d)b
 
 [https://en.wikipedia.org/wiki/Zalgo_text]
 
-![For select and comments](Assets/ZalgoSelect.png)
+![For select and comments](/assets/notes/ZalgoSelect.png)
 
-![Even for sysnames](Assets/ZalgoSql.png)
+![Even for sysnames](/assets/notes/ZalgoSql.png)
 
 Also see this link for postgres weirdness which might largely be replicable in sql:
 [Select wat from sql](https://scattered-thoughts.net/writing/select-wat-from-sql/)

@@ -15,6 +15,6 @@
 Pictures from the article:
 
 *State based approach:*
-![state-based-approach.png](state-based-approach.png)
+![state-based-approach.png](/assets/notes/state-based-approach.png)
 *Migrations based approach:*
-![migration-based-approach.png](migration-based-approach.png)
+![migration-based-approach.png](/assets/notes/migration-based-approach.png)
