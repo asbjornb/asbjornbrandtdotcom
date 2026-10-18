@@ -7,13 +7,12 @@ namespace SiteGenerator.Tests.Templates;
 
 public class LayoutModelFactoryTests
 {
-    private readonly SiteMetadata _metadata =
-        new(
-            SiteTitle: "Test Site",
-            BaseUrl: "https://example.com",
-            Author: "Test Author",
-            Description: "Test description"
-        );
+    private readonly SiteMetadata _metadata = new(
+        SiteTitle: "Test Site",
+        BaseUrl: "https://example.com",
+        Author: "Test Author",
+        Description: "Test description"
+    );
 
     [Fact]
     public void CreatePage_UsesSiteMetadataForTitleAndDescription()

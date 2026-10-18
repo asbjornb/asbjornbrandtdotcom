@@ -6,13 +6,12 @@ namespace SiteGenerator.Tests.Configuration;
 
 public class SiteUrlResolverTests
 {
-    private readonly SiteMetadata _metadata =
-        new(
-            SiteTitle: "Test Site",
-            BaseUrl: "https://example.com/",
-            Author: "Author",
-            Description: "Description"
-        );
+    private readonly SiteMetadata _metadata = new(
+        SiteTitle: "Test Site",
+        BaseUrl: "https://example.com/",
+        Author: "Author",
+        Description: "Description"
+    );
 
     [Fact]
     public void Note_ReturnsNotesUrlWithTrailingSlash()

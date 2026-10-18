@@ -26,6 +26,13 @@ jobs:
         cd code
         dotnet restore SiteGenerator.sln
 
+    - name: Check Formatting
+      if: runner.os == 'Linux'
+      run: |
+        cd code
+        dotnet tool restore
+        dotnet csharpier check .
+
     - name: Build Solution
       run: |
         cd code
