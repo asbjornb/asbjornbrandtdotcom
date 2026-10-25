@@ -1,5 +1,21 @@
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url(/assets/fonts/inter-latin.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url(/assets/fonts/inter-latin-italic.woff2) format('woff2');
+}
+
 :root {
-    --accent: #2D9CDB;
+    --accent: #1B75B0;
     --grey: #444;
 }
 

@@ -5,5 +5,6 @@ public record LayoutModel(
     string MetaDescription,
     string MetaType, //MetaType can be "website" or "article". Check OpenGraph protocol for more information.
     string PageUrl,
-    string? Body
+    string? Body,
+    string BaseUrl = ""
 );

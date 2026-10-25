@@ -19,7 +19,8 @@ public class LayoutModelFactory
             _siteMetadata.Description,
             "website",
             pageUrl,
-            bodyHtml
+            bodyHtml,
+            _siteMetadata.BaseUrl
         );
     }
 
@@ -30,7 +31,8 @@ public class LayoutModelFactory
             _siteMetadata.Description,
             "article",
             pageUrl,
-            null
+            null,
+            _siteMetadata.BaseUrl
         );
     }
 
@@ -41,7 +43,8 @@ public class LayoutModelFactory
             _siteMetadata.Description,
             "article",
             pageUrl,
-            null
+            null,
+            _siteMetadata.BaseUrl
         );
     }
 
@@ -52,7 +55,8 @@ public class LayoutModelFactory
             _siteMetadata.Description,
             "website",
             pageUrl,
-            null
+            null,
+            _siteMetadata.BaseUrl
         );
     }
 }

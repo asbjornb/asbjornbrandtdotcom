@@ -26,6 +26,7 @@ public class LayoutModelFactoryTests
         layout.MetaType.Should().Be("website");
         layout.PageUrl.Should().Be("https://example.com/about/");
         layout.Body.Should().Be("<p>content</p>");
+        layout.BaseUrl.Should().Be("https://example.com");
     }
 
     [Fact]
